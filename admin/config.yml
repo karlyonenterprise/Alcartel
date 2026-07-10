@@ -7,7 +7,7 @@
 # ══════════════════════════════════════════════════════════
 
 backend:
-  name: github
+  name: git-gateway
   repo: karlyonenterprise/Alcartel
   branch: main
   auth_type: pkce
