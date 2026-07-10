@@ -47,6 +47,23 @@ const ANALYTICS_HEAD = `<!-- Google tag (gtag.js) -->
   <meta name="google-adsense-account" content="ca-pub-5846610296337932">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5846610296337932" crossorigin="anonymous"></script>`;
 
+// ── Verificação do Google Search Console — mesma tag em todas as páginas
+//    geradas, para garantir que qualquer URL do site pode ser usada para
+//    validar a propriedade no Search Console. ──────────────────────────
+const GSC_META = `<meta name="google-site-verification" content="O7U2bjZOfiLyBXvJWmrlhOECB-EZYWza8RSlbqMrG7I">`;
+
+// ── Bloco partilhado de identidade visual (favicons, apple-touch-icon,
+//    manifest PWA) — igual ao usado nas páginas estáticas (index, vagas,
+//    sobre, etc.), para consistência de marca em todas as páginas geradas. ──
+const ICONS_HEAD = `<meta name="author" content="Alcartel – Karlyon Enterprise S.A.">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">`;
+
 // ── Normaliza uma vaga vinda de content/vagas/*.json para um objecto
 //    plano único, aceitando tanto o formato NOVO (campos agrupados em
 //    informacoes_gerais / local_contrato / remuneracao / perfil /
@@ -229,17 +246,31 @@ function paginaVaga(v) {
     } : {})
   };
 
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Vagas", "item": `${SITE_URL}/vagas.html` },
+      { "@type": "ListItem", "position": 3, "name": v.categoria, "item": `${SITE_URL}/categoria/${slugify(v.categoria)}.html` },
+      { "@type": "ListItem", "position": 4, "name": v.titulo, "item": url }
+    ]
+  };
+
   return `<!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  ${GSC_META}
   <title>${escapeHtml(v.titulo)} em ${escapeHtml(local)} – Alcartel | Vaga de Emprego</title>
   <meta name="description" content="Vaga de ${escapeHtml(v.titulo)} em ${escapeHtml(local)}. ${escapeHtml(v.empresa)} está a contratar. Candidate-se já na Alcartel.">
   ${v.palavras_chave ? `<meta name="keywords" content="${escapeHtml(v.palavras_chave)}">` : ""}
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="${url}">
   <meta name="theme-color" content="#0e2818">
+  ${ICONS_HEAD}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Alcartel">
   <meta property="og:title" content="${escapeHtml(v.titulo)} em ${escapeHtml(local)} – Alcartel">
@@ -248,13 +279,15 @@ function paginaVaga(v) {
   <meta property="og:image" content="${SITE_URL}/Og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:locale" content="pt_MZ">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(v.titulo)} em ${escapeHtml(local)} – Alcartel">
+  <meta name="twitter:description" content="${escapeHtml(v.empresa)} está a contratar em ${escapeHtml(local)}. Candidate-se já.">
   <meta name="twitter:image" content="${SITE_URL}/Og-image.jpg">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" href="../style.css">
   <script type="application/ld+json">${JSON.stringify(jobPosting)}</script>
+  <script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>
   ${ANALYTICS_HEAD}
 </head>
 <body>
@@ -412,16 +445,48 @@ function paginaListagem({ tipo, valor, lista }) {
   const tituloTipo = tipo === "categoria" ? "Vagas em" : "Vagas em";
   const cards = lista.map(cardVaga).join("\n");
 
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Vagas", "item": `${SITE_URL}/vagas.html` },
+      { "@type": "ListItem", "position": 3, "name": valor, "item": url }
+    ]
+  };
+  const collectionPage = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collectionpage`,
+    "url": url,
+    "name": `${tituloTipo} ${valor} – Alcartel`,
+    "description": `Confira todas as vagas de emprego disponíveis em ${valor} na Alcartel, o motor de empregos de Moçambique.`,
+    "inLanguage": "pt-MZ",
+    "isPartOf": { "@id": `${SITE_URL}/#website` },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": lista.map((v, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "url": `${SITE_URL}/vagas/${v.slug}.html`,
+        "name": v.titulo
+      }))
+    }
+  };
+
   return `<!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  ${GSC_META}
   <title>${tituloTipo} ${escapeHtml(valor)} – Alcartel | Vagas de Emprego</title>
   <meta name="description" content="Confira todas as vagas de emprego disponíveis em ${escapeHtml(valor)} na Alcartel, o motor de empregos de Moçambique.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${url}">
   <meta name="theme-color" content="#0e2818">
+  ${ICONS_HEAD}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Alcartel">
   <meta property="og:title" content="${tituloTipo} ${escapeHtml(valor)} – Alcartel">
@@ -430,13 +495,15 @@ function paginaListagem({ tipo, valor, lista }) {
   <meta property="og:image" content="${SITE_URL}/Og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:locale" content="pt_MZ">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${tituloTipo} ${escapeHtml(valor)} – Alcartel">
   <meta name="twitter:description" content="Confira todas as vagas de emprego disponíveis em ${escapeHtml(valor)} na Alcartel.">
   <meta name="twitter:image" content="${SITE_URL}/Og-image.jpg">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>
+  <script type="application/ld+json">${JSON.stringify(collectionPage)}</script>
   ${ANALYTICS_HEAD}
 </head>
 <body>
