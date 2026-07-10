@@ -32,6 +32,21 @@ const ROOT = path.join(__dirname, "..");
 const SITE_URL = "https://alcartel.vercel.app";
 const VAGAS_DIR_FONTE = path.join(ROOT, "content/vagas");
 
+// ── Bloco partilhado de Analytics/AdSense, injectado em todas as páginas
+//    geradas (vagas, categorias, cidades). As páginas estáticas (index,
+//    vagas, sobre, etc.) têm o mesmo bloco inserido manualmente no HTML. ──
+const ANALYTICS_HEAD = `<!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-12XX7764TS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-12XX7764TS');
+  </script>
+  <!-- Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-5846610296337932">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5846610296337932" crossorigin="anonymous"></script>`;
+
 // ── Normaliza uma vaga vinda de content/vagas/*.json para um objecto
 //    plano único, aceitando tanto o formato NOVO (campos agrupados em
 //    informacoes_gerais / local_contrato / remuneracao / perfil /
@@ -231,6 +246,8 @@ function paginaVaga(v) {
   <meta property="og:description" content="${escapeHtml(v.empresa)} está a contratar em ${escapeHtml(local)}. Candidate-se já.">
   <meta property="og:url" content="${url}">
   <meta property="og:image" content="${SITE_URL}/Og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="pt_MZ">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(v.titulo)} em ${escapeHtml(local)} – Alcartel">
@@ -238,6 +255,7 @@ function paginaVaga(v) {
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" href="../style.css">
   <script type="application/ld+json">${JSON.stringify(jobPosting)}</script>
+  ${ANALYTICS_HEAD}
 </head>
 <body>
 <header class="site-header" role="banner">
@@ -404,8 +422,22 @@ function paginaListagem({ tipo, valor, lista }) {
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${url}">
   <meta name="theme-color" content="#0e2818">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Alcartel">
+  <meta property="og:title" content="${tituloTipo} ${escapeHtml(valor)} – Alcartel">
+  <meta property="og:description" content="Confira todas as vagas de emprego disponíveis em ${escapeHtml(valor)} na Alcartel, o motor de empregos de Moçambique.">
+  <meta property="og:url" content="${url}">
+  <meta property="og:image" content="${SITE_URL}/Og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="pt_MZ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${tituloTipo} ${escapeHtml(valor)} – Alcartel">
+  <meta name="twitter:description" content="Confira todas as vagas de emprego disponíveis em ${escapeHtml(valor)} na Alcartel.">
+  <meta name="twitter:image" content="${SITE_URL}/Og-image.jpg">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="stylesheet" href="../style.css">
+  ${ANALYTICS_HEAD}
 </head>
 <body>
 <header class="site-header" role="banner">
