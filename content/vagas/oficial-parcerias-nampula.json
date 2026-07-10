@@ -1,0 +1,56 @@
+{
+  "cargo": "oficial-parcerias",
+  "imagem_empresa": "",
+  "destaque": false,
+  "informacoes_gerais": {
+    "codigo_vaga": "ALC-2026-002",
+    "titulo": "Oficial de Parcerias",
+    "empresa": "Save the Children Internacional",
+    "area": "Administração e Parcerias",
+    "departamento": "Parcerias Institucionais",
+    "numero_vagas": 1,
+    "data_publicacao": "2026-04-21",
+    "data_validade": "",
+    "estado_vaga": "Aberta"
+  },
+  "local_contrato": {
+    "pais": "Moçambique",
+    "provincia": "Nampula",
+    "cidade": "Nampula",
+    "regime_trabalho": "Presencial",
+    "tipo_contrato": "Tempo inteiro",
+    "horario_trabalho": ""
+  },
+  "remuneracao": {
+    "salario_min": null,
+    "salario_max": null,
+    "moeda": "MZN",
+    "periodicidade": "Mensal",
+    "salario_negociavel": false,
+    "beneficios": ""
+  },
+  "perfil": {
+    "descricao": "A Save the Children Internacional, organização humanitária dedicada ao bem-estar da criança, procura um(a) Oficial de Parcerias baseado(a) em Nampula.",
+    "responsabilidades": "",
+    "requisitos_obrigatorios": "Experiência em gestão de parcerias institucionais no sector humanitário.",
+    "requisitos_desejaveis": "",
+    "escolaridade": "",
+    "experiencia": "Experiência prévia em gestão de parcerias institucionais no sector humanitário",
+    "competencias_tecnicas": "",
+    "competencias_comportamentais": "",
+    "idiomas": "Português e Inglês",
+    "certificacoes": ""
+  },
+  "candidatura": {
+    "documentos_exigidos": "",
+    "como_candidatar": "Consulte o anúncio original para os requisitos completos e o processo de candidatura.",
+    "contacto": "",
+    "link_candidatura": "https://noticias.mmo.co.mz/2026/04/vagas-de-emprego-do-dia-20-de-abril-de-2026.html",
+    "observacoes": ""
+  },
+  "seo": {
+    "categoria": "Administração",
+    "palavras_chave": "oficial de parcerias, save the children, emprego nampula, ong moçambique",
+    "url_amigavel": ""
+  }
+}

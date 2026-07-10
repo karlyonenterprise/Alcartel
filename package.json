@@ -1,0 +1,12 @@
+{
+  "name": "alcartel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Alcartel — O Motor de Empregos de Moçambique. Site estático (HTML/CSS) com Decap CMS para gestão de vagas.",
+  "scripts": {
+    "build": "node scripts/gerar-site.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

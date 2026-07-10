@@ -1,0 +1,56 @@
+{
+  "cargo": "programador-wordpress-flutter",
+  "imagem_empresa": "",
+  "destaque": true,
+  "informacoes_gerais": {
+    "codigo_vaga": "ALC-2026-010",
+    "titulo": "Programador WordPress/Flutter",
+    "empresa": "Grupo CB",
+    "area": "Tecnologia",
+    "departamento": "Desenvolvimento",
+    "numero_vagas": 1,
+    "data_publicacao": "2026-06-20",
+    "data_validade": "2026-07-12",
+    "estado_vaga": "Aberta"
+  },
+  "local_contrato": {
+    "pais": "Moçambique",
+    "provincia": "Maputo",
+    "cidade": "Maputo",
+    "regime_trabalho": "Presencial",
+    "tipo_contrato": "Tempo inteiro",
+    "horario_trabalho": ""
+  },
+  "remuneracao": {
+    "salario_min": null,
+    "salario_max": null,
+    "moeda": "MZN",
+    "periodicidade": "Mensal",
+    "salario_negociavel": false,
+    "beneficios": ""
+  },
+  "perfil": {
+    "descricao": "O Grupo CB está a recrutar um(a) programador(a) para desenvolvimento e manutenção de sites em WordPress e aplicações móveis em Flutter.",
+    "responsabilidades": "Desenvolvimento e manutenção de sites em WordPress e de aplicações móveis em Flutter.",
+    "requisitos_obrigatorios": "Experiência comprovada em WordPress e em desenvolvimento de aplicações móveis com Flutter.",
+    "requisitos_desejaveis": "",
+    "escolaridade": "",
+    "experiencia": "Experiência comprovada em WordPress e Flutter",
+    "competencias_tecnicas": "WordPress, PHP, Flutter/Dart",
+    "competencias_comportamentais": "",
+    "idiomas": "Português",
+    "certificacoes": ""
+  },
+  "candidatura": {
+    "documentos_exigidos": "",
+    "como_candidatar": "Consulte o anúncio original para os requisitos completos e o processo de candidatura.",
+    "contacto": "",
+    "link_candidatura": "https://vagademprego.com/",
+    "observacoes": ""
+  },
+  "seo": {
+    "categoria": "Informática",
+    "palavras_chave": "programador wordpress, flutter, emprego maputo, grupo cb, desenvolvimento de software",
+    "url_amigavel": ""
+  }
+}

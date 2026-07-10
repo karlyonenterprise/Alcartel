@@ -1,0 +1,56 @@
+{
+  "cargo": "operador-maquinas-pesadas",
+  "imagem_empresa": "",
+  "destaque": false,
+  "informacoes_gerais": {
+    "codigo_vaga": "ALC-2026-007",
+    "titulo": "Operador de Máquinas Pesadas (Diversas Posições)",
+    "empresa": "Montepuez Ruby Mining",
+    "area": "Operações Industriais",
+    "departamento": "Produção",
+    "numero_vagas": 1,
+    "data_publicacao": "2026-05-27",
+    "data_validade": "",
+    "estado_vaga": "Aberta"
+  },
+  "local_contrato": {
+    "pais": "Moçambique",
+    "provincia": "Cabo Delgado",
+    "cidade": "Pemba",
+    "regime_trabalho": "Presencial",
+    "tipo_contrato": "Temporário",
+    "horario_trabalho": ""
+  },
+  "remuneracao": {
+    "salario_min": null,
+    "salario_max": null,
+    "moeda": "MZN",
+    "periodicidade": "Mensal",
+    "salario_negociavel": false,
+    "beneficios": ""
+  },
+  "perfil": {
+    "descricao": "A Montepuez Ruby Mining (MRM), do Grupo Gemfields, está a recrutar profissionais para 159 posições técnicas e operacionais na província de Cabo Delgado, incluindo operadores de máquinas pesadas.",
+    "responsabilidades": "",
+    "requisitos_obrigatorios": "Carta de condução válida e certificados que qualifiquem para operar as máquinas indicadas.",
+    "requisitos_desejaveis": "",
+    "escolaridade": "",
+    "experiencia": "Experiência comprovada na operação das máquinas pesadas indicadas",
+    "competencias_tecnicas": "Operação de máquinas pesadas",
+    "competencias_comportamentais": "",
+    "idiomas": "Português",
+    "certificacoes": "Carta de condução válida e certificados de operação de máquinas pesadas"
+  },
+  "candidatura": {
+    "documentos_exigidos": "Carta de condução válida e certificados de operação de máquinas pesadas.",
+    "como_candidatar": "Disponibilidade para testes práticos nas instalações da empresa.",
+    "contacto": "",
+    "link_candidatura": "https://vagademprego.com/vagas/provincia/cabo-delgado/page/4/",
+    "observacoes": "Testes práticos sem cobertura de despesas de alojamento/alimentação. A empresa não cobra nenhum valor aos candidatos."
+  },
+  "seo": {
+    "categoria": "Mineração e Petróleo e Gás",
+    "palavras_chave": "operador de máquinas pesadas, montepuez ruby mining, emprego pemba, emprego cabo delgado",
+    "url_amigavel": ""
+  }
+}

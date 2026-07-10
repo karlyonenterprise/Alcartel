@@ -1,0 +1,56 @@
+{
+  "cargo": "gestor-vendas",
+  "imagem_empresa": "",
+  "destaque": false,
+  "informacoes_gerais": {
+    "codigo_vaga": "ALC-2026-003",
+    "titulo": "Gestor de Vendas",
+    "empresa": "Bay Rachide",
+    "area": "Comercial",
+    "departamento": "Vendas",
+    "numero_vagas": 3,
+    "data_publicacao": "2026-04-22",
+    "data_validade": "",
+    "estado_vaga": "Aberta"
+  },
+  "local_contrato": {
+    "pais": "Moçambique",
+    "provincia": "Niassa",
+    "cidade": "Lichinga",
+    "regime_trabalho": "Presencial",
+    "tipo_contrato": "Tempo inteiro",
+    "horario_trabalho": ""
+  },
+  "remuneracao": {
+    "salario_min": null,
+    "salario_max": null,
+    "moeda": "MZN",
+    "periodicidade": "Mensal",
+    "salario_negociavel": false,
+    "beneficios": ""
+  },
+  "perfil": {
+    "descricao": "A Bay Rachide, empresa de transportes e logística sediada no Bairro de Nomba, Cidade de Lichinga, está a recrutar três Gestores de Vendas para actuar na Cidade de Lichinga e na Vila Municipal de Mandimba.",
+    "responsabilidades": "",
+    "requisitos_obrigatorios": "",
+    "requisitos_desejaveis": "",
+    "escolaridade": "12ª classe ou equivalente",
+    "experiencia": "",
+    "competencias_tecnicas": "",
+    "competencias_comportamentais": "",
+    "idiomas": "Português",
+    "certificacoes": ""
+  },
+  "candidatura": {
+    "documentos_exigidos": "Cópia autenticada do BI, declaração de NUIT, atestado médico e certificado de habilitações literárias.",
+    "como_candidatar": "Enviar candidatura por e-mail.",
+    "contacto": "saviana.tissa@gmail.com",
+    "link_candidatura": "mailto:saviana.tissa@gmail.com",
+    "observacoes": ""
+  },
+  "seo": {
+    "categoria": "Vendas e Marketing",
+    "palavras_chave": "gestor de vendas, emprego lichinga, emprego niassa, bay rachide, mandimba",
+    "url_amigavel": ""
+  }
+}
