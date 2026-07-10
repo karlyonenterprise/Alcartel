@@ -1,0 +1,26 @@
+{
+  "name": "Alcartel – O Motor de Empregos de Moçambique",
+  "short_name": "Alcartel",
+  "description": "A principal plataforma de emprego de Moçambique. Encontre vagas em todas as províncias.",
+  "start_url": "/index.html",
+  "id": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0e2818",
+  "lang": "pt-MZ",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
