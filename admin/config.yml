@@ -44,10 +44,6 @@ logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 # URL do site
 site_url: https://alcartel.vercel.app
 
-# Onde o CMS guarda os ficheiros de mídia enviados (logotipos, fotos de vagas)
-media_folder: "uploads"
-public_folder: "/uploads"
-
 publish_mode: editorial_workflow
 
 collections:
@@ -104,7 +100,7 @@ collections:
           - name: "provincia"
             label: "Província/Estado"
             widget: "select"
-            options: ["Maputo", "Maputo Cidade", "Gaza", "Inhambane", "Sofala", "Manica", "Tete", "Zambézia", "Nampula", "Niassa", "Cabo Delgado"]
+            options: ["Maputo", "Gaza", "Inhambane", "Sofala", "Manica", "Tete", "Zambézia", "Nampula", "Niassa", "Cabo Delgado"]
           - { name: "cidade", label: "Cidade", widget: "string", required: false }
           - name: "regime_trabalho"
             label: "Regime de Trabalho"
