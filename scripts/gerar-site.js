@@ -237,10 +237,62 @@ function textoLocal(v) {
   return v.local || [v.cidade, v.provincia].filter(Boolean).join(", ");
 }
 
+// ── Converte um caminho relativo (ex.: "/assets/empresas/x.jpg") numa
+//    URL absoluta com o domínio do site. Se já vier absoluto (http/https),
+//    devolve tal como está. Necessário porque og:image, twitter:image e
+//    o "image" do JSON-LD JobPosting têm de ser sempre URLs absolutas
+//    para funcionar em partilhas no WhatsApp, Facebook, LinkedIn, etc. ──
+function urlAbsoluta(caminho) {
+  if (!caminho) return "";
+  if (/^https?:\/\//i.test(caminho)) return caminho;
+  return `${SITE_URL}${caminho.startsWith("/") ? "" : "/"}${caminho}`;
+}
+
+// ── Imagem usada na partilha da vaga (Open Graph / Twitter Card /
+//    JSON-LD). Usa sempre o logótipo/imagem enviada no Decap CMS para
+//    aquela vaga; se a vaga não tiver imagem própria, cai para a imagem
+//    genérica do site (Og-image.jpg) — nunca fica sem imagem de preview. ──
+function imagemPartilhaVaga(v) {
+  return v.imagem_empresa ? urlAbsoluta(v.imagem_empresa) : `${SITE_URL}/Og-image.jpg`;
+}
+
+// ── Meta description exclusiva de cada vaga, gerada a partir do resumo
+//    real da vaga (descrição/responsabilidades) em vez de um texto
+//    genérico do site — nunca reutiliza a description da homepage.
+//    Se a vaga não tiver texto de descrição preenchido, cai para um
+//    template curto mas ainda assim único por vaga (título + local + empresa). ──
+function metaDescricaoVaga(v) {
+  const local = textoLocal(v) || v.pais || "Moçambique";
+  const resumo = (v.descricao || v.responsabilidades || "").replace(/\s+/g, " ").trim();
+  if (resumo) {
+    return truncar(`${v.titulo} em ${local} — ${v.empresa}. ${resumo}`, 160);
+  }
+  return `Vaga de ${v.titulo} em ${local}. ${v.empresa} está a contratar. Candidate-se já na Alcartel.`;
+}
+
+// ── Botão "Partilhar Vaga" + painel de recurso (WhatsApp, Facebook,
+//    LinkedIn, X, Telegram, Copiar Link), usado quando a Web Share API
+//    não está disponível no navegador. Os dados vêm em atributos
+//    data-* para scripts/vaga-share.js montar os links sem precisar de
+//    mais nenhuma configuração — funciona automaticamente para qualquer
+//    vaga nova publicada no Decap CMS. ─────────────────────────────────
+function blocoPartilha(v, url) {
+  const local = textoLocal(v) || v.pais || "Moçambique";
+  const textoPartilha = `Vaga de ${v.titulo} em ${local} — ${v.empresa}. Candidate-se na Alcartel.`;
+  return `<div class="vaga-share" data-titulo="${escapeHtml(`${v.titulo} — ${v.empresa}`)}" data-url="${escapeHtml(url)}" data-texto="${escapeHtml(textoPartilha)}">
+      <button type="button" class="btn btn--outline vaga-share__btn" aria-haspopup="true" aria-expanded="false">
+        <span aria-hidden="true">↗</span> Partilhar Vaga
+      </button>
+      <div class="vaga-share__menu" role="menu" hidden></div>
+    </div>`;
+}
+
 // ── Modelo de página individual de vaga ──────────────────────
 function paginaVaga(v) {
   const url = `${SITE_URL}/vagas/${v.slug}.html`;
   const local = textoLocal(v) || v.pais || "Moçambique";
+  const imagemPartilha = imagemPartilhaVaga(v);
+  const descricaoPartilha = metaDescricaoVaga(v);
   const periodicidadeSchema = { "Mensal": "MONTH", "Anual": "YEAR", "Semanal": "WEEK", "Diária": "DAY", "Por hora": "HOUR" }[v.periodicidade] || "MONTH";
   const jobPosting = {
     "@context": "https://schema.org/",
@@ -258,11 +310,14 @@ function paginaVaga(v) {
       if (t === "freelance" || t === "prestação de serviços" || t === "prestacao de servicos") return "CONTRACTOR";
       return "TEMPORARY"; // Temporário e restantes casos
     })(),
-    hiringOrganization: { "@type": "Organization", name: v.empresa, logo: v.imagem_empresa ? `${SITE_URL}${v.imagem_empresa}` : `${SITE_URL}/logo.png` },
+    hiringOrganization: { "@type": "Organization", name: v.empresa, logo: v.imagem_empresa ? urlAbsoluta(v.imagem_empresa) : `${SITE_URL}/logo.png` },
     jobLocation: {
       "@type": "Place",
       address: { "@type": "PostalAddress", addressLocality: v.cidade || v.provincia, addressRegion: v.provincia, addressCountry: "MZ" }
     },
+    url,
+    image: imagemPartilha,
+    ...(v.pais ? { applicantLocationRequirements: { "@type": "Country", name: v.pais } } : {}),
     ...(v.numero_vagas ? { totalJobOpenings: v.numero_vagas } : {}),
     ...(v.regime_trabalho === "Remoto" ? { jobLocationType: "TELECOMMUTE" } : {}),
     ...(v.salario_min || v.salario_max ? {
@@ -293,7 +348,7 @@ function paginaVaga(v) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   ${GSC_META}
   <title>${escapeHtml(v.titulo)} em ${escapeHtml(local)} – Alcartel | Vaga de Emprego</title>
-  <meta name="description" content="Vaga de ${escapeHtml(v.titulo)} em ${escapeHtml(local)}. ${escapeHtml(v.empresa)} está a contratar. Candidate-se já na Alcartel.">
+  <meta name="description" content="${escapeHtml(descricaoPartilha)}">
   ${v.palavras_chave ? `<meta name="keywords" content="${escapeHtml(v.palavras_chave)}">` : ""}
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="${url}">
@@ -302,17 +357,19 @@ function paginaVaga(v) {
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Alcartel">
   <meta property="og:title" content="${escapeHtml(v.titulo)} em ${escapeHtml(local)} – Alcartel">
-  <meta property="og:description" content="${escapeHtml(v.empresa)} está a contratar em ${escapeHtml(local)}. Candidate-se já.">
+  <meta property="og:description" content="${escapeHtml(descricaoPartilha)}">
   <meta property="og:url" content="${url}">
-  <meta property="og:image" content="${SITE_URL}/Og-image.jpg">
-  <meta property="og:image:width" content="1200">
+  <meta property="og:image" content="${imagemPartilha}">
+  ${!v.imagem_empresa ? `<meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:type" content="image/jpeg">` : ""}
+  <meta property="og:image:alt" content="${escapeHtml(v.titulo)} – ${escapeHtml(v.empresa)}">
   <meta property="og:locale" content="pt_MZ">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(v.titulo)} em ${escapeHtml(local)} – Alcartel">
-  <meta name="twitter:description" content="${escapeHtml(v.empresa)} está a contratar em ${escapeHtml(local)}. Candidate-se já.">
-  <meta name="twitter:image" content="${SITE_URL}/Og-image.jpg">
+  <meta name="twitter:description" content="${escapeHtml(descricaoPartilha)}">
+  <meta name="twitter:image" content="${imagemPartilha}">
+  <meta name="twitter:image:alt" content="${escapeHtml(v.titulo)} – ${escapeHtml(v.empresa)}">
   <link rel="stylesheet" href="../style.css">
   <script type="application/ld+json">${JSON.stringify(jobPosting)}</script>
   <script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>
@@ -352,6 +409,7 @@ function paginaVaga(v) {
       <span class="vaga-card__badge vaga-card__badge--estado">${escapeHtml(v.estado_vaga)}</span>
       ${v.codigo_vaga ? `<span class="vaga-card__badge vaga-card__badge--neutro">Ref. ${escapeHtml(v.codigo_vaga)}</span>` : ""}
     </p>
+    ${blocoPartilha(v, url)}
     <div class="divider"></div>
 
     ${listaMeta([
@@ -392,6 +450,7 @@ function paginaVaga(v) {
   <p class="footer-brand">Al<span>c</span>artel</p>
   <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
 </footer>
+<script src="/scripts/vaga-share.js" defer></script>
 </body>
 </html>
 `;
@@ -468,7 +527,8 @@ function blocoModal(lista) {
   </div>
 </div>
 <script id="vagas-dados" type="application/json">${json}</script>
-<script src="/scripts/vaga-modal.js" defer></script>`;
+<script src="/scripts/vaga-modal.js" defer></script>
+<script src="/scripts/vaga-pesquisa.js" defer></script>`;
 }
 
 // ── Modelo de página de listagem (categoria ou cidade) ───────
@@ -583,7 +643,7 @@ function injetarEntreMarcadores(html, marcadorInicio, marcadorFim, conteudo) {
   return html.slice(0, inicio + marcadorInicio.length) + "\n" + conteudo + "\n" + html.slice(fim);
 }
 
-function injetarGrid(nomeFicheiro, lista) {
+function injetarGrid(nomeFicheiro, lista, listaDados) {
   const caminho = path.join(ROOT, nomeFicheiro);
   if (!fs.existsSync(caminho)) {
     console.warn(`⚠️  ${nomeFicheiro} não encontrado — grid não injectado.`);
@@ -601,7 +661,12 @@ function injetarGrid(nomeFicheiro, lista) {
     html = comGrid;
   }
 
-  const comModal = injetarEntreMarcadores(html, "<!-- VAGA_MODAL:START -->", "<!-- VAGA_MODAL:END -->", blocoModal(lista));
+  // O bloco de dados (#vagas-dados) alimenta tanto o modal "Ver mais" como
+  // o sistema de pesquisa (scripts/vaga-pesquisa.js). Por omissão usa a
+  // mesma lista que é mostrada em cartões, mas pode receber uma lista mais
+  // completa (ex.: na homepage, onde só se mostram 2 vagas em destaque mas
+  // a pesquisa tem de poder encontrar TODAS as vagas do site).
+  const comModal = injetarEntreMarcadores(html, "<!-- VAGA_MODAL:START -->", "<!-- VAGA_MODAL:END -->", blocoModal(listaDados || lista));
   if (comModal === null) {
     console.warn(`⚠️  Marcadores VAGA_MODAL:START/END não encontrados em ${nomeFicheiro} — modal "Ver mais" não injectado.`);
   } else {
@@ -666,13 +731,17 @@ function main() {
     urlsGeradas.push(`${SITE_URL}/cidade/${slug}.html`);
   }
 
-  // Homepage: só as vagas em destaque (mesma regra que já existia em
-  // data-vagas-modo="destaque" data-vagas-limite="2" no index.html)
+  // Homepage: só as vagas em destaque aparecem como cartões (mesma regra
+  // que já existia em data-vagas-modo="destaque" data-vagas-limite="2" no
+  // index.html), mas o bloco de dados (#vagas-dados) leva a lista COMPLETA
+  // de vagas — é dela que o sistema de pesquisa (scripts/vaga-pesquisa.js)
+  // lê para poder encontrar qualquer vaga do site directamente a partir da
+  // homepage, mesmo que não esteja em destaque.
   const destaque = vagas.filter(v => v.destaque);
   const paraHomepage = (destaque.length ? destaque : vagas).slice(0, 2);
-  injetarGrid("index.html", paraHomepage);
+  injetarGrid("index.html", paraHomepage, vagas);
 
-  // vagas.html: lista completa
+  // vagas.html: lista completa em cartões e como dados de pesquisa.
   injetarGrid("vagas.html", vagas);
 
   gerarSitemap(urlsGeradas);

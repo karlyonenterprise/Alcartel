@@ -428,6 +428,30 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   background: var(--branco);
 }
 
+/* ── Contagem de resultados da pesquisa ("18 vagas encontradas"),
+   mostrada no topo do grid apenas depois de uma pesquisa ser feita. ── */
+.pesquisa-resultado {
+  max-width: var(--max-width);
+  margin: 18px auto 0;
+  padding: 0 2px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--verde-escuro);
+  text-align: left;
+}
+.pesquisa-resultado[hidden] { display: none; }
+
+/* ── Estado "sem resultados" — ocupa a largura toda do grid e fica
+   centrado, para não parecer um cartão de vaga a mais. ─────────────── */
+.vaga-card--vazio {
+  grid-column: 1 / -1;
+  align-items: center;
+  text-align: center;
+  color: var(--texto-suave);
+}
+.vaga-card--vazio p { margin: 0; }
+.vaga-card--vazio p + p { margin-top: 6px; font-size: 0.9rem; }
+
 
 /* ================================================================
    INDEX — VAGAS
@@ -568,6 +592,77 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .btn--vermelho:hover {
   background: var(--vermelho);
   color: var(--branco);
+}
+
+/* ── Partilhar Vaga (botão + menu de recurso para redes sociais) ── */
+.vaga-share {
+  position: relative;
+  display: inline-block;
+  margin-top: 14px;
+}
+.vaga-share__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.vaga-share__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  min-width: 210px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 6px;
+  animation: vaga-share-abrir 0.15s ease-out;
+}
+.vaga-share__menu[hidden] { display: none; }
+@keyframes vaga-share-abrir {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.vaga-share__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--texto);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.vaga-share__link:hover,
+.vaga-share__link:focus-visible {
+  background: var(--cinza-claro);
+}
+.vaga-share__link::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--texto-suave);
+}
+.vaga-share__link--whatsapp::before { background: var(--whatsapp); }
+.vaga-share__link--facebook::before { background: #1877f2; }
+.vaga-share__link--linkedin::before { background: #0a66c2; }
+.vaga-share__link--x::before        { background: #000000; }
+.vaga-share__link--telegram::before { background: #26a5e4; }
+.vaga-share__link--copiar::before   { background: var(--ouro); }
+.vaga-share__link--copiado {
+  color: var(--verde-medio);
 }
 
 /* ── Modal "Ver mais" (detalhe rápido da vaga) ─────────────── */
@@ -1433,8 +1528,10 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   .vaga-meta-lista     { gap: 6px 14px; padding: 12px; font-size: 0.84rem; }
   .vaga-card__rodape   { flex-wrap: wrap; }
   .vaga-pagina-titulo__logo { width: 48px; height: 48px; }
+  .vaga-share__menu    { left: auto; right: 0; min-width: 190px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
+  .vaga-share__menu { animation: none !important; }
 }
