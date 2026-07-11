@@ -62,9 +62,17 @@ body {
 }
 
 img { display: block; max-width: 100%; height: auto; }
-a { color: inherit; text-decoration: none; }
+a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
 ul { list-style: none; }
 button, input, select, textarea { font-family: var(--font-corpo); }
+
+/* ── Rede de segurança contra overflow horizontal em ecrãs pequenos:
+   qualquer texto corrido (parágrafos, títulos, listas) — incluindo URLs
+   "nuas" em links e conteúdo vindo do CMS (markdown de vagas) — quebra
+   em vez de forçar scroll horizontal na página inteira. ──────────────── */
+p, li, h1, h2, h3, h4, h5, h6, blockquote {
+  overflow-wrap: anywhere;
+}
 
 
 /* ================================================================
