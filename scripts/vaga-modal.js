@@ -82,7 +82,7 @@
       <h3>Descrição da Vaga</h3>
       <p>${escapeHtml(v.descricao)}</p>
       ${secao("Responsabilidades", v.responsabilidades)}
-      <h3>Requisitos Obrigatórios</h3>
+      <h3>Requisitos</h3>
       <p>${escapeHtml(v.requisitos_obrigatorios)}</p>
       ${secao("Requisitos Desejáveis", v.requisitos_desejaveis)}
       ${listaMeta([
@@ -93,11 +93,14 @@
       ])}
       ${secao("Documentos Exigidos", v.documentos_exigidos)}
       ${secao("Como Candidatar-se", v.como_candidatar)}
+      ${(v.candidatura_email || v.candidatura_link) ? `<h3>Como Candidatar-se</h3>${listaMeta([
+        ["E-mail", v.candidatura_email], ["Link", v.candidatura_link]
+      ])}` : ""}
       ${secao("Observações", v.observacoes)}
       ${v.contacto ? `<p class="vaga-modal__meta"><strong>Contacto:</strong> ${escapeHtml(v.contacto)}</p>` : ""}
       ${v.palavras_chave ? `<p class="vaga-pagina-tags">${v.palavras_chave.split(",").map(p => p.trim()).filter(Boolean).map(p => `<span class="vaga-card__badge vaga-card__badge--neutro">${escapeHtml(p)}</span>`).join("")}</p>` : ""}
       <div class="vaga-modal__acoes">
-        <a href="${escapeHtml(v.link_candidatura)}" class="btn btn--ouro">Candidatar-me a Esta Vaga</a>
+        ${(v.candidatura_link || v.candidatura_email) ? `<a href="${v.candidatura_link ? escapeHtml(v.candidatura_link) : `mailto:${escapeHtml(v.candidatura_email)}`}" class="btn btn--ouro">Candidatar-me a Esta Vaga</a>` : ""}
         <a href="/vagas/${escapeHtml(v.slug)}.html" class="btn btn--outline">Ver Página Completa</a>
       </div>
     `;
