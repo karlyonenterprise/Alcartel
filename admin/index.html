@@ -14,5 +14,90 @@
 <body>
   <!-- Decap CMS -->
   <script src="https://unpkg.com/decap-cms@3.8.3/dist/decap-cms.js"></script>
+
+  <!-- ══════════════════════════════════════════════════════════
+       WIDGET CUSTOMIZADO: "candidatura"
+       Campo único que guarda { email, link } e impede a
+       publicação da vaga se os dois estiverem vazios.
+       Tem de ficar DEPOIS do script do decap-cms.js acima
+       (para que CMS/createClass/h já existam) e ANTES do Decap
+       terminar de carregar a config.yml automaticamente.
+       ══════════════════════════════════════════════════════════ -->
+  <script>
+    var CandidaturaControl = createClass({
+      getValue: function (key) {
+        var v = this.props.value;
+        if (!v) return "";
+        if (typeof v.get === "function") return v.get(key) || "";
+        return v[key] || "";
+      },
+      handleChange: function (key, e) {
+        var newVal = e.target.value;
+        var current = this.props.value;
+        var updated;
+        if (current && typeof current.set === "function") {
+          updated = current.set(key, newVal);
+        } else {
+          updated = Object.assign({}, current || {});
+          updated[key] = newVal;
+        }
+        this.props.onChange(updated);
+      },
+      render: function () {
+        return h(
+          "div",
+          { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+          h("label", { style: { fontSize: "12px", fontWeight: "600" } }, "E-mail para Candidatura"),
+          h("input", {
+            type: "text",
+            value: this.getValue("email"),
+            placeholder: "exemplo@empresa.co.mz",
+            style: { padding: "8px", border: "1px solid #ccc", borderRadius: "4px" },
+            onChange: this.handleChange.bind(this, "email"),
+          }),
+          h("label", { style: { fontSize: "12px", fontWeight: "600", marginTop: "8px" } }, "Link para Candidatura"),
+          h("input", {
+            type: "text",
+            value: this.getValue("link"),
+            placeholder: "https://...",
+            style: { padding: "8px", border: "1px solid #ccc", borderRadius: "4px" },
+            onChange: this.handleChange.bind(this, "link"),
+          })
+        );
+      },
+    });
+
+    var CandidaturaPreview = createClass({
+      render: function () {
+        var v = this.props.value;
+        var email = v && (typeof v.get === "function" ? v.get("email") : v.email);
+        var link = v && (typeof v.get === "function" ? v.get("link") : v.link);
+        return h(
+          "div",
+          {},
+          email ? h("p", {}, "E-mail: " + email) : null,
+          link ? h("p", {}, "Link: " + link) : null
+        );
+      },
+    });
+
+    var candidaturaSchema = {
+      validateObject: function (value, field, t) {
+        var email = value && (typeof value.get === "function" ? value.get("email") : value.email);
+        var link = value && (typeof value.get === "function" ? value.get("link") : value.link);
+        if (!email && !link) {
+          return [
+            {
+              type: "CUSTOM",
+              message: "Preenche pelo menos o E-mail ou o Link para candidatura.",
+            },
+          ];
+        }
+        return [];
+      },
+    };
+
+    CMS.registerWidget("candidatura", CandidaturaControl, CandidaturaPreview, candidaturaSchema);
+  </script>
 </body>
 </html>

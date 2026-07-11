@@ -56,131 +56,69 @@ collections:
                                           # no build e gera /vagas/, /categoria/,
                                           # /cidade/ e o grid de index.html/vagas.html.
     create: true
-    slug: "{{cargo}}-{{fields.local_contrato.provincia}}"   # gera ex: programador-maputo
+    slug: "{{fields.titulo}}-{{fields.local}}"     # gera ex: programador-beira-sofala
     extension: "json"
     format: "json"
-    summary: "{{fields.informacoes_gerais.titulo}} — {{fields.local_contrato.provincia}}"
+    summary: "{{fields.titulo}} — {{fields.local}}"
     fields:
-      # Campos técnicos (não formam uma "secção" mas são necessários ao gerador do site)
-      - { name: "cargo", label: "Cargo (usado apenas para gerar o slug/URL)", widget: "string", hint: "Ex: programador. Não aparece no site, só serve para o endereço da página." }
+      # ── 1. Título da Vaga ───────────────────────────────────
+      - { name: "titulo", label: "Título da Vaga", widget: "string", required: true }
+
+      # ── 2. Nome da Empresa ──────────────────────────────────
+      - { name: "empresa", label: "Nome da Empresa", widget: "string", required: true }
+
+      # ── 3. Logótipo da Empresa ──────────────────────────────
       - name: "imagem_empresa"
-        label: "Imagem / Logótipo da Empresa"
+        label: "Logótipo da Empresa"
         widget: "image"
         required: false
         hint: "Opcional. Se não for enviada, o site usa o logótipo da Alcartel como imagem por defeito."
-      - { name: "destaque", label: "Vaga em Destaque (aparece na página inicial)", widget: "boolean", default: false }
 
-      # ── 1. Informações Gerais ──────────────────────────────
-      - name: "informacoes_gerais"
-        label: "1. Informações Gerais"
-        widget: "object"
-        collapsed: false
-        fields:
-          - { name: "codigo_vaga", label: "Código da Vaga", widget: "string", required: false, hint: "Ex: ALC-2026-014" }
-          - { name: "titulo", label: "Título da Vaga", widget: "string" }
-          - { name: "empresa", label: "Empresa", widget: "string" }
-          - { name: "area", label: "Área", widget: "string", required: false, hint: "Ex: Comercial, Tecnologia, Saúde" }
-          - { name: "departamento", label: "Departamento", widget: "string", required: false }
-          - { name: "numero_vagas", label: "Número de Vagas", widget: "number", valueType: "int", default: 1, required: false, min: 1 }
-          - { name: "data_publicacao", label: "Data de Publicação", widget: "datetime" }
-          - { name: "data_validade", label: "Data Limite para Candidatura", widget: "datetime", required: false }
-          - name: "estado_vaga"
-            label: "Estado da Vaga"
-            widget: "select"
-            options: ["Aberta", "Em análise", "Fechada", "Suspensa"]
-            default: "Aberta"
+      # ── 4. Local da Vaga ─────────────────────────────────────
+      - { name: "local", label: "Local da Vaga", widget: "string", required: true, hint: "Ex: Beira, Sofala" }
 
-      # ── 2. Local e Contrato ─────────────────────────────────
-      - name: "local_contrato"
-        label: "2. Local e Contrato"
-        widget: "object"
-        collapsed: false
-        fields:
-          - { name: "pais", label: "País", widget: "string", default: "Moçambique" }
-          - name: "provincia"
-            label: "Província/Estado"
-            widget: "select"
-            options: ["Maputo", "Gaza", "Inhambane", "Sofala", "Manica", "Tete", "Zambézia", "Nampula", "Niassa", "Cabo Delgado"]
-          - { name: "cidade", label: "Cidade", widget: "string", required: false }
-          - name: "regime_trabalho"
-            label: "Regime de Trabalho"
-            widget: "select"
-            options: ["Presencial", "Remoto", "Híbrido"]
-            default: "Presencial"
-            required: false
-          - name: "tipo_contrato"
-            label: "Tipo de Contrato"
-            widget: "select"
-            options: ["Tempo inteiro", "Meio período", "Estágio", "Freelance", "Temporário"]
-          - { name: "horario_trabalho", label: "Horário de Trabalho", widget: "string", required: false, hint: "Ex: Segunda a Sexta, 08h00-17h00" }
+      # ── 5. Tipo de Contrato ─────────────────────────────────
+      - name: "tipo_contrato"
+        label: "Tipo de Contrato"
+        widget: "select"
+        required: true
+        options: ["Tempo Inteiro", "Meio Período", "Estágio", "Freelance", "Temporário", "Prestação de Serviços"]
 
-      # ── 3. Remuneração ──────────────────────────────────────
-      - name: "remuneracao"
-        label: "3. Remuneração"
-        widget: "object"
-        collapsed: true
-        fields:
-          - { name: "salario_min", label: "Salário Mínimo", widget: "number", required: false }
-          - { name: "salario_max", label: "Salário Máximo", widget: "number", required: false }
-          - name: "moeda"
-            label: "Moeda"
-            widget: "select"
-            options: ["MZN", "USD", "ZAR", "EUR"]
-            default: "MZN"
-            required: false
-          - name: "periodicidade"
-            label: "Periodicidade"
-            widget: "select"
-            options: ["Mensal", "Anual", "Semanal", "Diária", "Por hora"]
-            default: "Mensal"
-            required: false
-          - { name: "salario_negociavel", label: "Salário Negociável", widget: "boolean", default: false, required: false }
-          - { name: "beneficios", label: "Benefícios", widget: "text", required: false, hint: "Ex: Seguro de saúde, subsídio de transporte, formação..." }
+      # ── 6. Principais Responsabilidades ─────────────────────
+      - { name: "responsabilidades", label: "Principais Responsabilidades", widget: "markdown", required: true }
 
-      # ── 4. Perfil da Vaga ───────────────────────────────────
-      - name: "perfil"
-        label: "4. Perfil da Vaga"
-        widget: "object"
-        collapsed: false
-        fields:
-          - { name: "descricao", label: "Descrição", widget: "markdown" }
-          - { name: "responsabilidades", label: "Responsabilidades", widget: "markdown", required: false }
-          - { name: "requisitos_obrigatorios", label: "Requisitos Obrigatórios", widget: "markdown" }
-          - { name: "requisitos_desejaveis", label: "Requisitos Desejáveis", widget: "markdown", required: false }
-          - { name: "escolaridade", label: "Escolaridade", widget: "string", required: false }
-          - { name: "experiencia", label: "Experiência", widget: "string", required: false }
-          - { name: "competencias_tecnicas", label: "Competências Técnicas", widget: "text", required: false }
-          - { name: "competencias_comportamentais", label: "Competências Comportamentais", widget: "text", required: false }
-          - { name: "idiomas", label: "Idiomas", widget: "string", required: false }
-          - { name: "certificacoes", label: "Certificações", widget: "string", required: false }
+      # ── 7. Requisitos ────────────────────────────────────────
+      - { name: "requisitos", label: "Requisitos", widget: "markdown", required: true }
 
-      # ── 5. Candidatura ──────────────────────────────────────
+      # ── 8. Como Candidatar-se ───────────────────────────────
+      # Widget customizado (registado em admin/index.html) que guarda
+      # { email: "...", link: "..." } e IMPEDE a publicação se os dois
+      # estiverem vazios. Ver admin/index.html para o código do widget.
       - name: "candidatura"
-        label: "5. Candidatura"
-        widget: "object"
-        collapsed: true
-        fields:
-          - { name: "documentos_exigidos", label: "Documentos Exigidos", widget: "text", required: false }
-          - { name: "como_candidatar", label: "Como Candidatar-se", widget: "text", required: false }
-          - { name: "contacto", label: "Contacto", widget: "string", required: false }
-          - name: "link_candidatura"
-            label: "E-mail ou Link para Candidatura"
-            widget: "string"
-            hint: "Use um e-mail no formato mailto:exemplo@empresa.co.mz ou um link completo (https://...)."
-          - { name: "observacoes", label: "Observações", widget: "text", required: false }
+        label: "Como Candidatar-se"
+        widget: "candidatura"
+        required: true
+        hint: "Preenche pelo menos um dos dois campos (e-mail ou link). Não é possível publicar se ambos ficarem vazios."
 
-      # ── 6. SEO ───────────────────────────────────────────────
-      - name: "seo"
-        label: "6. SEO"
-        widget: "object"
-        collapsed: true
-        fields:
-          - name: "categoria"
-            label: "Categoria"
-            widget: "select"
-            options: ["Informática", "Contabilidade e Finanças", "Logística e Transportes", "Recursos Humanos", "Vendas e Marketing", "Saúde", "Educação", "Construção", "Mineração e Petróleo e Gás", "Agricultura", "Administração", "Outra"]
-          - { name: "palavras_chave", label: "Palavras-chave", widget: "string", required: false, hint: "Separadas por vírgula" }
-          - { name: "url_amigavel", label: "URL Amigável", widget: "string", required: false, hint: "Deixe em branco para ser gerada automaticamente" }
+      # ── 9. Data Limite para Candidatura ─────────────────────
+      - name: "data_limite"
+        label: "Data Limite para Candidatura"
+        widget: "datetime"
+        required: true
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: false
+        hint: "Apenas a data (sem hora)."
+
+      # ── Campos técnicos gerados automaticamente ─────────────
+      # Não aparecem no formulário do administrador. Existem para não
+      # quebrar o site caso scripts/gerar-site.js ainda dependa deles
+      # (ex.: ordenar por data de publicação, filtrar vagas "Abertas").
+      # Se confirmares que gerar-site.js não usa mais estes campos,
+      # podes removê-los sem problema.
+      - { name: "data_publicacao", label: "Data de Publicação (automático)", widget: "hidden", default: "{{now}}" }
+      - { name: "estado_vaga", label: "Estado da Vaga (automático)", widget: "hidden", default: "Aberta" }
+      - { name: "destaque", label: "Vaga em Destaque (automático)", widget: "hidden", default: false }
 
 # NOTA: a colecção "Páginas Institucionais" (edição de sobre.html/servicos.html
 # inteiros por um único campo markdown) foi removida nesta ronda — estes
