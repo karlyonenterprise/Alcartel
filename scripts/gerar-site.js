@@ -270,20 +270,57 @@ function metaDescricaoVaga(v) {
   return `Vaga de ${v.titulo} em ${local}. ${v.empresa} está a contratar. Candidate-se já na Alcartel.`;
 }
 
-// ── Botão "Partilhar Vaga" + painel de recurso (WhatsApp, Facebook,
-//    LinkedIn, X, Telegram, Copiar Link), usado quando a Web Share API
-//    não está disponível no navegador. Os dados vêm em atributos
-//    data-* para scripts/vaga-share.js montar os links sem precisar de
-//    mais nenhuma configuração — funciona automaticamente para qualquer
-//    vaga nova publicada no Decap CMS. ─────────────────────────────────
+// ── Ícones de partilha social (sempre visíveis, um por rede) para
+//    WhatsApp, Facebook, LinkedIn, X e Telegram, mais um botão de
+//    "Copiar Link". Gerado automaticamente para qualquer vaga nova
+//    publicada no Decap CMS — não depende de configuração adicional. ──
 function blocoPartilha(v, url) {
   const local = textoLocal(v) || v.pais || "Moçambique";
   const textoPartilha = `Vaga de ${v.titulo} em ${local} — ${v.empresa}. Candidate-se na Alcartel.`;
-  return `<div class="vaga-share" data-titulo="${escapeHtml(`${v.titulo} — ${v.empresa}`)}" data-url="${escapeHtml(url)}" data-texto="${escapeHtml(textoPartilha)}">
-      <button type="button" class="btn btn--outline vaga-share__btn" aria-haspopup="true" aria-expanded="false">
-        <span aria-hidden="true">↗</span> Partilhar Vaga
+  const urlCod = encodeURIComponent(url);
+  const textoCod = encodeURIComponent(textoPartilha);
+  const tituloCod = encodeURIComponent(`${v.titulo} — ${v.empresa}`);
+
+  const redes = [
+    {
+      nome: "WhatsApp", classe: "whatsapp",
+      href: `https://wa.me/?text=${textoCod}%20${urlCod}`,
+      svg: '<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.06 1.6 5.8L2 22l4.42-1.16a9.87 9.87 0 0 0 5.62 1.75h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.78 14.16c-.24.68-1.4 1.3-1.93 1.33-.5.03-1 .22-3.36-.7-2.83-1.12-4.65-4-4.78-4.19-.14-.19-1.15-1.53-1.15-2.92s.73-2.07 1-2.35c.26-.28.56-.35.75-.35h.53c.17 0 .4-.03.62.47.24.55.83 1.94.9 2.08.08.14.13.31.02.5-.1.19-.15.31-.28.48-.14.17-.3.38-.42.51-.14.15-.29.31-.13.6.17.3.75 1.24 1.62 2.01 1.11 1 2.04 1.31 2.34 1.46.3.14.47.11.64-.08.17-.19.73-.85.93-1.14.19-.29.38-.24.64-.14.26.09 1.66.78 1.94.92.28.14.47.21.53.33.07.14.07.83-.17 1.51z"/>'
+    },
+    {
+      nome: "Facebook", classe: "facebook",
+      href: `https://www.facebook.com/sharer/sharer.php?u=${urlCod}`,
+      svg: '<path d="M13.5 22v-8.5h2.85l.43-3.31H13.5V8.06c0-.96.27-1.61 1.64-1.61h1.75V3.5C16.55 3.44 15.5 3.33 14.28 3.33c-2.45 0-4.13 1.5-4.13 4.24v2.62H7.28v3.31h2.87V22h3.35z"/>'
+    },
+    {
+      nome: "LinkedIn", classe: "linkedin",
+      href: `https://www.linkedin.com/sharing/share-offsite/?url=${urlCod}`,
+      svg: '<path d="M6.94 8.5H3.56V21h3.38V8.5zM5.25 3a1.95 1.95 0 1 0 0 3.9 1.95 1.95 0 0 0 0-3.9zM21 21h-3.37v-6.3c0-1.5-.03-3.44-2.1-3.44-2.1 0-2.42 1.64-2.42 3.33V21H9.74V8.5h3.24v1.7h.05c.45-.85 1.55-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.19V21z"/>'
+    },
+    {
+      nome: "X (Twitter)", classe: "x",
+      href: `https://twitter.com/intent/tweet?text=${tituloCod}&url=${urlCod}`,
+      svg: '<path d="M18.9 3H21l-6.35 7.27L22.1 21h-6.02l-4.7-6.14L5.9 21H3.8l6.8-7.78L2 3h6.17l4.25 5.6L18.9 3zm-1.06 16.2h1.66L7.3 4.7H5.5l12.34 14.5z"/>'
+    },
+    {
+      nome: "Telegram", classe: "telegram",
+      href: `https://t.me/share/url?url=${urlCod}&text=${tituloCod}`,
+      svg: '<path d="M21.94 4.36 18.6 20.5c-.25 1.13-.9 1.4-1.83.87l-5.06-3.73-2.44 2.35c-.27.27-.5.5-1.02.5l.36-5.14 9.36-8.46c.41-.36-.09-.56-.63-.2L6.65 13.4l-4.96-1.55c-1.08-.34-1.1-1.08.23-1.6l19.4-7.48c.9-.33 1.68.21 1.62 1.6z"/>'
+    }
+  ];
+
+  const iconesRedes = redes.map(r =>
+    `<a href="${escapeHtml(r.href)}" target="_blank" rel="noopener noreferrer" class="vaga-share__icon vaga-share__icon--${r.classe}" aria-label="Partilhar no ${r.nome}" title="Partilhar no ${r.nome}"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">${r.svg}</svg></a>`
+  ).join("\n      ");
+
+  return `<div class="vaga-share" data-url="${escapeHtml(url)}">
+      <span class="vaga-share__label">Partilhar esta vaga</span>
+      <div class="vaga-share__icons">
+      ${iconesRedes}
+      <button type="button" class="vaga-share__icon vaga-share__icon--copiar" data-copiar aria-label="Copiar link da vaga" title="Copiar link">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10.6 13.4a4 4 0 0 0 5.6 0l3-3a4 4 0 1 0-5.6-5.6l-1.5 1.5M13.4 10.6a4 4 0 0 0-5.6 0l-3 3a4 4 0 1 0 5.6 5.6l1.5-1.5"/></svg>
       </button>
-      <div class="vaga-share__menu" role="menu" hidden></div>
+      </div>
     </div>`;
 }
 

@@ -21,7 +21,7 @@
   <meta name="language" content="Portuguese">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="googlebot" content="index, follow">
-  <meta name="theme-color" content="#0e2818">
+  <meta name="theme-color" content="#ffffff">
   <meta name="msapplication-navbutton-color" content="#0e2818">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -75,6 +75,7 @@
   <!-- ── PWA MANIFEST ── -->
   <link rel="manifest" href="/manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
+  <script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/sw.js"); }</script>
 
   <!-- ── PERFORMANCE ── -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -472,6 +473,11 @@
   <div class="footer-divider"></div>
   <p>© 2025 <a href="/" aria-label="Alcartel">Alcartel</a> — O Motor de Empregos de Moçambique</p>
   <p style="margin-top:6px;">Uma iniciativa da <strong>Karlyon Enterprise S.A.</strong> · Beira, Moçambique</p>
+  <nav class="footer-links" aria-label="Ligações do rodapé">
+    <a href="/privacidade.html" title="Política de Privacidade">Privacidade</a>
+    <a href="/termos.html" title="Termos de Uso">Termos de Uso</a>
+    <a href="/cookies.html" title="Política de Cookies">Cookies</a>
+  </nav>
 </footer>
 
 <a
@@ -506,5 +512,6 @@
 <script src="/scripts/vaga-modal.js" defer></script>
 <script src="/scripts/vaga-pesquisa.js" defer></script>
 <!-- VAGA_MODAL:END -->
+<script src="/js/install-prompt.js"></script>
 </body>
 </html>
