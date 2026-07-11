@@ -1,1 +1,44 @@
+name: Notificar novas vagas (Decap → Apps Script)
 
+# Corre sempre que o Decap CMS (ou qualquer commit) alterar ficheiros
+# dentro de content/vagas/. Detecta apenas os ficheiros NOVOS (adicionados)
+# e envia cada um para o Web App do Google Apps Script.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/vagas/**.json'
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detectar vagas novas (ficheiros adicionados)
+        id: novas
+        run: |
+          FICHEIROS=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- content/vagas/*.json || true)
+          echo "ficheiros<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$FICHEIROS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Enviar cada vaga nova para o Apps Script
+        if: steps.novas.outputs.ficheiros != ''
+        env:
+          APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+          WEBHOOK_TOKEN: ${{ secrets.APPS_SCRIPT_WEBHOOK_TOKEN }}
+        run: |
+          echo "${{ steps.novas.outputs.ficheiros }}" | while IFS= read -r ficheiro; do
+            [ -z "$ficheiro" ] && continue
+            echo "A notificar: $ficheiro"
+            VAGA_JSON=$(cat "$ficheiro")
+            PAYLOAD=$(jq -n --arg token "$WEBHOOK_TOKEN" --argjson vaga "$VAGA_JSON" \
+              '{acao: "notificar_vaga", token: $token, vaga: $vaga}')
+            curl -s -X POST "$APPS_SCRIPT_URL" \
+              -H "Content-Type: text/plain;charset=utf-8" \
+              -d "$PAYLOAD"
+          done
