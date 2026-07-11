@@ -119,21 +119,26 @@ collections:
         label: "Categoria"
         widget: "select"
         required: true
+        # NOTA: estes valores têm de corresponder exactamente às categorias já
+        # em uso em content/vagas/*.json (ver seo.categoria / categoria), porque
+        # scripts/gerar-site.js usa slugify(categoria) para o nome do ficheiro
+        # em /categoria/. Um rótulo diferente aqui geraria um URL novo em vez
+        # de reaproveitar a página /categoria/ já existente e indexada.
         options:
-          - "Administração e Gestão"
+          - "Administração"
           - "Agricultura e Agropecuária"
           - "Atendimento ao Cliente e Vendas"
           - "Comércio e Retalho"
           - "Construção Civil e Engenharia"
           - "Contabilidade e Finanças"
-          - "Educação e Formação"
+          - "Educação"
           - "Hotelaria e Turismo"
+          - "Informática"
           - "Logística e Transportes"
-          - "Marketing e Comunicação"
           - "Mineração e Petróleo e Gás"
           - "Recursos Humanos"
           - "Saúde"
-          - "Tecnologias de Informação"
+          - "Vendas e Marketing"
           - "Outra"
 
       # ── 11. Palavras-chave (SEO) ─────────────────────────────
