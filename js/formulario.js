@@ -4,8 +4,9 @@
      1. Lê os dados preenchidos pelo utilizador
      2. Valida os campos obrigatórios
      3. Envia os dados ao Google Apps Script (que grava no Google Sheets)
-     4. Mostra mensagem de sucesso ou erro
-     5. Limpa o formulário após envio bem-sucedido
+     4. Trata respostas específicas do backend (email duplicado, etc.)
+     5. Mostra mensagem de sucesso ou erro
+     6. Limpa o formulário após envio bem-sucedido
    ══════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -13,7 +14,7 @@
 
   // TODO: substituir pelo URL do Web App publicado no Google Apps Script
   // (Extensões → Apps Script → Implementar → Nova implementação → Aplicação Web)
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyLHqwqeoyUIg2dY-msBJDkZWjCgBLee070mR8dfJa8ajicPBjb39qkWgjpFFSwcseJ/exec';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/SEU_ID_DO_APPS_SCRIPT/exec';
 
   var form = document.getElementById('alerta-form');
   if (!form) return;
@@ -22,8 +23,17 @@
   var btnSubmit = form.querySelector('button[type="submit"]');
   var textoOriginalBtn = btnSubmit ? btnSubmit.textContent : 'Receber Vagas';
 
+  // ── Mapeamento de códigos de erro devolvidos pelo Code.gs ────
+  var MENSAGENS_ERRO = {
+    email_duplicado: 'Este e-mail já está inscrito para receber alertas.',
+    campos_invalidos: 'Foram enviados dados inválidos. Verifique o formulário.',
+    limite_excedido: 'Demasiadas tentativas. Tente novamente dentro de alguns minutos.',
+    erro_interno: 'Ocorreu um erro no servidor. Tente novamente mais tarde.'
+  };
+
   // ── Mensagens de feedback ────────────────────────────────────
   function mostrarMensagem(texto, tipo) {
+    if (!msgEl) return;
     var estilosBase = 'display:block;margin-top:12px;padding:12px 16px;border-radius:8px;' +
       'font-size:0.9rem;font-weight:600;text-align:center;';
     var estilosTipo = tipo === 'erro'
@@ -43,17 +53,22 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
   }
 
+  function valorCampo(seletor) {
+    var el = form.querySelector(seletor);
+    return el ? String(el.value || '').trim() : '';
+  }
+
   function obterDadosFormulario() {
     return {
-      nome: (form.querySelector('#alerta-nome') || {}).value.trim(),
-      email: (form.querySelector('#alerta-email') || {}).value.trim(),
-      provincia: (form.querySelector('#alerta-provincia') || {}).value,
-      cargo: (form.querySelector('#alerta-cargo') || {}).value.trim()
+      nome: valorCampo('#alerta-nome'),
+      email: valorCampo('#alerta-email'),
+      provincia: valorCampo('#alerta-provincia'),
+      cargo: valorCampo('#alerta-cargo')
     };
   }
 
   function validarCampos(dados) {
-    if (!dados.nome) return 'Por favor, indique o seu nome completo.';
+    if (!dados.nome || dados.nome.length < 2) return 'Por favor, indique o seu nome completo.';
     if (!dados.email || !validarEmail(dados.email)) return 'Por favor, indique um e-mail válido.';
     if (!dados.provincia) return 'Por favor, seleccione a sua província.';
     if (!dados.cargo) return 'Por favor, indique o cargo desejado.';
@@ -77,8 +92,23 @@
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(dados)
     }).then(function (resposta) {
+      if (!resposta.ok) throw new Error('HTTP ' + resposta.status);
       return resposta.json();
     });
+  }
+
+  function tratarResultado(resultado) {
+    definirEstadoEnvio(false);
+
+    if (resultado && resultado.sucesso) {
+      mostrarMensagem('✅ Registo efectuado! Vai receber as próximas vagas para esta área.', 'sucesso');
+      form.reset();
+      return;
+    }
+
+    var codigo = resultado && resultado.erro;
+    var texto = (codigo && MENSAGENS_ERRO[codigo]) || 'Não foi possível concluir o registo. Tente novamente.';
+    mostrarMensagem('⚠️ ' + texto, 'erro');
   }
 
   form.addEventListener('submit', function (e) {
@@ -103,15 +133,7 @@
     definirEstadoEnvio(true);
 
     enviarParaAppsScript(dados)
-      .then(function (resultado) {
-        definirEstadoEnvio(false);
-        if (resultado && resultado.sucesso) {
-          mostrarMensagem('✅ Registo efectuado! Vai receber as próximas vagas para esta área.', 'sucesso');
-          form.reset();
-        } else {
-          mostrarMensagem('⚠️ Não foi possível concluir o registo. Tente novamente.', 'erro');
-        }
-      })
+      .then(tratarResultado)
       .catch(function (err) {
         definirEstadoEnvio(false);
         console.error('[formulario.js] Erro ao enviar formulário:', err);
