@@ -110,6 +110,44 @@ collections:
         picker_utc: false
         hint: "Apenas a data (sem hora)."
 
+      # ── 10. Categoria ────────────────────────────────────────
+      # Define em que página /categoria/ a vaga aparece e a etiqueta
+      # mostrada no cartão e na página da vaga. gerar-site.js já lê este
+      # campo (dados.categoria); sem ele, todas as vagas caíam em "Outra".
+      # Ajusta a lista de opções conforme os sectores da Karlyon.
+      - name: "categoria"
+        label: "Categoria"
+        widget: "select"
+        required: true
+        options:
+          - "Administração e Gestão"
+          - "Agricultura e Agropecuária"
+          - "Atendimento ao Cliente e Vendas"
+          - "Comércio e Retalho"
+          - "Construção Civil e Engenharia"
+          - "Contabilidade e Finanças"
+          - "Educação e Formação"
+          - "Hotelaria e Turismo"
+          - "Logística e Transportes"
+          - "Marketing e Comunicação"
+          - "Mineração e Petróleo e Gás"
+          - "Recursos Humanos"
+          - "Saúde"
+          - "Tecnologias de Informação"
+          - "Outra"
+
+      # ── 11. Palavras-chave (SEO) ─────────────────────────────
+      # Vão para a tag <meta name="keywords"> e aparecem como etiquetas
+      # visíveis no fim da página da vaga — ajudam o Google a perceber do
+      # que a vaga trata e reforçam a relevância para pesquisas locais
+      # (ex.: "emprego beira", "vagas sofala"). gerar-site.js já lê este
+      # campo (dados.palavras_chave); não é preciso mexer no script.
+      - name: "palavras_chave"
+        label: "Palavras-chave (SEO)"
+        widget: "string"
+        required: false
+        hint: "Separadas por vírgula. Ex: emprego beira, técnico manutenção, vagas sofala, karlyon"
+
       # ── Campos técnicos gerados automaticamente ─────────────
       # Não aparecem no formulário do administrador. Existem para não
       # quebrar o site caso scripts/gerar-site.js ainda dependa deles
