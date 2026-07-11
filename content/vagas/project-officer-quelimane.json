@@ -1,56 +1,19 @@
 {
-  "cargo": "project-officer",
+  "titulo": "Project Officer",
+  "empresa": "COSV",
   "imagem_empresa": "",
-  "destaque": false,
-  "informacoes_gerais": {
-    "codigo_vaga": "ALC-2026-006",
-    "titulo": "Project Officer",
-    "empresa": "COSV",
-    "area": "Gestão de Projectos",
-    "departamento": "Cooperação Internacional",
-    "numero_vagas": 1,
-    "data_publicacao": "2026-05-20",
-    "data_validade": "",
-    "estado_vaga": "Aberta"
-  },
-  "local_contrato": {
-    "pais": "Moçambique",
-    "provincia": "Zambézia",
-    "cidade": "Quelimane",
-    "regime_trabalho": "Presencial",
-    "tipo_contrato": "Tempo inteiro",
-    "horario_trabalho": ""
-  },
-  "remuneracao": {
-    "salario_min": null,
-    "salario_max": null,
-    "moeda": "MZN",
-    "periodicidade": "Mensal",
-    "salario_negociavel": false,
-    "beneficios": ""
-  },
-  "perfil": {
-    "descricao": "A COSV (Coordinamento delle Organizzazioni per il Servizio Volontario) está a recrutar um(a) Project Officer para coordenar actividades de um dos seus projectos em Quelimane, Zambézia.",
-    "responsabilidades": "Coordenação de actividades de um projecto de cooperação internacional na província da Zambézia.",
-    "requisitos_obrigatorios": "Experiência em gestão/coordenação de projectos, preferencialmente no sector de cooperação internacional.",
-    "requisitos_desejaveis": "",
-    "escolaridade": "",
-    "experiencia": "Experiência prévia em gestão/coordenação de projectos, preferencialmente no sector de cooperação internacional",
-    "competencias_tecnicas": "",
-    "competencias_comportamentais": "",
-    "idiomas": "Português e Italiano ou Inglês",
-    "certificacoes": ""
-  },
+  "local": "Quelimane, Zambézia",
+  "tipo_contrato": "Tempo Inteiro",
+  "responsabilidades": "A COSV (Coordinamento delle Organizzazioni per il Servizio Volontario) está a recrutar um(a) Project Officer para coordenar actividades de um dos seus projectos em Quelimane, Zambézia.\n\nCoordenação de actividades de um projecto de cooperação internacional na província da Zambézia.",
+  "requisitos": "Experiência em gestão/coordenação de projectos, preferencialmente no sector de cooperação internacional.\n\n- **Experiência:** Experiência prévia em gestão/coordenação de projectos, preferencialmente no sector de cooperação internacional\n- **Idiomas:** Português e Italiano ou Inglês",
   "candidatura": {
-    "documentos_exigidos": "",
-    "como_candidatar": "Consulte o anúncio original para os requisitos completos e o processo de candidatura.",
-    "contacto": "",
-    "link_candidatura": "https://emprego.mmo.co.mz/local/zambezia/",
-    "observacoes": ""
+    "email": "",
+    "link": "https://emprego.mmo.co.mz/local/zambezia/"
   },
-  "seo": {
-    "categoria": "Administração",
-    "palavras_chave": "project officer, cosv, emprego quelimane, emprego zambézia, ong internacional",
-    "url_amigavel": ""
-  }
+  "data_limite": "",
+  "categoria": "Administração",
+  "palavras_chave": "project officer, cosv, emprego quelimane, emprego zambézia, ong internacional",
+  "data_publicacao": "2026-05-20",
+  "estado_vaga": "Aberta",
+  "destaque": false
 }

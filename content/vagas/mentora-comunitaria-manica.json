@@ -1,56 +1,19 @@
 {
-  "cargo": "mentora-comunitaria",
+  "titulo": "Mentora Comunitária — Programa Eu Sou Capaz",
+  "empresa": "Associação H2n",
   "imagem_empresa": "",
-  "destaque": true,
-  "informacoes_gerais": {
-    "codigo_vaga": "ALC-2026-004",
-    "titulo": "Mentora Comunitária — Programa Eu Sou Capaz",
-    "empresa": "Associação H2n",
-    "area": "Educação Comunitária",
-    "departamento": "Programa Eu Sou Capaz",
-    "numero_vagas": 77,
-    "data_publicacao": "2026-05-01",
-    "data_validade": "",
-    "estado_vaga": "Aberta"
-  },
-  "local_contrato": {
-    "pais": "Moçambique",
-    "provincia": "Manica",
-    "cidade": "Chimoio",
-    "regime_trabalho": "Presencial",
-    "tipo_contrato": "Tempo inteiro",
-    "horario_trabalho": ""
-  },
-  "remuneracao": {
-    "salario_min": null,
-    "salario_max": null,
-    "moeda": "MZN",
-    "periodicidade": "Mensal",
-    "salario_negociavel": false,
-    "beneficios": ""
-  },
-  "perfil": {
-    "descricao": "A Associação H2n procura 77 Mentoras Comunitárias para o programa \"Eu Sou Capaz\", financiado pelo Banco Mundial através do Instituto Nacional da Juventude, com actuação em 812 escolas da província de Manica. O programa visa o empoderamento e a retenção da rapariga na escola.",
-    "responsabilidades": "Acompanhamento e mentoria de raparigas em idade escolar num distrito da província de Manica, no âmbito do programa \"Eu Sou Capaz\".",
-    "requisitos_obrigatorios": "Sem histórico de fraude ou corrupção. Disponibilidade para actuar num distrito da província de Manica.",
-    "requisitos_desejaveis": "",
-    "escolaridade": "",
-    "experiencia": "",
-    "competencias_tecnicas": "",
-    "competencias_comportamentais": "Empatia, boa capacidade de comunicação e trabalho comunitário",
-    "idiomas": "Português",
-    "certificacoes": ""
-  },
+  "local": "Chimoio, Manica",
+  "tipo_contrato": "Tempo Inteiro",
+  "responsabilidades": "A Associação H2n procura 77 Mentoras Comunitárias para o programa \"Eu Sou Capaz\", financiado pelo Banco Mundial através do Instituto Nacional da Juventude, com actuação em 812 escolas da província de Manica. O programa visa o empoderamento e a retenção da rapariga na escola.\n\nAcompanhamento e mentoria de raparigas em idade escolar num distrito da província de Manica, no âmbito do programa \"Eu Sou Capaz\".",
+  "requisitos": "Sem histórico de fraude ou corrupção. Disponibilidade para actuar num distrito da província de Manica.\n\n- **Competências comportamentais:** Empatia, boa capacidade de comunicação e trabalho comunitário\n- **Idiomas:** Português",
   "candidatura": {
-    "documentos_exigidos": "",
-    "como_candidatar": "Enviar candidatura por e-mail.",
-    "contacto": "recrutamento@icrhm.org.mz",
-    "link_candidatura": "mailto:recrutamento@icrhm.org.mz",
-    "observacoes": ""
+    "email": "recrutamento@icrhm.org.mz",
+    "link": ""
   },
-  "seo": {
-    "categoria": "Educação",
-    "palavras_chave": "mentora comunitária, eu sou capaz, emprego manica, emprego chimoio, associação h2n",
-    "url_amigavel": ""
-  }
+  "data_limite": "",
+  "categoria": "Educação",
+  "palavras_chave": "mentora comunitária, eu sou capaz, emprego manica, emprego chimoio, associação h2n",
+  "data_publicacao": "2026-05-01",
+  "estado_vaga": "Aberta",
+  "destaque": true
 }

@@ -1,56 +1,19 @@
 {
-  "cargo": "gestor-vendas",
+  "titulo": "Gestor de Vendas",
+  "empresa": "Connect Plus SA",
   "imagem_empresa": "",
-  "destaque": false,
-  "informacoes_gerais": {
-    "codigo_vaga": "ALC-2026-009",
-    "titulo": "Gestor de Vendas",
-    "empresa": "Connect Plus SA",
-    "area": "Comercial",
-    "departamento": "Vendas",
-    "numero_vagas": 1,
-    "data_publicacao": "2026-06-15",
-    "data_validade": "",
-    "estado_vaga": "Aberta"
-  },
-  "local_contrato": {
-    "pais": "Moçambique",
-    "provincia": "Sofala",
-    "cidade": "Beira",
-    "regime_trabalho": "Presencial",
-    "tipo_contrato": "Tempo inteiro",
-    "horario_trabalho": ""
-  },
-  "remuneracao": {
-    "salario_min": null,
-    "salario_max": null,
-    "moeda": "MZN",
-    "periodicidade": "Mensal",
-    "salario_negociavel": false,
-    "beneficios": ""
-  },
-  "perfil": {
-    "descricao": "A Connect Plus SA está a recrutar Gestores de Vendas para a Cidade da Beira, para reforçar a equipa comercial de um dos seus clientes.",
-    "responsabilidades": "",
-    "requisitos_obrigatorios": "Experiência em gestão de equipas comerciais e vendas.",
-    "requisitos_desejaveis": "",
-    "escolaridade": "",
-    "experiencia": "Experiência em gestão de equipas comerciais e vendas",
-    "competencias_tecnicas": "",
-    "competencias_comportamentais": "",
-    "idiomas": "Português",
-    "certificacoes": ""
-  },
+  "local": "Beira, Sofala",
+  "tipo_contrato": "Tempo Inteiro",
+  "responsabilidades": "A Connect Plus SA está a recrutar Gestores de Vendas para a Cidade da Beira, para reforçar a equipa comercial de um dos seus clientes.",
+  "requisitos": "Experiência em gestão de equipas comerciais e vendas.\n\n- **Experiência:** Experiência em gestão de equipas comerciais e vendas\n- **Idiomas:** Português",
   "candidatura": {
-    "documentos_exigidos": "",
-    "como_candidatar": "Consulte o anúncio original para os requisitos completos e o processo de candidatura.",
-    "contacto": "",
-    "link_candidatura": "https://emprego.mmo.co.mz/",
-    "observacoes": ""
+    "email": "",
+    "link": "https://emprego.mmo.co.mz/"
   },
-  "seo": {
-    "categoria": "Vendas e Marketing",
-    "palavras_chave": "gestor de vendas, emprego beira, emprego sofala, connect plus sa",
-    "url_amigavel": ""
-  }
+  "data_limite": "",
+  "categoria": "Vendas e Marketing",
+  "palavras_chave": "gestor de vendas, emprego beira, emprego sofala, connect plus sa",
+  "data_publicacao": "2026-06-15",
+  "estado_vaga": "Aberta",
+  "destaque": false
 }

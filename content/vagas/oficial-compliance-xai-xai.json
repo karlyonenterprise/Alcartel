@@ -1,56 +1,19 @@
 {
-  "cargo": "oficial-compliance",
+  "titulo": "Oficial de Compliance de Resposta a Emergências",
+  "empresa": "Save the Children Internacional",
   "imagem_empresa": "",
-  "destaque": false,
-  "informacoes_gerais": {
-    "codigo_vaga": "ALC-2026-001",
-    "titulo": "Oficial de Compliance de Resposta a Emergências",
-    "empresa": "Save the Children Internacional",
-    "area": "Administração e Compliance",
-    "departamento": "Operações de Emergência",
-    "numero_vagas": 1,
-    "data_publicacao": "2026-04-20",
-    "data_validade": "",
-    "estado_vaga": "Aberta"
-  },
-  "local_contrato": {
-    "pais": "Moçambique",
-    "provincia": "Gaza",
-    "cidade": "Xai-Xai",
-    "regime_trabalho": "Presencial",
-    "tipo_contrato": "Tempo inteiro",
-    "horario_trabalho": ""
-  },
-  "remuneracao": {
-    "salario_min": null,
-    "salario_max": null,
-    "moeda": "MZN",
-    "periodicidade": "Mensal",
-    "salario_negociavel": false,
-    "beneficios": ""
-  },
-  "perfil": {
-    "descricao": "A Save the Children Internacional, organização humanitária dedicada ao bem-estar da criança, procura um(a) Oficial de Compliance para apoiar as operações de resposta a emergências na província de Gaza.",
-    "responsabilidades": "",
-    "requisitos_obrigatorios": "Experiência em compliance ou gestão administrativa de projectos humanitários.",
-    "requisitos_desejaveis": "",
-    "escolaridade": "",
-    "experiencia": "Experiência prévia em compliance ou gestão administrativa de projectos humanitários",
-    "competencias_tecnicas": "",
-    "competencias_comportamentais": "",
-    "idiomas": "Português e Inglês",
-    "certificacoes": ""
-  },
+  "local": "Xai-Xai, Gaza",
+  "tipo_contrato": "Tempo Inteiro",
+  "responsabilidades": "A Save the Children Internacional, organização humanitária dedicada ao bem-estar da criança, procura um(a) Oficial de Compliance para apoiar as operações de resposta a emergências na província de Gaza.",
+  "requisitos": "Experiência em compliance ou gestão administrativa de projectos humanitários.\n\n- **Experiência:** Experiência prévia em compliance ou gestão administrativa de projectos humanitários\n- **Idiomas:** Português e Inglês",
   "candidatura": {
-    "documentos_exigidos": "",
-    "como_candidatar": "Consulte o anúncio original para os requisitos completos e o processo de candidatura.",
-    "contacto": "",
-    "link_candidatura": "https://noticias.mmo.co.mz/2026/04/vagas-de-emprego-do-dia-20-de-abril-de-2026.html",
-    "observacoes": ""
+    "email": "",
+    "link": "https://noticias.mmo.co.mz/2026/04/vagas-de-emprego-do-dia-20-de-abril-de-2026.html"
   },
-  "seo": {
-    "categoria": "Administração",
-    "palavras_chave": "oficial de compliance, save the children, emprego xai-xai, emprego gaza, ong moçambique",
-    "url_amigavel": ""
-  }
+  "data_limite": "",
+  "categoria": "Administração",
+  "palavras_chave": "oficial de compliance, save the children, emprego xai-xai, emprego gaza, ong moçambique",
+  "data_publicacao": "2026-04-20",
+  "estado_vaga": "Aberta",
+  "destaque": false
 }

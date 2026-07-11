@@ -1,56 +1,19 @@
 {
-  "cargo": "inquiridor-campo",
+  "titulo": "Inquiridor(a) de Campo",
+  "empresa": "Malaria Consortium",
   "imagem_empresa": "",
-  "destaque": false,
-  "informacoes_gerais": {
-    "codigo_vaga": "ALC-2026-008",
-    "titulo": "Inquiridor(a) de Campo",
-    "empresa": "Malaria Consortium",
-    "area": "Saúde Pública",
-    "departamento": "Investigação e Recolha de Dados",
-    "numero_vagas": 1,
-    "data_publicacao": "2026-06-01",
-    "data_validade": "",
-    "estado_vaga": "Aberta"
-  },
-  "local_contrato": {
-    "pais": "Moçambique",
-    "provincia": "Inhambane",
-    "cidade": "Maxixe",
-    "regime_trabalho": "Presencial",
-    "tipo_contrato": "Temporário",
-    "horario_trabalho": ""
-  },
-  "remuneracao": {
-    "salario_min": null,
-    "salario_max": null,
-    "moeda": "MZN",
-    "periodicidade": "Mensal",
-    "salario_negociavel": false,
-    "beneficios": ""
-  },
-  "perfil": {
-    "descricao": "A Malaria Consortium, uma das principais organizações mundiais dedicadas ao combate à malária, procura inquiridores(as) para recolha de dados nos distritos de Maxixe e Massinga, em Inhambane.",
-    "responsabilidades": "Recolha de dados de campo nos distritos de Maxixe e Massinga.",
-    "requisitos_obrigatorios": "Experiência em recolha de dados de campo. Disponibilidade para deslocações aos distritos indicados.",
-    "requisitos_desejaveis": "",
-    "escolaridade": "",
-    "experiencia": "Experiência em recolha de dados de campo",
-    "competencias_tecnicas": "",
-    "competencias_comportamentais": "Disponibilidade para deslocações e trabalho de campo",
-    "idiomas": "Português",
-    "certificacoes": ""
-  },
+  "local": "Maxixe, Inhambane",
+  "tipo_contrato": "Temporário",
+  "responsabilidades": "A Malaria Consortium, uma das principais organizações mundiais dedicadas ao combate à malária, procura inquiridores(as) para recolha de dados nos distritos de Maxixe e Massinga, em Inhambane.\n\nRecolha de dados de campo nos distritos de Maxixe e Massinga.",
+  "requisitos": "Experiência em recolha de dados de campo. Disponibilidade para deslocações aos distritos indicados.\n\n- **Experiência:** Experiência em recolha de dados de campo\n- **Competências comportamentais:** Disponibilidade para deslocações e trabalho de campo\n- **Idiomas:** Português",
   "candidatura": {
-    "documentos_exigidos": "",
-    "como_candidatar": "Consulte o anúncio original para os requisitos completos e o processo de candidatura.",
-    "contacto": "",
-    "link_candidatura": "https://emprego.mmo.co.mz/local/inhambane/",
-    "observacoes": ""
+    "email": "",
+    "link": "https://emprego.mmo.co.mz/local/inhambane/"
   },
-  "seo": {
-    "categoria": "Saúde",
-    "palavras_chave": "inquiridor de campo, malaria consortium, emprego maxixe, emprego inhambane",
-    "url_amigavel": ""
-  }
+  "data_limite": "",
+  "categoria": "Saúde",
+  "palavras_chave": "inquiridor de campo, malaria consortium, emprego maxixe, emprego inhambane",
+  "data_publicacao": "2026-06-01",
+  "estado_vaga": "Aberta",
+  "destaque": false
 }

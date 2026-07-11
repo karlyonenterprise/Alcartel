@@ -1,56 +1,19 @@
 {
-  "cargo": "consultor-vendas-seguros",
+  "titulo": "Consultor de Vendas da Banca de Seguros",
+  "empresa": "Global Alliance Seguros",
   "imagem_empresa": "",
-  "destaque": false,
-  "informacoes_gerais": {
-    "codigo_vaga": "ALC-2026-005",
-    "titulo": "Consultor de Vendas da Banca de Seguros",
-    "empresa": "Global Alliance Seguros",
-    "area": "Comercial",
-    "departamento": "Vendas",
-    "numero_vagas": 1,
-    "data_publicacao": "2026-05-15",
-    "data_validade": "",
-    "estado_vaga": "Aberta"
-  },
-  "local_contrato": {
-    "pais": "Moçambique",
-    "provincia": "Tete",
-    "cidade": "Tete",
-    "regime_trabalho": "Presencial",
-    "tipo_contrato": "Tempo inteiro",
-    "horario_trabalho": ""
-  },
-  "remuneracao": {
-    "salario_min": null,
-    "salario_max": null,
-    "moeda": "MZN",
-    "periodicidade": "Mensal",
-    "salario_negociavel": false,
-    "beneficios": ""
-  },
-  "perfil": {
-    "descricao": "A Global Alliance Seguros, com sede em Maputo, procura um(a) Consultor(a) de Vendas da Banca de Seguros para trabalhar no escritório de Tete.",
-    "responsabilidades": "",
-    "requisitos_obrigatorios": "Perfil comercial, boa capacidade de comunicação.",
-    "requisitos_desejaveis": "",
-    "escolaridade": "",
-    "experiencia": "",
-    "competencias_tecnicas": "",
-    "competencias_comportamentais": "Perfil comercial e boa capacidade de comunicação",
-    "idiomas": "Português",
-    "certificacoes": ""
-  },
+  "local": "Tete, Tete",
+  "tipo_contrato": "Tempo Inteiro",
+  "responsabilidades": "A Global Alliance Seguros, com sede em Maputo, procura um(a) Consultor(a) de Vendas da Banca de Seguros para trabalhar no escritório de Tete.",
+  "requisitos": "Perfil comercial, boa capacidade de comunicação.\n\n- **Competências comportamentais:** Perfil comercial e boa capacidade de comunicação\n- **Idiomas:** Português",
   "candidatura": {
-    "documentos_exigidos": "",
-    "como_candidatar": "Consulte o anúncio original para os requisitos completos e o processo de candidatura.",
-    "contacto": "",
-    "link_candidatura": "https://emprego.mmo.co.mz/search/tete/",
-    "observacoes": ""
+    "email": "",
+    "link": "https://emprego.mmo.co.mz/search/tete/"
   },
-  "seo": {
-    "categoria": "Vendas e Marketing",
-    "palavras_chave": "consultor de vendas, seguros, emprego tete, global alliance seguros",
-    "url_amigavel": ""
-  }
+  "data_limite": "",
+  "categoria": "Vendas e Marketing",
+  "palavras_chave": "consultor de vendas, seguros, emprego tete, global alliance seguros",
+  "data_publicacao": "2026-05-15",
+  "estado_vaga": "Aberta",
+  "destaque": false
 }
