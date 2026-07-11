@@ -78,6 +78,21 @@ function normalizarVaga(dados) {
   const cand = dados.candidatura || {};
   const seo = dados.seo || {};
 
+  // ── Novo formato (config.yml actual): "local" é uma única string livre
+  //    (ex.: "Beira, Sofala"). Divide-se em cidade/província para continuar
+  //    a alimentar o Schema.org JobPosting e o agrupamento por /cidade/
+  //    sem tocar no resto do script. Formatos antigos com cidade/província
+  //    já separados continuam a ter prioridade quando existirem. ─────────
+  const localTexto = typeof dados.local === "string" ? dados.local : "";
+  const partesLocal = localTexto.split(",").map(s => s.trim()).filter(Boolean);
+
+  // ── Novo formato: "responsabilidades" é hoje o campo único de descrição
+  //    completa da vaga (substitui "descricao"). Só tratamos como descrição
+  //    principal quando não existir nenhum "descricao" antigo (nested ou
+  //    plano) — assim vagas antigas com os dois campos distintos continuam
+  //    a mostrar a secção extra "Responsabilidades" tal como antes. ──────
+  const descricaoAntiga = perfil.descricao || dados.descricao || "";
+
   return {
     // Informações Gerais
     codigo_vaga: ig.codigo_vaga || dados.codigo_vaga || "",
@@ -87,13 +102,14 @@ function normalizarVaga(dados) {
     departamento: ig.departamento || dados.departamento || "",
     numero_vagas: ig.numero_vagas || dados.numero_vagas || 1,
     data_publicacao: ig.data_publicacao || dados.data_publicacao || "",
-    data_validade: ig.data_validade || dados.data_validade || "",
+    data_validade: ig.data_validade || dados.data_validade || dados.data_limite || "",
     estado_vaga: ig.estado_vaga || dados.estado_vaga || "Aberta",
 
     // Local e Contrato
     pais: lc.pais || dados.pais || "Moçambique",
-    provincia: lc.provincia || dados.provincia || "",
-    cidade: lc.cidade || dados.cidade || dados.localidade || "",
+    local: localTexto,
+    provincia: lc.provincia || dados.provincia || partesLocal[1] || partesLocal[0] || "",
+    cidade: lc.cidade || dados.cidade || dados.localidade || partesLocal[0] || "",
     regime_trabalho: lc.regime_trabalho || dados.regime_trabalho || "",
     tipo_contrato: lc.tipo_contrato || dados.tipo_contrato || "",
     horario_trabalho: lc.horario_trabalho || dados.horario_trabalho || "",
@@ -107,8 +123,8 @@ function normalizarVaga(dados) {
     beneficios: rem.beneficios || dados.beneficios || "",
 
     // Perfil da Vaga
-    descricao: perfil.descricao || dados.descricao || "",
-    responsabilidades: perfil.responsabilidades || dados.responsabilidades || "",
+    descricao: descricaoAntiga || dados.responsabilidades || "",
+    responsabilidades: perfil.responsabilidades || (descricaoAntiga ? (dados.responsabilidades || "") : ""),
     requisitos_obrigatorios: perfil.requisitos_obrigatorios || dados.requisitos_obrigatorios || dados.requisitos || "",
     requisitos_desejaveis: perfil.requisitos_desejaveis || dados.requisitos_desejaveis || "",
     escolaridade: perfil.escolaridade || dados.escolaridade || "",
@@ -122,7 +138,12 @@ function normalizarVaga(dados) {
     documentos_exigidos: cand.documentos_exigidos || dados.documentos_exigidos || "",
     como_candidatar: cand.como_candidatar || dados.como_candidatar || "",
     contacto: cand.contacto || dados.contacto || "",
-    link_candidatura: cand.link_candidatura || dados.link_candidatura || "",
+    // Novo formato: candidatura = { email, link } (widget customizado "candidatura").
+    // link_candidatura mantém-se preenchido para compatibilidade com
+    // scripts/vaga-modal.js, que ainda pode ler essa chave.
+    candidatura_email: cand.email || "",
+    candidatura_link: cand.link || dados.link_candidatura || cand.link_candidatura || "",
+    link_candidatura: cand.link || dados.link_candidatura || cand.link_candidatura || "",
     observacoes: cand.observacoes || dados.observacoes || "",
 
     // SEO
@@ -213,7 +234,7 @@ function listaMeta(pares) {
 //    existem, mas nunca deixa vírgulas ou "em" soltos quando a cidade
 //    (campo opcional) não foi preenchida. ──────────────────────────────
 function textoLocal(v) {
-  return [v.cidade, v.provincia].filter(Boolean).join(", ");
+  return v.local || [v.cidade, v.provincia].filter(Boolean).join(", ");
 }
 
 // ── Modelo de página individual de vaga ──────────────────────
@@ -229,7 +250,14 @@ function paginaVaga(v) {
     identifier: { "@type": "PropertyValue", name: "Alcartel", value: v.codigo_vaga || v.slug },
     datePosted: v.data_publicacao,
     validThrough: v.data_validade ? `${v.data_validade}T23:59:59` : undefined,
-    employmentType: v.tipo_contrato === "Tempo inteiro" ? "FULL_TIME" : v.tipo_contrato === "Meio período" ? "PART_TIME" : v.tipo_contrato === "Estágio" ? "INTERN" : v.tipo_contrato === "Freelance" ? "CONTRACTOR" : "TEMPORARY",
+    employmentType: (() => {
+      const t = (v.tipo_contrato || "").toLowerCase();
+      if (t === "tempo inteiro") return "FULL_TIME";
+      if (t === "meio período" || t === "meio periodo") return "PART_TIME";
+      if (t === "estágio" || t === "estagio") return "INTERN";
+      if (t === "freelance" || t === "prestação de serviços" || t === "prestacao de servicos") return "CONTRACTOR";
+      return "TEMPORARY"; // Temporário e restantes casos
+    })(),
     hiringOrganization: { "@type": "Organization", name: v.empresa, logo: v.imagem_empresa ? `${SITE_URL}${v.imagem_empresa}` : `${SITE_URL}/logo.png` },
     jobLocation: {
       "@type": "Place",
@@ -336,7 +364,7 @@ function paginaVaga(v) {
     <h2>Descrição da Vaga</h2>
     <p>${escapeHtml(v.descricao)}</p>
     ${secao("Responsabilidades", v.responsabilidades)}
-    <h2>Requisitos Obrigatórios</h2>
+    <h2>Requisitos</h2>
     <p>${escapeHtml(v.requisitos_obrigatorios)}</p>
     ${secao("Requisitos Desejáveis", v.requisitos_desejaveis)}
 
@@ -349,11 +377,15 @@ function paginaVaga(v) {
 
     ${secao("Documentos Exigidos", v.documentos_exigidos)}
     ${secao("Como Candidatar-se", v.como_candidatar)}
+    ${(v.candidatura_email || v.candidatura_link) ? `<h2>Como Candidatar-se</h2><ul class="vaga-meta-lista">
+      ${v.candidatura_email ? `<li><strong>E-mail:</strong> <a href="mailto:${escapeHtml(v.candidatura_email)}">${escapeHtml(v.candidatura_email)}</a></li>` : ""}
+      ${v.candidatura_link ? `<li><strong>Link:</strong> <a href="${escapeHtml(v.candidatura_link)}" target="_blank" rel="noopener">${escapeHtml(v.candidatura_link)}</a></li>` : ""}
+    </ul>` : ""}
     ${secao("Observações", v.observacoes)}
     ${v.contacto ? `<p class="vaga-pagina-contacto"><strong>Contacto:</strong> ${escapeHtml(v.contacto)}</p>` : ""}
     ${v.palavras_chave ? `<p class="vaga-pagina-tags">${v.palavras_chave.split(",").map(p => p.trim()).filter(Boolean).map(p => `<span class="vaga-card__badge vaga-card__badge--neutro">${escapeHtml(p)}</span>`).join("")}</p>` : ""}
 
-    <p style="margin-top:32px;"><a href="${escapeHtml(v.link_candidatura)}" class="btn">Candidatar-me a Esta Vaga</a></p>
+    ${(v.candidatura_link || v.candidatura_email) ? `<p style="margin-top:32px;"><a href="${v.candidatura_link ? escapeHtml(v.candidatura_link) : `mailto:${escapeHtml(v.candidatura_email)}`}" class="btn">Candidatar-me a Esta Vaga</a></p>` : ""}
   </article>
 </main>
 <footer class="site-footer" role="contentinfo">
@@ -421,7 +453,8 @@ function blocoModal(lista) {
       documentos_exigidos: v.documentos_exigidos || "", como_candidatar: v.como_candidatar || "",
       contacto: v.contacto || "", observacoes: v.observacoes || "", palavras_chave: v.palavras_chave || "",
       data_publicacao: v.data_publicacao, data_validade: v.data_validade || "",
-      link_candidatura: v.link_candidatura, slug: v.slug
+      link_candidatura: v.link_candidatura, candidatura_email: v.candidatura_email || "",
+      candidatura_link: v.candidatura_link || "", slug: v.slug
     };
   }
   // Escapa "</" para o JSON nunca poder fechar a tag <script> prematuramente.
