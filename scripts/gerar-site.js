@@ -32,6 +32,38 @@ const ROOT = path.join(__dirname, "..");
 const SITE_URL = "https://alcartel.vercel.app";
 const VAGAS_DIR_FONTE = path.join(ROOT, "content/vagas");
 
+// Lista de categorias do formulário "Alerta de Vagas" (campo "Categoria da
+// vaga pretendida"). Esta lista é INDEPENDENTE das categorias de vaga do
+// Decap CMS (admin/config.yml) — a pessoa que se inscreve para alertas
+// escolhe entre um leque mais amplo de sectores profissionais, com
+// subcategorias associadas em js/categorias-vaga.js (fonte única para o
+// campo dependente "Subcategoria da vaga pretendida", populado em runtime
+// pelo browser, não por este script). Mantenha esta lista sincronizada com
+// as chaves de window.ALCARTEL_CATEGORIAS_VAGA em js/categorias-vaga.js.
+const CATEGORIAS_OFICIAIS = [
+  "Saúde",
+  "Educação e Professorado",
+  "Tecnologias de Informação",
+  "Administração e Gestão",
+  "Contabilidade e Finanças",
+  "Hotelaria e Turismo",
+  "Comércio e Vendas",
+  "Recursos Humanos",
+  "Engenharia",
+  "Construção Civil",
+  "Electricidade e Electrónica",
+  "Mecânica",
+  "Agricultura e Pecuária",
+  "Transportes e Logística",
+  "Direito e Justiça",
+  "Comunicação e Marketing",
+  "Indústria",
+  "Segurança",
+  "Limpeza e Serviços Gerais",
+  "Arte e Design",
+  "Outros"
+];
+
 // ── Bloco partilhado de Analytics/AdSense, injectado em todas as páginas
 //    geradas (vagas, categorias, cidades). As páginas estáticas (index,
 //    vagas, sobre, etc.) têm o mesmo bloco inserido manualmente no HTML. ──
@@ -715,10 +747,11 @@ function injetarGrid(nomeFicheiro, lista, listaDados) {
 
 // ── Injecta as opções da categoria no formulário "Alerta de Vagas"
 //    (index.html, entre <!-- ALERTA_CATEGORIAS:START --> e ...:END -->),
-//    usando SEMPRE a lista de categorias com vagas activas no momento do
-//    build. Assim, o formulário fica automaticamente sincronizado: uma
-//    categoria só aparece como opção se existir pelo menos uma vaga
-//    publicada nela — e desaparece sozinha quando essa vaga expira/sai. ──
+//    usando SEMPRE a lista completa de categorias oficiais (CATEGORIAS_OFICIAIS),
+//    para que a pessoa possa escolher qualquer sector de interesse — mesmo
+//    que ainda não haja nenhuma vaga activa nessa categoria — e receba o
+//    alerta assim que uma vaga for publicada. Selecção única (um <select>
+//    só permite uma opção de cada vez). ──
 function injetarCategoriasAlerta(nomeFicheiro, categorias) {
   const caminho = path.join(ROOT, nomeFicheiro);
   if (!fs.existsSync(caminho)) return;
@@ -802,9 +835,11 @@ function main() {
   // vagas.html: lista completa em cartões e como dados de pesquisa.
   injetarGrid("vagas.html", vagas);
 
-  // Sincroniza as opções do formulário "Alerta de Vagas" com as categorias
-  // que têm, neste momento, pelo menos uma vaga activa.
-  injetarCategoriasAlerta("index.html", Object.keys(porCategoria));
+  // Sincroniza as opções do formulário "Alerta de Vagas" com a lista
+  // COMPLETA de categorias oficiais (não apenas as que têm vagas activas
+  // neste momento), para que a pessoa possa seleccionar qualquer categoria
+  // pretendida.
+  injetarCategoriasAlerta("index.html", CATEGORIAS_OFICIAIS);
 
   gerarSitemap(urlsGeradas);
 

@@ -24,6 +24,49 @@
   var btnSubmit = form.querySelector('button[type="submit"]');
   var textoOriginalBtn = btnSubmit ? btnSubmit.textContent : 'Receber Vagas';
 
+  // ── Categoria / Subcategoria (campos dependentes) ─────────────
+  var selectCategoria = document.getElementById('alerta-categoria');
+  var selectSubcategoria = document.getElementById('alerta-subcategoria');
+  var TEXTO_SUBCATEGORIA_INICIAL = 'Seleccione primeiro a categoria';
+  var TEXTO_SUBCATEGORIA_PLACEHOLDER = 'Subcategoria da vaga pretendida';
+
+  function popularSubcategorias(nomeCategoria) {
+    if (!selectSubcategoria) return;
+    var mapa = window.ALCARTEL_CATEGORIAS_VAGA || {};
+    var subcategorias = mapa[nomeCategoria];
+
+    selectSubcategoria.innerHTML = '';
+
+    if (!nomeCategoria || !subcategorias || !subcategorias.length) {
+      var optVazia = document.createElement('option');
+      optVazia.value = '';
+      optVazia.textContent = TEXTO_SUBCATEGORIA_INICIAL;
+      selectSubcategoria.appendChild(optVazia);
+      selectSubcategoria.disabled = true;
+      return;
+    }
+
+    var optPlaceholder = document.createElement('option');
+    optPlaceholder.value = '';
+    optPlaceholder.textContent = TEXTO_SUBCATEGORIA_PLACEHOLDER;
+    selectSubcategoria.appendChild(optPlaceholder);
+
+    subcategorias.forEach(function (subcategoria) {
+      var opt = document.createElement('option');
+      opt.value = subcategoria;
+      opt.textContent = subcategoria;
+      selectSubcategoria.appendChild(opt);
+    });
+
+    selectSubcategoria.disabled = false;
+  }
+
+  if (selectCategoria) {
+    selectCategoria.addEventListener('change', function () {
+      popularSubcategorias(selectCategoria.value);
+    });
+  }
+
   // ── Mapeamento de códigos de erro devolvidos pelo Code.gs ────
   var MENSAGENS_ERRO = {
     email_duplicado: 'Este e-mail já está inscrito para receber alertas.',
@@ -66,7 +109,8 @@
       email: valorCampo('#alerta-email'),
       provincia: valorCampo('#alerta-provincia'),
       telefone: telefoneDigitos ? '+258' + telefoneDigitos : '',
-      cargo: valorCampo('#alerta-cargo')
+      categoria: valorCampo('#alerta-categoria'),
+      subcategoria: valorCampo('#alerta-subcategoria')
     };
   }
 
@@ -75,7 +119,8 @@
     if (!dados.email || !validarEmail(dados.email)) return 'Por favor, indique um e-mail válido.';
     if (!dados.telefone || dados.telefone.length !== 13) return 'Por favor, indique um contacto telefónico válido (9 dígitos).';
     if (!dados.provincia) return 'Por favor, seleccione a sua província.';
-    if (!dados.cargo) return 'Por favor, seleccione a categoria de vaga pretendida.';
+    if (!dados.categoria) return 'Por favor, seleccione a categoria da vaga pretendida.';
+    if (!dados.subcategoria) return 'Por favor, seleccione a subcategoria da vaga pretendida.';
     return null;
   }
 
@@ -107,6 +152,7 @@
     if (resultado && resultado.sucesso) {
       mostrarMensagem('✅ Registo efectuado! Vai receber as próximas vagas para esta área.', 'sucesso');
       form.reset();
+      popularSubcategorias('');
       return;
     }
 
@@ -131,6 +177,7 @@
       console.warn('[formulario.js] Configure APPS_SCRIPT_URL com o URL do Web App do Google Apps Script.');
       mostrarMensagem('✅ Registo efectuado! Vai receber as próximas vagas para esta área.', 'sucesso');
       form.reset();
+      popularSubcategorias('');
       return;
     }
 

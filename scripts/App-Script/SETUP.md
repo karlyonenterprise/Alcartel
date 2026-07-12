@@ -59,13 +59,21 @@ que dispara automaticamente sempre que uma vaga nova é publicada via CMS
 
 ## Como fica a folha "Inscricoes"
 
-| ID | Nome | Email | Contacto Telefónico | Categoria de Interesse | Data de Registo |
-|----|------|-------|----------------------|--------------------------|-------------------|
+| ID | Nome | Email | Contacto Telefónico | Categoria de Interesse | Subcategoria de Interesse | Data de Registo |
+|----|------|-------|----------------------|--------------------------|------------------------------|-------------------|
 
 - Uma pessoa pode aparecer várias vezes com o mesmo e-mail, desde que a
-  categoria seja diferente de cada vez (ex.: Motorista + Construção).
-- O mesmo e-mail + a mesma categoria não é aceite duas vezes
-  (mensagem "Este e-mail já está inscrito para receber alertas.").
+  categoria e/ou subcategoria seja diferente de cada vez (ex.: Motorista +
+  Transportes e Logística vs. Pedreiro + Construção Civil).
+- O mesmo e-mail + a mesma categoria + a mesma subcategoria não é aceite
+  duas vezes (mensagem "Este e-mail já está inscrito para receber alertas.").
+- **Atenção:** a lista de categorias/subcategorias do formulário de alerta
+  (`js/categorias-vaga.js` e `CATEGORIAS_OFICIAIS` em `scripts/gerar-site.js`)
+  é independente da lista de categorias das vagas no CMS (`admin/config.yml`).
+  Se quiser que o envio automático de e-mail por categoria (`notificar_vaga`)
+  funcione correctamente, as duas listas de nomes de categoria têm de
+  coincidir exactamente — caso contrário, reveja `notificarNovaVaga_` em
+  `Code.gs`.
 
 ## Testar
 

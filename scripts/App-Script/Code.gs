@@ -8,7 +8,7 @@
  * passo a passo completo de instalação.
  *
  * Responsabilidades:
- *   1. doPost(e) com {nome,email,telefone,provincia,cargo}
+ *   1. doPost(e) com {nome,email,telefone,provincia,categoria,subcategoria}
  *      → grava uma nova inscrição na folha "Inscricoes".
  *   2. doPost(e) com {acao:"notificar_vaga", token, vaga}
  *      → chamado pelo GitHub Action (.github/workflows/notificar-vagas.yml)
@@ -19,7 +19,7 @@
 
 // ── Configuração ────────────────────────────────────────────────
 const NOME_FOLHA = "Inscricoes";
-const CABECALHO = ["ID", "Nome", "Email", "Contacto Telefónico", "Categoria de Interesse", "Data de Registo"];
+const CABECALHO = ["ID", "Nome", "Email", "Contacto Telefónico", "Categoria de Interesse", "Subcategoria de Interesse", "Data de Registo"];
 
 // O token é guardado em Ficheiro → Propriedades do projecto → Propriedades
 // do script (chave: WEBHOOK_TOKEN), NUNCA escrito directamente aqui.
@@ -49,12 +49,13 @@ function registarInscricao_(dados) {
   var email = String(dados.email || "").trim().toLowerCase();
   var telefone = String(dados.telefone || "").trim();
   var provincia = String(dados.provincia || "").trim();
-  var cargo = String(dados.cargo || "").trim(); // categoria de interesse
+  var categoria = String(dados.categoria || "").trim(); // categoria de interesse
+  var subcategoria = String(dados.subcategoria || "").trim(); // subcategoria de interesse
 
   if (!nome || nome.length < 2) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
   if (!validarEmail_(email)) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
   if (!/^\+258\d{9}$/.test(telefone)) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
-  if (!provincia || !cargo) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
+  if (!provincia || !categoria || !subcategoria) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
 
   // Limite simples de pedidos por e-mail (evita spam/abuso do formulário):
   // no máximo 5 registos em 60 segundos vindos do mesmo e-mail.
@@ -71,17 +72,18 @@ function registarInscricao_(dados) {
     var linhas = folha.getDataRange().getValues();
 
     // Permite múltiplos registos com o mesmo e-mail, mas não duplica a
-    // MESMA combinação e-mail + categoria (pedido 8 do briefing).
+    // MESMA combinação e-mail + categoria + subcategoria (pedido 8 do briefing).
     for (var i = 1; i < linhas.length; i++) {
       var linhaEmail = String(linhas[i][2] || "").trim().toLowerCase();
-      var linhaCargo = String(linhas[i][4] || "").trim();
-      if (linhaEmail === email && linhaCargo === cargo) {
+      var linhaCategoria = String(linhas[i][4] || "").trim();
+      var linhaSubcategoria = String(linhas[i][5] || "").trim();
+      if (linhaEmail === email && linhaCategoria === categoria && linhaSubcategoria === subcategoria) {
         return respostaJson_({ sucesso: false, erro: "email_duplicado" });
       }
     }
 
     var novoId = linhas.length; // linha 1 é cabeçalho, por isso length já dá o próximo ID sequencial
-    folha.appendRow([novoId, nome, email, telefone, cargo, new Date()]);
+    folha.appendRow([novoId, nome, email, telefone, categoria, subcategoria, new Date()]);
   } finally {
     lock.releaseLock();
   }
@@ -99,14 +101,20 @@ function notificarNovaVaga_(dados) {
   var categoria = String(vaga.categoria || "").trim();
   if (!categoria) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
 
+  // NOTA: esta comparação assume que "categoria" da vaga (definida no
+  // Decap CMS, ver admin/config.yml) usa exactamente os mesmos nomes que
+  // "Categoria de Interesse" escolhida no formulário de alerta (ver
+  // js/categorias-vaga.js). Se as duas listas divergirem, os e-mails
+  // automáticos deixam de casar correctamente — reconcilie as duas
+  // listas de categorias caso o valor não seja idêntico.
   var folha = obterFolha_();
   var linhas = folha.getDataRange().getValues();
   var emailsNotificados = 0;
 
   for (var i = 1; i < linhas.length; i++) {
     var linhaEmail = String(linhas[i][2] || "").trim();
-    var linhaCargo = String(linhas[i][4] || "").trim();
-    if (linhaCargo !== categoria || !linhaEmail) continue;
+    var linhaCategoria = String(linhas[i][4] || "").trim();
+    if (linhaCategoria !== categoria || !linhaEmail) continue;
 
     enviarEmailNovaVaga_(linhaEmail, vaga);
     emailsNotificados++;

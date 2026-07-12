@@ -313,25 +313,37 @@
       <input id="alerta-telefone" type="tel" name="telefone" placeholder="84 123 4567" inputmode="numeric" autocomplete="tel-national" pattern="[0-9]{9}" maxlength="9" required>
     </div>
 
-    <label for="alerta-cargo" class="sr-only">Categoria de interesse</label>
-    <select id="alerta-cargo" class="full" name="cargo" required>
-      <option value="">Seleccione a categoria de vaga pretendida</option>
+    <label for="alerta-categoria" class="sr-only">Categoria da vaga pretendida</label>
+    <select id="alerta-categoria" name="categoria" required>
+      <option value="">Categoria da vaga pretendida</option>
       <!-- ALERTA_CATEGORIAS:START -->
-      <option value="Administração">Administração</option>
-      <option value="Agricultura e Agropecuária">Agricultura e Agropecuária</option>
-      <option value="Atendimento ao Cliente e Vendas">Atendimento ao Cliente e Vendas</option>
-      <option value="Comércio e Retalho">Comércio e Retalho</option>
-      <option value="Construção Civil e Engenharia">Construção Civil e Engenharia</option>
-      <option value="Contabilidade e Finanças">Contabilidade e Finanças</option>
-      <option value="Educação">Educação</option>
-      <option value="Hotelaria e Turismo">Hotelaria e Turismo</option>
-      <option value="Informática">Informática</option>
-      <option value="Logística e Transportes">Logística e Transportes</option>
-      <option value="Mineração e Petróleo e Gás">Mineração e Petróleo e Gás</option>
-      <option value="Recursos Humanos">Recursos Humanos</option>
       <option value="Saúde">Saúde</option>
-      <option value="Vendas e Marketing">Vendas e Marketing</option>
+      <option value="Educação e Professorado">Educação e Professorado</option>
+      <option value="Tecnologias de Informação">Tecnologias de Informação</option>
+      <option value="Administração e Gestão">Administração e Gestão</option>
+      <option value="Contabilidade e Finanças">Contabilidade e Finanças</option>
+      <option value="Hotelaria e Turismo">Hotelaria e Turismo</option>
+      <option value="Comércio e Vendas">Comércio e Vendas</option>
+      <option value="Recursos Humanos">Recursos Humanos</option>
+      <option value="Engenharia">Engenharia</option>
+      <option value="Construção Civil">Construção Civil</option>
+      <option value="Electricidade e Electrónica">Electricidade e Electrónica</option>
+      <option value="Mecânica">Mecânica</option>
+      <option value="Agricultura e Pecuária">Agricultura e Pecuária</option>
+      <option value="Transportes e Logística">Transportes e Logística</option>
+      <option value="Direito e Justiça">Direito e Justiça</option>
+      <option value="Comunicação e Marketing">Comunicação e Marketing</option>
+      <option value="Indústria">Indústria</option>
+      <option value="Segurança">Segurança</option>
+      <option value="Limpeza e Serviços Gerais">Limpeza e Serviços Gerais</option>
+      <option value="Arte e Design">Arte e Design</option>
+      <option value="Outros">Outros</option>
 <!-- ALERTA_CATEGORIAS:END -->
+    </select>
+
+    <label for="alerta-subcategoria" class="sr-only">Subcategoria da vaga pretendida</label>
+    <select id="alerta-subcategoria" name="subcategoria" required disabled>
+      <option value="">Seleccione primeiro a categoria</option>
     </select>
 
     <button class="btn btn--full full" type="submit">Receber Vagas</button>
@@ -400,6 +412,7 @@
      ALCARTEL — SCRIPTS
 ══════════════════════════════════ -->
 
+<script src="js/categorias-vaga.js" defer></script>
 <script src="js/formulario.js" defer></script>
 <!-- VAGA_MODAL:START -->
 
