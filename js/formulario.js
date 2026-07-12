@@ -16,7 +16,7 @@
   // Siga o guia completo em scripts/apps-script/SETUP.md (cria a folha
   // Google Sheets, cola scripts/apps-script/Code.gs, e publica como
   // Aplicação Web). Depois de publicar, cole aqui o URL que termina em /exec.
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyypLTLmYOf4WfgOGOit9pOy8sowf_yUWFj07PTtz81JHRMIzqh3sDmEI9ZRCt3lF8c/exec';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYUWQF0ZxLk1574qaVP-wp9n0twGOlE-NLUvO56WOCvzvJsPAv72dXNjr2L-ROIB9u/exec';
   var form = document.getElementById('alerta-form');
   if (!form) return;
 
