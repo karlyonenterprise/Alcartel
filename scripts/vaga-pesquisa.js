@@ -161,9 +161,12 @@
     vagas.forEach(function (v) { v._indice = construirIndice(v); });
 
     const campoTexto = secaoPesquisa.querySelector('input[name="q"]');
+    // Selector de província removido do HTML (pesquisa passou a ser só por
+    // texto livre); mantém-se a leitura aqui como opcional, caso volte a
+    // existir numa página futura, sem quebrar nada nas páginas actuais.
     const campoProvincia = secaoPesquisa.querySelector('select[name="provincia"]');
     const botaoPesquisar = secaoPesquisa.querySelector("button");
-    if (!campoTexto || !campoProvincia || !botaoPesquisar) return;
+    if (!campoTexto || !botaoPesquisar) return;
 
     // Contador de resultados — criado dinamicamente por cima do grid,
     // se ainda não existir na página (mantém compatibilidade com
@@ -183,7 +186,7 @@
     //    → paginar) e desenha o resultado. ──────────────────────────
     function executarPesquisa() {
       const termoNormalizado = normalizarTexto(campoTexto.value);
-      const provinciaValor = campoProvincia.value;
+      const provinciaValor = campoProvincia ? campoProvincia.value : "";
 
       const filtradas = filtrarVagas(vagas, termoNormalizado, provinciaValor);
       const ordenadas = ordenarVagas(filtradas);

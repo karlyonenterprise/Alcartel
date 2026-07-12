@@ -104,7 +104,31 @@ function registarInscricao_(dados) {
     lock.releaseLock();
   }
 
+  // E-mail de confirmação de inscrição — enviado uma única vez, fora do
+  // lock (não deve bloquear nem atrasar a gravação na folha, e uma
+  // eventual falha de envio não deve impedir a resposta de sucesso).
+  try {
+    enviarEmailConfirmacaoInscricao_(email, nome, categoria, subcategoria);
+  } catch (erroEmail) {
+    // Não falha o registo por causa de um erro no envio do e-mail —
+    // a inscrição já ficou gravada na folha, que é o que importa.
+  }
+
   return respostaJson_({ sucesso: true });
+}
+
+function enviarEmailConfirmacaoInscricao_(destinatario, nome, categoria, subcategoria) {
+  var assunto = "Inscrição confirmada — Alertas de Vagas Alcartel";
+  var corpo =
+    "Olá, " + nome + "!\n\n" +
+    "A sua inscrição no Alerta de Vagas da Alcartel foi confirmada com sucesso.\n\n" +
+    "Categoria: " + categoria + "\n" +
+    "Subcategoria: " + subcategoria + "\n\n" +
+    "A partir de agora, sempre que for publicada uma nova vaga nesta categoria, " +
+    "receberá um e-mail com os detalhes e o link para se candidatar.\n\n" +
+    "— Alcartel, o Motor de Empregos de Moçambique";
+
+  MailApp.sendEmail(destinatario, assunto, corpo);
 }
 
 // ── 2. Notificação de vaga nova aos inscritos da categoria ───────
