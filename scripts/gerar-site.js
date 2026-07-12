@@ -713,6 +713,27 @@ function injetarGrid(nomeFicheiro, lista, listaDados) {
   fs.writeFileSync(caminho, html, "utf-8");
 }
 
+// ── Injecta as opções da categoria no formulário "Alerta de Vagas"
+//    (index.html, entre <!-- ALERTA_CATEGORIAS:START --> e ...:END -->),
+//    usando SEMPRE a lista de categorias com vagas activas no momento do
+//    build. Assim, o formulário fica automaticamente sincronizado: uma
+//    categoria só aparece como opção se existir pelo menos uma vaga
+//    publicada nela — e desaparece sozinha quando essa vaga expira/sai. ──
+function injetarCategoriasAlerta(nomeFicheiro, categorias) {
+  const caminho = path.join(ROOT, nomeFicheiro);
+  if (!fs.existsSync(caminho)) return;
+  let html = fs.readFileSync(caminho, "utf-8");
+
+  const opcoes = categorias
+    .sort((a, b) => a.localeCompare(b, "pt"))
+    .map(c => `      <option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`)
+    .join("\n");
+
+  const comOpcoes = injetarEntreMarcadores(html, "<!-- ALERTA_CATEGORIAS:START -->", "<!-- ALERTA_CATEGORIAS:END -->", opcoes);
+  if (comOpcoes === null) return;
+  fs.writeFileSync(caminho, comOpcoes, "utf-8");
+}
+
 function gerarSitemap(urlsExtra) {
   const paginasEstaticas = [
     "", "vagas.html", "sobre.html", "servicos.html",
@@ -780,6 +801,10 @@ function main() {
 
   // vagas.html: lista completa em cartões e como dados de pesquisa.
   injetarGrid("vagas.html", vagas);
+
+  // Sincroniza as opções do formulário "Alerta de Vagas" com as categorias
+  // que têm, neste momento, pelo menos uma vaga activa.
+  injetarCategoriasAlerta("index.html", Object.keys(porCategoria));
 
   gerarSitemap(urlsGeradas);
 
