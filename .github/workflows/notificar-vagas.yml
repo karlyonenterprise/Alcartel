@@ -35,9 +35,13 @@ jobs:
           echo "${{ steps.novas.outputs.ficheiros }}" | while IFS= read -r ficheiro; do
             [ -z "$ficheiro" ] && continue
             echo "A notificar: $ficheiro"
+            SLUG=$(basename "$ficheiro" .json)
             VAGA_JSON=$(cat "$ficheiro")
-            PAYLOAD=$(jq -n --arg token "$WEBHOOK_TOKEN" --argjson vaga "$VAGA_JSON" \
-              '{acao: "notificar_vaga", token: $token, vaga: $vaga}')
+            # O slug não vive dentro do JSON (é derivado do nome do ficheiro
+            # em scripts/gerar-site.js), por isso é injectado aqui para que
+            # o Code.gs consiga montar o link /vagas/{slug}.html no e-mail.
+            PAYLOAD=$(jq -n --arg token "$WEBHOOK_TOKEN" --arg slug "$SLUG" --argjson vaga "$VAGA_JSON" \
+              '{acao: "notificar_vaga", token: $token, vaga: ($vaga + {slug: $slug})}')
             curl -s -X POST "$APPS_SCRIPT_URL" \
               -H "Content-Type: text/plain;charset=utf-8" \
               -d "$PAYLOAD"
