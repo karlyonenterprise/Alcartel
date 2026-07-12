@@ -12,8 +12,10 @@
 (function () {
   'use strict';
 
-  // TODO: substituir pelo URL do Web App publicado no Google Apps Script
-  // (Extensões → Apps Script → Implementar → Nova implementação → Aplicação Web)
+  // TODO: substituir pelo URL do Web App publicado no Google Apps Script.
+  // Siga o guia completo em scripts/apps-script/SETUP.md (cria a folha
+  // Google Sheets, cola scripts/apps-script/Code.gs, e publica como
+  // Aplicação Web). Depois de publicar, cole aqui o URL que termina em /exec.
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwD4oqrLayIw6PrHWJridf2FzEH1yyZs9Ti3iiglrdjvjbPykFSrwir941o-_mdftbV/exec';
   var form = document.getElementById('alerta-form');
   if (!form) return;
@@ -58,10 +60,12 @@
   }
 
   function obterDadosFormulario() {
+    var telefoneDigitos = valorCampo('#alerta-telefone').replace(/\D/g, '');
     return {
       nome: valorCampo('#alerta-nome'),
       email: valorCampo('#alerta-email'),
       provincia: valorCampo('#alerta-provincia'),
+      telefone: telefoneDigitos ? '+258' + telefoneDigitos : '',
       cargo: valorCampo('#alerta-cargo')
     };
   }
@@ -69,8 +73,9 @@
   function validarCampos(dados) {
     if (!dados.nome || dados.nome.length < 2) return 'Por favor, indique o seu nome completo.';
     if (!dados.email || !validarEmail(dados.email)) return 'Por favor, indique um e-mail válido.';
+    if (!dados.telefone || dados.telefone.length !== 13) return 'Por favor, indique um contacto telefónico válido (9 dígitos).';
     if (!dados.provincia) return 'Por favor, seleccione a sua província.';
-    if (!dados.cargo) return 'Por favor, indique o cargo desejado.';
+    if (!dados.cargo) return 'Por favor, seleccione a categoria de vaga pretendida.';
     return null;
   }
 
