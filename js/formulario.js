@@ -67,6 +67,13 @@
     });
   }
 
+  if (!window.ALCARTEL_CATEGORIAS_VAGA) {
+    console.warn('[formulario.js] js/categorias-vaga.js não foi carregado (ou carregou depois deste ficheiro). ' +
+      'O campo "Subcategoria" vai ficar sempre vazio e o envio será recusado como "campos_invalidos". ' +
+      'Verifique se <script src="js/categorias-vaga.js"> está incluído em index.html ANTES de <script src="js/formulario.js">, ' +
+      'e se o ficheiro foi publicado no deploy actual.');
+  }
+
   // ── Mapeamento de códigos de erro devolvidos pelo Code.gs ────
   var MENSAGENS_ERRO = {
     email_duplicado: 'Este e-mail já está inscrito para receber alertas.',
@@ -158,6 +165,9 @@
 
     var codigo = resultado && resultado.erro;
     var texto = (codigo && MENSAGENS_ERRO[codigo]) || 'Não foi possível concluir o registo. Tente novamente.';
+    if (resultado && resultado.detalhe) {
+      console.warn('[formulario.js] Detalhe do erro devolvido pelo servidor:', resultado.detalhe);
+    }
     mostrarMensagem('⚠️ ' + texto, 'erro');
   }
 

@@ -52,10 +52,26 @@ function registarInscricao_(dados) {
   var categoria = String(dados.categoria || "").trim(); // categoria de interesse
   var subcategoria = String(dados.subcategoria || "").trim(); // subcategoria de interesse
 
-  if (!nome || nome.length < 2) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
-  if (!validarEmail_(email)) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
-  if (!/^\+258\d{9}$/.test(telefone)) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
-  if (!provincia || !categoria || !subcategoria) return respostaJson_({ sucesso: false, erro: "campos_invalidos" });
+  // ── Validação campo a campo, com detalhe do que falhou ─────────
+  // (facilita muito o diagnóstico quando o formulário envia algo
+  // inesperado — ex.: site desactualizado ainda a enviar "cargo" em
+  // vez de "categoria"/"subcategoria").
+  var camposFalha = [];
+  if (!nome || nome.length < 2) camposFalha.push("nome");
+  if (!validarEmail_(email)) camposFalha.push("email");
+  if (!/^\+258\d{9}$/.test(telefone)) camposFalha.push("telefone");
+  if (!provincia) camposFalha.push("provincia");
+  if (!categoria) camposFalha.push("categoria");
+  if (!subcategoria) camposFalha.push("subcategoria");
+
+  if (camposFalha.length) {
+    return respostaJson_({
+      sucesso: false,
+      erro: "campos_invalidos",
+      detalhe: "Campo(s) em falta ou inválido(s): " + camposFalha.join(", ") +
+        ". Dados recebidos: " + JSON.stringify(dados)
+    });
+  }
 
   // Limite simples de pedidos por e-mail (evita spam/abuso do formulário):
   // no máximo 5 registos em 60 segundos vindos do mesmo e-mail.
