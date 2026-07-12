@@ -14,7 +14,7 @@
 
   // TODO: substituir pelo URL do Web App publicado no Google Apps Script
   // (Extensões → Apps Script → Implementar → Nova implementação → Aplicação Web)
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx8mkDgJ5C2MuygW1R5RxYEgwOVYU_rRKbVjuoYYNOORFwtZR-EZLwxgrtSYb43O6H6/exec';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwD4oqrLayIw6PrHWJridf2FzEH1yyZs9Ti3iiglrdjvjbPykFSrwir941o-_mdftbV/exec';
   var form = document.getElementById('alerta-form');
   if (!form) return;
 
