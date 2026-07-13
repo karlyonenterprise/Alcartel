@@ -85,13 +85,13 @@ collections:
         options: ["Tempo Inteiro", "Meio Período", "Estágio", "Freelance", "Temporário", "Prestação de Serviços"]
 
       # ── 6. Principais Responsabilidades ─────────────────────
-      - { name: "responsabilidades", label: "Principais Responsabilidades", widget: "markdown", required: true }
+      - { name: "responsabilidades", label: "Principais Responsabilidades", widget: "markdown", required: true, modes: ["raw"] }
 
       # ── 7. Requisitos ────────────────────────────────────────
-      - { name: "requisitos", label: "Requisitos", widget: "markdown", required: true }
+      - { name: "requisitos", label: "Requisitos", widget: "markdown", required: true, modes: ["raw"] }
       
       # ── 8. Documentos Necessarios ─────────────────────
-      - { name: "documentos", label: "Documentos Necessarios", widget: "markdown", required: true }
+      - { name: "documentos", label: "Documentos Necessarios", widget: "markdown", required: true, modes: ["raw"] }
 
       # ── 8. Como Candidatar-se ───────────────────────────────
       # Widget customizado (registado em admin/index.html) que guarda
