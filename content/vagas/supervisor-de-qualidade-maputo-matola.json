@@ -3,7 +3,7 @@
   "destaque": false,
   "candidatura": {
     "link": "https://www.emprego.co.mz/vaga/supervisor-de-qualidade-3/",
-    "email": "Acessar o link abaixo"
+    "email": ""
   },
   "tipo_contrato": "Tempo Inteiro",
   "empresa": "Cimentos de Moçambique",
@@ -15,5 +15,6 @@
   "titulo": "Supervisor de Qualidade",
   "imagem_empresa": "/assets/empresas/transferir.png",
   "estado_vaga": "Aberta",
+  "documentos": "Currículo vitae \nCarta de apresentação ",
   "data_limite": "2026-07-19"
 }
