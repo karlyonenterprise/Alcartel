@@ -127,30 +127,29 @@ collections:
         # scripts/gerar-site.js usa slugify(categoria) para o nome do ficheiro
         # em /categoria/. Um rótulo diferente aqui geraria um URL novo em vez
         # de reaproveitar a página /categoria/ já existente e indexada.
+        # ─── Categoria ────────────────────────────────────────────────
         options:
-          # ─── Categoria ────────────────────────────────────────────────
-  options:
-    - "Saúde"
-    - "Educação e Professorado"
-    - "Tecnologias de Informação"
-    - "Administração e Gestão"
-    - "Contabilidade e Finanças"
-    - "Hotelaria e Turismo"
-    - "Comércio e Vendas"
-    - "Recursos Humanos"
-    - "Engenharia"
-    - "Construção Civil"
-    - "Electricidade e Electrónica"
-    - "Mecânica"
-    - "Agricultura e Pecuária"
-    - "Transportes e Logística"
-    - "Direito e Justiça"
-    - "Comunicação e Marketing"
-    - "Indústria"
-    - "Segurança"
-    - "Limpeza e Serviços Gerais"
-    - "Arte e Design"
-    - "Outros"
+          - "Saúde"
+          - "Educação e Professorado"
+          - "Tecnologias de Informação"
+          - "Administração e Gestão"
+          - "Contabilidade e Finanças"
+          - "Hotelaria e Turismo"
+          - "Comércio e Vendas"
+          - "Recursos Humanos"
+          - "Engenharia"
+          - "Construção Civil"
+          - "Electricidade e Electrónica"
+          - "Mecânica"
+          - "Agricultura e Pecuária"
+          - "Transportes e Logística"
+          - "Direito e Justiça"
+          - "Comunicação e Marketing"
+          - "Indústria"
+          - "Segurança"
+          - "Limpeza e Serviços Gerais"
+          - "Arte e Design"
+          - "Outros"
 
       # ── 11. Palavras-chave (SEO) ─────────────────────────────
       # Vão para a tag <meta name="keywords"> e aparecem como etiquetas
