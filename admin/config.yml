@@ -89,6 +89,9 @@ collections:
 
       # ── 7. Requisitos ────────────────────────────────────────
       - { name: "requisitos", label: "Requisitos", widget: "markdown", required: true }
+      
+      # ── 8. Documentos Necessarios ─────────────────────
+      - { name: "documentos", label: "Documentos Necessarios", widget: "markdown", required: true }
 
       # ── 8. Como Candidatar-se ───────────────────────────────
       # Widget customizado (registado em admin/index.html) que guarda
@@ -125,21 +128,29 @@ collections:
         # em /categoria/. Um rótulo diferente aqui geraria um URL novo em vez
         # de reaproveitar a página /categoria/ já existente e indexada.
         options:
-          - "Administração"
-          - "Agricultura e Agropecuária"
-          - "Atendimento ao Cliente e Vendas"
-          - "Comércio e Retalho"
-          - "Construção Civil e Engenharia"
-          - "Contabilidade e Finanças"
-          - "Educação"
-          - "Hotelaria e Turismo"
-          - "Informática"
-          - "Logística e Transportes"
-          - "Mineração e Petróleo e Gás"
-          - "Recursos Humanos"
-          - "Saúde"
-          - "Vendas e Marketing"
-          - "Outra"
+          # ─── Categoria ────────────────────────────────────────────────
+  options:
+    - "Saúde"
+    - "Educação e Professorado"
+    - "Tecnologias de Informação"
+    - "Administração e Gestão"
+    - "Contabilidade e Finanças"
+    - "Hotelaria e Turismo"
+    - "Comércio e Vendas"
+    - "Recursos Humanos"
+    - "Engenharia"
+    - "Construção Civil"
+    - "Electricidade e Electrónica"
+    - "Mecânica"
+    - "Agricultura e Pecuária"
+    - "Transportes e Logística"
+    - "Direito e Justiça"
+    - "Comunicação e Marketing"
+    - "Indústria"
+    - "Segurança"
+    - "Limpeza e Serviços Gerais"
+    - "Arte e Design"
+    - "Outros"
 
       # ── 11. Palavras-chave (SEO) ─────────────────────────────
       # Vão para a tag <meta name="keywords"> e aparecem como etiquetas
