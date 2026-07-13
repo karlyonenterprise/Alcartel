@@ -133,7 +133,23 @@ function normalizarVaga(dados) {
     area: ig.area || dados.area || "",
     departamento: ig.departamento || dados.departamento || "",
     numero_vagas: ig.numero_vagas || dados.numero_vagas || 1,
-    data_publicacao: ig.data_publicacao || dados.data_publicacao || "",
+    // O widget "hidden" do Decap CMS (admin/config.yml) usa default:
+    // "{{now}}", um marcador que só é substituído pela data real quando o
+    // ficheiro é criado através do formulário do CMS. Se o JSON for criado
+    // ou editado por fora do CMS (à mão, por script), o texto literal
+    // "{{now}}" fica gravado — isto já aconteceu e partiu o campo
+    // datePosted no schema JobPosting (Google Jobs exige uma data ISO
+    // válida) e mostrava "Publicado em {{now}}" a quem visitava a página.
+    // Aqui apanhamos qualquer valor vazio/por-substituir/inválido e usamos
+    // a data de hoje como rede de segurança.
+    data_publicacao: (() => {
+      const bruto = ig.data_publicacao || dados.data_publicacao || "";
+      const valida = bruto && !bruto.includes("{{") && !isNaN(new Date(bruto).getTime());
+      if (!valida && bruto) {
+        console.warn(`⚠️  data_publicacao inválida ("${bruto}") — a usar a data de hoje como substituto.`);
+      }
+      return valida ? bruto : new Date().toISOString();
+    })(),
     data_validade: ig.data_validade || dados.data_validade || dados.data_limite || "",
     estado_vaga: ig.estado_vaga || dados.estado_vaga || "Aberta",
 
@@ -201,6 +217,15 @@ function carregarVagas() {
       // CMS usa como identificador de facto ao gravar em content/vagas/{slug}.json),
       // independentemente do que o config.yml tiver como widget "slug".
       dados.slug = f.replace(/\.json$/, "");
+      // Alerta de segurança: um slug com acentos, espaços ou "#"/"%" produz
+      // um URL partido (ex.: "#" é lido como fragmento, não como parte do
+      // caminho, e a página fica invisível para o Google e por-clicar).
+      // Isto já aconteceu por um slug gerado pelo Decap sem clean_accents
+      // activo. Fica aqui como rede de segurança para detectar no log do
+      // build do Vercel, mesmo que o ficheiro seja criado/editado à mão.
+      if (!/^[a-z0-9-]+$/.test(dados.slug)) {
+        console.warn(`⚠️  Slug inválido para URL em "${f}": "${dados.slug}" — contém caracteres fora de a-z/0-9/"-". Isto vai gerar um link partido. Corrige o nome do ficheiro (só letras minúsculas sem acentos, números e hífenes).`);
+      }
       return dados;
     })
     // vagas válidas até à data (se não tiver data_validade, considera-se sempre válida)

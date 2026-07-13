@@ -46,6 +46,18 @@ site_url: https://alcartel.vercel.app
 
 publish_mode: editorial_workflow
 
+# ── Regras globais de geração de slug (nomes de ficheiro) ──
+# Sem isto, o Decap mantém acentos/caracteres unicode "em bruto" no nome do
+# ficheiro (ex.: "avaliação" em vez de "avaliacao"), o que já partiu URLs no
+# site (o "#" resultante era interpretado como fragmento de URL, não como
+# parte do caminho, e a página deixava de ser indexável/clicável). encoding:
+# "ascii" + clean_accents: true garante que o Decap CMS transliteres estes
+# caracteres para ASCII simples ao criar o nome do ficheiro/slug.
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
 collections:
   - name: "vagas"
     label: "Vagas de Emprego"
