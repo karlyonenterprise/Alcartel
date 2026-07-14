@@ -164,6 +164,7 @@ function normalizarVaga(dados) {
     horario_trabalho: lc.horario_trabalho || dados.horario_trabalho || "",
 
     // Remuneração
+    salario: dados.salario || "",
     salario_min: rem.salario_min ?? dados.salario_min ?? null,
     salario_max: rem.salario_max ?? dados.salario_max ?? null,
     moeda: rem.moeda || dados.moeda || "MZN",
@@ -176,7 +177,10 @@ function normalizarVaga(dados) {
     responsabilidades: perfil.responsabilidades || (descricaoAntiga ? (dados.responsabilidades || "") : ""),
     requisitos_obrigatorios: perfil.requisitos_obrigatorios || dados.requisitos_obrigatorios || dados.requisitos || "",
     requisitos_desejaveis: perfil.requisitos_desejaveis || dados.requisitos_desejaveis || "",
-    escolaridade: perfil.escolaridade || dados.escolaridade || "",
+    // "nivel_academico" é o nome actual do campo no config.yml (substituiu
+    // "escolaridade"); mantém-se a chave interna "escolaridade" para não
+    // obrigar a tocar no resto do script.
+    escolaridade: dados.nivel_academico || perfil.escolaridade || dados.escolaridade || "",
     experiencia: perfil.experiencia || dados.experiencia || "",
     competencias_tecnicas: perfil.competencias_tecnicas || dados.competencias_tecnicas || "",
     competencias_comportamentais: perfil.competencias_comportamentais || dados.competencias_comportamentais || "",
@@ -184,7 +188,7 @@ function normalizarVaga(dados) {
     certificacoes: perfil.certificacoes || dados.certificacoes || "",
 
     // Candidatura
-    documentos_exigidos: cand.documentos_exigidos || dados.documentos_exigidos || "",
+    documentos_exigidos: cand.documentos_exigidos || dados.documentos_exigidos || dados.documentos || "",
     como_candidatar: cand.como_candidatar || dados.como_candidatar || "",
     contacto: cand.contacto || dados.contacto || "",
     // Novo formato: candidatura = { email, link } (widget customizado "candidatura").
@@ -254,10 +258,63 @@ function escapeHtml(str = "") {
   return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+// ── Conversor Markdown mínimo para os 4 campos "markdown" do config.yml
+//    (descricao, responsabilidades, requisitos, documentos), que só
+//    permitem negrito e marcadores (buttons: ["bold", "bulleted-list"]).
+//    Antes disto, o texto era só escapado e "**negrito**"/"- item" apareciam
+//    em cru na página. Escapa primeiro (contra HTML/XSS vindo do CMS) e só
+//    depois aplica as transformações — assim nunca se interpreta HTML que
+//    viesse dentro do texto da vaga. ──────────────────────────────────────
+function negritoHtml(linhaEscapada) {
+  return linhaEscapada.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
+function markdownParaHtml(texto) {
+  if (!texto) return "";
+  const linhas = escapeHtml(texto).split(/\r?\n/);
+  let html = "";
+  let dentroLista = false;
+  const fecharLista = () => { if (dentroLista) { html += "</ul>"; dentroLista = false; } };
+
+  for (const bruta of linhas) {
+    const linha = bruta.trim();
+    if (!linha) { fecharLista(); continue; }
+    const item = linha.match(/^[-*]\s+(.*)/);
+    if (item) {
+      if (!dentroLista) { html += "<ul>"; dentroLista = true; }
+      html += `<li>${negritoHtml(item[1])}</li>`;
+    } else {
+      fecharLista();
+      html += `<p>${negritoHtml(linha)}</p>`;
+    }
+  }
+  fecharLista();
+  return html;
+}
+
+// ── Versão em texto plano do conteúdo Markdown (sem "**"/"- "), usada em
+//    sítios que não podem levar HTML: <meta description>, resumo do
+//    cartão de vaga, campo "description" do JSON-LD JobPosting. ─────────
+function markdownParaTextoPlano(texto) {
+  if (!texto) return "";
+  return texto
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/^[-*]\s+/gm, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 // ── Formata o intervalo salarial de forma legível, ou devolve "" se não
 //    houver nenhum valor (a secção correspondente simplesmente não é
 //    impressa, para não deixar espaços vazios no layout) ─────────────
+// ── Formata o salário. O config.yml actual grava "salario" como texto
+//    livre (ex.: "15.000 MT a 25.000 MT" ou "A negociar") — usa-se tal
+//    e qual. Para vagas antigas gravadas no formato numérico
+//    (salario_min/salario_max/moeda/periodicidade), calcula-se o texto
+//    a partir desses campos, para nenhuma vaga já publicada perder o
+//    salário. Sem nenhum dos dois, devolve "" (a secção não é impressa). ──
 function formatarSalario(v) {
+  if (v.salario) return v.salario;
   if (!v.salario_min && !v.salario_max) return "";
   const fmt = n => new Intl.NumberFormat("pt-MZ").format(n);
   let texto;
@@ -271,11 +328,18 @@ function formatarSalario(v) {
   return texto;
 }
 
-// ── Imprime um bloco "<h2>título</h2><p>conteúdo</p>" só se houver
-//    conteúdo — evita secções vazias que quebrariam o ritmo do layout ──
-function secao(titulo, conteudo, classe = "") {
+// ── Cartão de texto corrido (Descrição, Responsabilidades, Requisitos,
+//    Documentos, etc.) — cada secção vira o seu próprio cartão em vez de
+//    um <h2>/<p> "soltos" na página. Só é impresso se houver conteúdo. ──
+function cardTexto(titulo, conteudo, { classe = "vaga-texto", markdown = false } = {}) {
   if (!conteudo) return "";
-  return `<h2>${escapeHtml(titulo)}</h2><p${classe ? ` class="${classe}"` : ""}>${escapeHtml(conteudo)}</p>`;
+  const corpo = markdown
+    ? `<div class="${classe}">${markdownParaHtml(conteudo)}</div>`
+    : `<p class="${classe}">${escapeHtml(conteudo)}</p>`;
+  return `<div class="vaga-card-texto">
+      <h3>${escapeHtml(titulo)}</h3>
+      ${corpo}
+    </div>`;
 }
 
 // ── Lista de "chips" de metadados curtos (área, escolaridade, idiomas,
@@ -338,7 +402,7 @@ function imagemPartilhaVaga(v) {
 //    template curto mas ainda assim único por vaga (título + local + empresa). ──
 function metaDescricaoVaga(v) {
   const local = textoLocal(v) || v.pais || "Moçambique";
-  const resumo = (v.descricao || v.responsabilidades || "").replace(/\s+/g, " ").trim();
+  const resumo = markdownParaTextoPlano(v.descricao || v.responsabilidades);
   if (resumo) {
     return truncar(`${v.titulo} em ${local} — ${v.empresa}. ${resumo}`, 160);
   }
@@ -410,7 +474,7 @@ function paginaVaga(v) {
     "@context": "https://schema.org/",
     "@type": "JobPosting",
     title: v.titulo,
-    description: v.descricao,
+    description: markdownParaTextoPlano(v.descricao),
     identifier: { "@type": "PropertyValue", name: "Alcartel", value: v.codigo_vaga || v.slug },
     datePosted: v.data_publicacao,
     validThrough: v.data_validade ? `${v.data_validade}T23:59:59` : undefined,
@@ -526,38 +590,38 @@ function paginaVaga(v) {
 
     <h2>Detalhes da Vaga</h2>
     ${quadroDetalhes([
+      ["Local", textoLocal(v)],
+      ["Tipo de Contrato", v.tipo_contrato],
+      ["Regime de Trabalho", v.regime_trabalho],
       ["Nº de Vagas", v.numero_vagas ? String(v.numero_vagas) : ""],
       ["Salário", formatarSalario(v)],
-      ["Idioma", v.idioma]
-    ])}
-
-    ${listaMeta([
+      ["Idioma", v.idioma],
+      ["Nível Académico", v.escolaridade],
+      ["Categoria", v.categoria],
+      ["Data Limite", v.data_validade],
       ["País", v.pais], ["Área", v.area], ["Departamento", v.departamento],
-      ["Horário", v.horario_trabalho],
-      ["Benefícios", v.beneficios]
+      ["Horário", v.horario_trabalho], ["Benefícios", v.beneficios],
+      ["Experiência", v.experiencia], ["Idiomas Exigidos", v.idiomas],
+      ["Certificações", v.certificacoes],
+      ["Competências Técnicas", v.competencias_tecnicas],
+      ["Competências Comportamentais", v.competencias_comportamentais]
     ])}
 
-    <h2>Descrição da Vaga</h2>
-    <p class="vaga-texto">${escapeHtml(v.descricao)}</p>
-    ${secao("Responsabilidades", v.responsabilidades, "vaga-texto")}
-    <h2>Requisitos</h2>
-    <p class="vaga-texto">${escapeHtml(v.requisitos_obrigatorios)}</p>
-    ${secao("Requisitos Desejáveis", v.requisitos_desejaveis, "vaga-texto")}
+    ${cardTexto("Descrição da Vaga", v.descricao, { markdown: true })}
+    ${cardTexto("Responsabilidades", v.responsabilidades, { markdown: true })}
+    ${cardTexto("Requisitos", v.requisitos_obrigatorios, { markdown: true })}
+    ${cardTexto("Requisitos Desejáveis", v.requisitos_desejaveis)}
+    ${cardTexto("Documentos Exigidos", v.documentos_exigidos, { markdown: true })}
+    ${cardTexto("Como Candidatar-se", v.como_candidatar)}
 
-    ${listaMeta([
-      ["Escolaridade", v.escolaridade], ["Experiência", v.experiencia],
-      ["Idiomas", v.idiomas], ["Certificações", v.certificacoes],
-      ["Competências técnicas", v.competencias_tecnicas],
-      ["Competências comportamentais", v.competencias_comportamentais]
-    ])}
-
-    ${secao("Documentos Exigidos", v.documentos_exigidos, "vaga-texto")}
-    ${secao("Como Candidatar-se", v.como_candidatar)}
-    ${(v.candidatura_email || v.candidatura_link) ? `<h2>Como Candidatar-se</h2><ul class="vaga-meta-lista">
-      ${v.candidatura_email ? `<li><strong>E-mail:</strong> <a href="mailto:${escapeHtml(v.candidatura_email)}">${escapeHtml(v.candidatura_email)}</a></li>` : ""}
-      ${v.candidatura_link ? `<li><strong>Link:</strong> <a href="${escapeHtml(v.candidatura_link)}" target="_blank" rel="noopener">${escapeHtml(v.candidatura_link)}</a></li>` : ""}
-    </ul>` : ""}
-    ${secao("Observações", v.observacoes)}
+    ${(v.candidatura_email || v.candidatura_link) ? `<div class="vaga-card-texto">
+      <h3>Como Candidatar-se</h3>
+      <ul class="vaga-meta-lista">
+        ${v.candidatura_email ? `<li><strong>E-mail:</strong> <a href="mailto:${escapeHtml(v.candidatura_email)}">${escapeHtml(v.candidatura_email)}</a></li>` : ""}
+        ${v.candidatura_link ? `<li><strong>Link:</strong> <a href="${escapeHtml(v.candidatura_link)}" target="_blank" rel="noopener">${escapeHtml(v.candidatura_link)}</a></li>` : ""}
+      </ul>
+    </div>` : ""}
+    ${cardTexto("Observações", v.observacoes)}
     ${v.contacto ? `<p class="vaga-pagina-contacto"><strong>Contacto:</strong> ${escapeHtml(v.contacto)}</p>` : ""}
     ${v.palavras_chave ? `<p class="vaga-pagina-tags">${v.palavras_chave.split(",").map(p => p.trim()).filter(Boolean).map(p => `<span class="vaga-card__badge vaga-card__badge--neutro">${escapeHtml(p)}</span>`).join("")}</p>` : ""}
 
@@ -597,7 +661,7 @@ function cardVaga(v) {
           <p>${escapeHtml(v.empresa)} — ${escapeHtml([v.cidade, v.provincia].filter(Boolean).join(", "))}</p>
         </div>
       </div>
-      <p class="vaga-card__resumo">${escapeHtml(truncar(v.descricao, 110))}</p>
+      <p class="vaga-card__resumo">${escapeHtml(truncar(markdownParaTextoPlano(v.descricao), 110))}</p>
       ${salario ? `<p class="vaga-card__salario">${escapeHtml(salario)}</p>` : ""}
       <div class="vaga-card__rodape">
         <span class="vaga-card__badges">
