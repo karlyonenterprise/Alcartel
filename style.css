@@ -938,39 +938,65 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   color: var(--preto);
 }
 
-/* ── Quadro "Detalhes da Vaga" — grelha de 2 colunas (rótulo/valor),
-   usada no topo da página de vaga para destacar Nº de Vagas, Salário
-   e Idioma. Cada linha só é impressa pelo gerar-site.js se o campo
-   existir, por isso o quadro nunca aparece com espaços vazios. ────── */
+/* ── Quadro "Detalhes da Vaga" — grelha de cartões (rótulo/valor),
+   um cartão por campo, usada no topo da página de vaga. Cada cartão só
+   é impresso pelo gerar-site.js se o campo existir, por isso a grelha
+   nunca aparece com espaços vazios. ─────────────────────────────────── */
 .vaga-detalhes {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px 24px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
   margin: 16px 0 24px;
-  padding: 16px 18px;
-  background: var(--branco);
-  border: 1px solid var(--cinza-borda);
-  border-left: 3px solid var(--ouro);
-  border-radius: var(--radius);
 }
 .vaga-detalhes__item {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
   min-width: 0;
+  padding: 14px 16px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-left: 3px solid var(--ouro);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
 }
 .vaga-detalhes__rotulo {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--texto-suave);
 }
 .vaga-detalhes__valor {
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   font-weight: 600;
   color: var(--preto);
   word-wrap: break-word;
+}
+
+/* ── Cartões de texto corrido (Descrição, Responsabilidades, Requisitos,
+   Documentos, Como Candidatar-se, Observações...) — cada secção da vaga
+   fica no seu próprio cartão em vez de títulos/parágrafos soltos na
+   página. ────────────────────────────────────────────────────────────── */
+.vaga-card-texto {
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 20px 22px;
+  margin: 0 0 16px;
+}
+.vaga-card-texto h3 {
+  font-family: var(--font-titulo);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--verde-escuro);
+  margin-bottom: 10px;
+}
+.vaga-card-texto .vaga-meta-lista {
+  margin: 0;
 }
 
 /* ── Blocos de texto corrido da vaga (descrição, responsabilidades,
@@ -980,6 +1006,25 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .vaga-texto {
   text-align: justify;
   hyphens: auto;
+}
+.vaga-texto p { margin: 0 0 10px; }
+.vaga-texto p:last-child { margin-bottom: 0; }
+.vaga-texto ul {
+  margin: 0 0 10px;
+  padding-left: 4px;
+}
+.vaga-texto ul:last-child { margin-bottom: 0; }
+.vaga-texto ul li {
+  list-style: none;
+  padding: 3px 0 3px 20px;
+  position: relative;
+  text-align: left;
+}
+.vaga-texto ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--ouro);
 }
 
 .vaga-header {
@@ -1706,7 +1751,9 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   #pesquisa       { padding: 36px 16px; }
   .vaga-modal__caixa   { padding: 28px 18px 24px; }
   .vaga-meta-lista     { gap: 6px 14px; padding: 12px; font-size: 0.84rem; }
-  .vaga-detalhes       { grid-template-columns: 1fr; gap: 10px; padding: 14px 16px; }
+  .vaga-detalhes       { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+  .vaga-detalhes__item { padding: 10px 12px; }
+  .vaga-card-texto     { padding: 16px 16px; }
   .vaga-texto          { text-align: left; hyphens: none; }
   .vaga-card__rodape   { flex-wrap: wrap; }
   .vaga-pagina-titulo__logo { width: 48px; height: 48px; }
