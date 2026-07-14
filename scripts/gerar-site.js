@@ -133,6 +133,7 @@ function normalizarVaga(dados) {
     area: ig.area || dados.area || "",
     departamento: ig.departamento || dados.departamento || "",
     numero_vagas: ig.numero_vagas || dados.numero_vagas || 1,
+    idioma: ig.idioma || dados.idioma || "",
     // O widget "hidden" do Decap CMS (admin/config.yml) usa default:
     // "{{now}}", um marcador que só é substituído pela data real quando o
     // ficheiro é criado através do formulário do CMS. Se o JSON for criado
@@ -272,9 +273,9 @@ function formatarSalario(v) {
 
 // ── Imprime um bloco "<h2>título</h2><p>conteúdo</p>" só se houver
 //    conteúdo — evita secções vazias que quebrariam o ritmo do layout ──
-function secao(titulo, conteudo) {
+function secao(titulo, conteudo, classe = "") {
   if (!conteudo) return "";
-  return `<h2>${escapeHtml(titulo)}</h2><p>${escapeHtml(conteudo)}</p>`;
+  return `<h2>${escapeHtml(titulo)}</h2><p${classe ? ` class="${classe}"` : ""}>${escapeHtml(conteudo)}</p>`;
 }
 
 // ── Lista de "chips" de metadados curtos (área, escolaridade, idiomas,
@@ -285,6 +286,23 @@ function listaMeta(pares) {
     `<li><strong>${escapeHtml(rotulo)}:</strong> ${escapeHtml(valor)}</li>`);
   if (!itens.length) return "";
   return `<ul class="vaga-meta-lista">${itens.join("")}</ul>`;
+}
+
+// ── Quadro "Detalhes da Vaga" — grelha de 2 colunas (rótulo/valor) usada
+//    no topo da página de vaga. Cada linha só aparece se o campo
+//    correspondente existir; se NENHUM campo existir, o quadro inteiro
+//    não é impresso (evita uma caixa vazia no layout). Os pares aceites
+//    são passados pelo chamador para este quadro poder ser reaproveitado
+//    com conjuntos de campos diferentes no futuro, se for preciso. ──────
+function quadroDetalhes(pares) {
+  const linhas = pares.filter(([, valor]) => valor);
+  if (!linhas.length) return "";
+  const celulas = linhas.map(([rotulo, valor]) =>
+    `<div class="vaga-detalhes__item"><span class="vaga-detalhes__rotulo">${escapeHtml(rotulo)}</span><span class="vaga-detalhes__valor">${escapeHtml(valor)}</span></div>`
+  ).join("\n      ");
+  return `<div class="vaga-detalhes" role="table" aria-label="Detalhes da vaga">
+      ${celulas}
+    </div>`;
 }
 
 // ── Texto de localização seguro: usa cidade + província quando ambas
@@ -506,19 +524,25 @@ function paginaVaga(v) {
     ${blocoPartilha(v, url)}
     <div class="divider"></div>
 
+    <h2>Detalhes da Vaga</h2>
+    ${quadroDetalhes([
+      ["Nº de Vagas", v.numero_vagas ? String(v.numero_vagas) : ""],
+      ["Salário", formatarSalario(v)],
+      ["Idioma", v.idioma]
+    ])}
+
     ${listaMeta([
       ["País", v.pais], ["Área", v.area], ["Departamento", v.departamento],
-      ["Nº de vagas", v.numero_vagas ? String(v.numero_vagas) : ""],
-      ["Horário", v.horario_trabalho], ["Salário", formatarSalario(v)],
+      ["Horário", v.horario_trabalho],
       ["Benefícios", v.beneficios]
     ])}
 
     <h2>Descrição da Vaga</h2>
-    <p>${escapeHtml(v.descricao)}</p>
-    ${secao("Responsabilidades", v.responsabilidades)}
+    <p class="vaga-texto">${escapeHtml(v.descricao)}</p>
+    ${secao("Responsabilidades", v.responsabilidades, "vaga-texto")}
     <h2>Requisitos</h2>
-    <p>${escapeHtml(v.requisitos_obrigatorios)}</p>
-    ${secao("Requisitos Desejáveis", v.requisitos_desejaveis)}
+    <p class="vaga-texto">${escapeHtml(v.requisitos_obrigatorios)}</p>
+    ${secao("Requisitos Desejáveis", v.requisitos_desejaveis, "vaga-texto")}
 
     ${listaMeta([
       ["Escolaridade", v.escolaridade], ["Experiência", v.experiencia],
@@ -527,7 +551,7 @@ function paginaVaga(v) {
       ["Competências comportamentais", v.competencias_comportamentais]
     ])}
 
-    ${secao("Documentos Exigidos", v.documentos_exigidos)}
+    ${secao("Documentos Exigidos", v.documentos_exigidos, "vaga-texto")}
     ${secao("Como Candidatar-se", v.como_candidatar)}
     ${(v.candidatura_email || v.candidatura_link) ? `<h2>Como Candidatar-se</h2><ul class="vaga-meta-lista">
       ${v.candidatura_email ? `<li><strong>E-mail:</strong> <a href="mailto:${escapeHtml(v.candidatura_email)}">${escapeHtml(v.candidatura_email)}</a></li>` : ""}
