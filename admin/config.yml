@@ -96,16 +96,52 @@ collections:
         required: true
         options: ["Tempo Inteiro", "Meio Período", "Estágio", "Freelance", "Temporário", "Prestação de Serviços"]
 
-      # ── 6. Principais Responsabilidades ─────────────────────
-      - { name: "responsabilidades", label: "Principais Responsabilidades", widget: "markdown", required: true, modes: ["raw"] }
+      # ── 6. Nível Académico ──────────────────────────────────
+      - name: "nivel_academico"
+        label: "Nível Académico Mínimo"
+        widget: "select"
+        required: true
+        options:
+          - "Ensino Primário (6º ano)"
+          - "Ensino Secundário (9º ano)"
+          - "Ensino Secundário (12º ano)"
+          - "Formação Profissional"
+          - "Diploma/Bacharelato"
+          - "Licenciatura"
+          - "Mestrado"
+          - "Doutorado"
+          - "Não Especificado"
+        hint: "Selecione o nível académico mínimo exigido para esta posição."
 
-      # ── 7. Requisitos ────────────────────────────────────────
-      - { name: "requisitos", label: "Requisitos", widget: "markdown", required: true, modes: ["raw"] }
+      # ── 7. Descrição Geral ──────────────────────────────────
+      - name: "descricao"
+        label: "Descrição Geral da Vaga"
+        widget: "text"
+        required: false
+        hint: "Breve resumo ou contexto geral sobre a vaga e a oportunidade. Este campo é opcional."
+
+      # ── 8. Principais Responsabilidades ─────────────────────
+      - name: "responsabilidades"
+        label: "Principais Responsabilidades"
+        widget: "text"
+        required: true
+        hint: "Descreva as principais responsabilidades. Cada ponto em linha nova."
+
+      # ── 9. Requisitos ────────────────────────────────────────
+      - name: "requisitos"
+        label: "Requisitos"
+        widget: "text"
+        required: true
+        hint: "Liste os requisitos necessários. Cada requisito em linha nova."
       
-      # ── 8. Documentos Necessarios ─────────────────────
-      - { name: "documentos", label: "Documentos Necessarios", widget: "markdown", required: true, modes: ["raw"] }
+      # ── 10. Documentos Necessarios ──────────────────────────
+      - name: "documentos"
+        label: "Documentos Necessarios"
+        widget: "text"
+        required: false
+        hint: "Documentos a serem apresentados na candidatura. Opcional. Cada documento em linha nova."
 
-      # ── 8. Como Candidatar-se ───────────────────────────────
+      # ── 11. Como Candidatar-se ──────────────────────────────
       # Widget customizado (registado em admin/index.html) que guarda
       # { email: "...", link: "..." } e IMPEDE a publicação se os dois
       # estiverem vazios. Ver admin/index.html para o código do widget.
@@ -115,7 +151,7 @@ collections:
         required: true
         hint: "Preenche pelo menos um dos dois campos (e-mail ou link). Não é possível publicar se ambos ficarem vazios."
 
-      # ── 9. Data Limite para Candidatura ─────────────────────
+      # ── 12. Data Limite para Candidatura ─────────────────────
       - name: "data_limite"
         label: "Data Limite para Candidatura"
         widget: "datetime"
@@ -125,7 +161,7 @@ collections:
         picker_utc: false
         hint: "Apenas a data (sem hora)."
 
-      # ── 10. Categoria ────────────────────────────────────────
+      # ── 13. Categoria ────────────────────────────────────────
       # Define em que página /categoria/ a vaga aparece e a etiqueta
       # mostrada no cartão e na página da vaga. gerar-site.js já lê este
       # campo (dados.categoria); sem ele, todas as vagas caíam em "Outra".
@@ -163,7 +199,7 @@ collections:
           - "Arte e Design"
           - "Outros"
 
-      # ── 11. Palavras-chave (SEO) ─────────────────────────────
+      # ── 14. Palavras-chave (SEO) ─────────────────────────────
       # Vão para a tag <meta name="keywords"> e aparecem como etiquetas
       # visíveis no fim da página da vaga — ajudam o Google a perceber do
       # que a vaga trata e reforçam a relevância para pesquisas locais
