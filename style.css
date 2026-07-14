@@ -938,6 +938,50 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   color: var(--preto);
 }
 
+/* ── Quadro "Detalhes da Vaga" — grelha de 2 colunas (rótulo/valor),
+   usada no topo da página de vaga para destacar Nº de Vagas, Salário
+   e Idioma. Cada linha só é impressa pelo gerar-site.js se o campo
+   existir, por isso o quadro nunca aparece com espaços vazios. ────── */
+.vaga-detalhes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 24px;
+  margin: 16px 0 24px;
+  padding: 16px 18px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-left: 3px solid var(--ouro);
+  border-radius: var(--radius);
+}
+.vaga-detalhes__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.vaga-detalhes__rotulo {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+.vaga-detalhes__valor {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--preto);
+  word-wrap: break-word;
+}
+
+/* ── Blocos de texto corrido da vaga (descrição, responsabilidades,
+   requisitos, documentos exigidos). O body já é justify por omissão,
+   mas em ecrãs estreitos o justify cria "rios" de espaço em branco —
+   por isso estes blocos caem para alinhamento à esquerda em mobile. ── */
+.vaga-texto {
+  text-align: justify;
+  hyphens: auto;
+}
+
 .vaga-header {
   display: flex;
   align-items: flex-start;
@@ -1662,6 +1706,8 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   #pesquisa       { padding: 36px 16px; }
   .vaga-modal__caixa   { padding: 28px 18px 24px; }
   .vaga-meta-lista     { gap: 6px 14px; padding: 12px; font-size: 0.84rem; }
+  .vaga-detalhes       { grid-template-columns: 1fr; gap: 10px; padding: 14px 16px; }
+  .vaga-texto          { text-align: left; hyphens: none; }
   .vaga-card__rodape   { flex-wrap: wrap; }
   .vaga-pagina-titulo__logo { width: 48px; height: 48px; }
   .vaga-share__menu    { left: auto; right: 0; min-width: 190px; }
