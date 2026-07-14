@@ -96,7 +96,31 @@ collections:
         required: true
         options: ["Tempo Inteiro", "Meio Período", "Estágio", "Freelance", "Temporário", "Prestação de Serviços"]
 
-      # ── 6. Nível Académico ──────────────────────────────────
+      # ── 6. Número de Vagas ───────────────────────────────────
+      - name: "numero_vagas"
+        label: "Número de Vagas"
+        widget: "number"
+        value_type: "int"
+        required: false
+        min: 1
+        hint: "Opcional. Se não preenchido, este campo não aparece nos Detalhes da Vaga."
+
+      # ── 6b. Salário ──────────────────────────────────────────
+      - name: "salario"
+        label: "Salário"
+        widget: "string"
+        required: false
+        hint: "Opcional. Ex: '15.000 MT a 25.000 MT' ou 'A negociar'. Se em branco, não aparece nos Detalhes da Vaga."
+
+      # ── 6c. Idioma ───────────────────────────────────────────
+      - name: "idioma"
+        label: "Idioma"
+        widget: "select"
+        required: false
+        options: ["Português", "Inglês", "Português e Inglês", "Outro"]
+        hint: "Opcional. Idioma exigido ou usado na vaga."
+
+      # ── 7. Nível Académico ──────────────────────────────────
       - name: "nivel_academico"
         label: "Nível Académico Mínimo"
         widget: "select"
@@ -113,35 +137,43 @@ collections:
           - "Não Especificado"
         hint: "Selecione o nível académico mínimo exigido para esta posição."
 
-      # ── 7. Descrição Geral ──────────────────────────────────
+      # ── 8. Descrição Geral ──────────────────────────────────
       - name: "descricao"
         label: "Descrição Geral da Vaga"
-        widget: "text"
+        widget: "markdown"
         required: false
-        hint: "Breve resumo ou contexto geral sobre a vaga e a oportunidade. Este campo é opcional."
+        modes: ["raw"]
+        buttons: ["bold", "bulleted-list"]
+        hint: "Breve resumo ou contexto geral sobre a vaga. Opcional. Use o botão de negrito e de marcadores conforme necessário."
 
-      # ── 8. Principais Responsabilidades ─────────────────────
+      # ── 9. Principais Responsabilidades ─────────────────────
       - name: "responsabilidades"
         label: "Principais Responsabilidades"
-        widget: "text"
+        widget: "markdown"
         required: true
-        hint: "Descreva as principais responsabilidades. Cada ponto em linha nova."
+        modes: ["raw"]
+        buttons: ["bold", "bulleted-list"]
+        hint: "Descreva as principais responsabilidades. Use o botão de marcadores para listar cada ponto."
 
-      # ── 9. Requisitos ────────────────────────────────────────
+      # ── 10. Requisitos ────────────────────────────────────────
       - name: "requisitos"
         label: "Requisitos"
-        widget: "text"
+        widget: "markdown"
         required: true
-        hint: "Liste os requisitos necessários. Cada requisito em linha nova."
+        modes: ["raw"]
+        buttons: ["bold", "bulleted-list"]
+        hint: "Liste os requisitos necessários. Use o botão de marcadores para cada requisito."
       
-      # ── 10. Documentos Necessarios ──────────────────────────
+      # ── 11. Documentos Necessarios ──────────────────────────
       - name: "documentos"
         label: "Documentos Necessarios"
-        widget: "text"
+        widget: "markdown"
         required: false
-        hint: "Documentos a serem apresentados na candidatura. Opcional. Cada documento em linha nova."
+        modes: ["raw"]
+        buttons: ["bold", "bulleted-list"]
+        hint: "Documentos a apresentar na candidatura. Opcional. Use marcadores para cada documento."
 
-      # ── 11. Como Candidatar-se ──────────────────────────────
+      # ── 12. Como Candidatar-se ──────────────────────────────
       # Widget customizado (registado em admin/index.html) que guarda
       # { email: "...", link: "..." } e IMPEDE a publicação se os dois
       # estiverem vazios. Ver admin/index.html para o código do widget.
@@ -151,7 +183,7 @@ collections:
         required: true
         hint: "Preenche pelo menos um dos dois campos (e-mail ou link). Não é possível publicar se ambos ficarem vazios."
 
-      # ── 12. Data Limite para Candidatura ─────────────────────
+      # ── 13. Data Limite para Candidatura ─────────────────────
       - name: "data_limite"
         label: "Data Limite para Candidatura"
         widget: "datetime"
@@ -161,7 +193,7 @@ collections:
         picker_utc: false
         hint: "Apenas a data (sem hora)."
 
-      # ── 13. Categoria ────────────────────────────────────────
+      # ── 14. Categoria ────────────────────────────────────────
       # Define em que página /categoria/ a vaga aparece e a etiqueta
       # mostrada no cartão e na página da vaga. gerar-site.js já lê este
       # campo (dados.categoria); sem ele, todas as vagas caíam em "Outra".
@@ -199,7 +231,7 @@ collections:
           - "Arte e Design"
           - "Outros"
 
-      # ── 14. Palavras-chave (SEO) ─────────────────────────────
+      # ── 15. Palavras-chave (SEO) ─────────────────────────────
       # Vão para a tag <meta name="keywords"> e aparecem como etiquetas
       # visíveis no fim da página da vaga — ajudam o Google a perceber do
       # que a vaga trata e reforçam a relevância para pesquisas locais
