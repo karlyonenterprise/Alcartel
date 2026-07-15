@@ -49,7 +49,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="/logo.png" fetchpriority="high">
+  <link rel="preload" as="image" href="/logo.webp" type="image/webp" fetchpriority="high">
 
   <!-- ── SCHEMA.ORG JSON-LD ── -->
   <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://alcartel.vercel.app/servicos.html#webpage", "url": "https://alcartel.vercel.app/servicos.html", "name": "Serviços – Alcartel", "description": "Conheça os serviços digitais do Alcartel: marketing digital, design gráfico, desenvolvimento web, currículos profissionais e consultoria.", "inLanguage": "pt-MZ", "isPartOf": {"@id": "https://alcartel.vercel.app/#website"}, "breadcrumb": {"@id": "https://alcartel.vercel.app/servicos.html#breadcrumb"}}, {"@type": "BreadcrumbList", "@id": "https://alcartel.vercel.app/servicos.html#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Início", "item": "https://alcartel.vercel.app/"}, {"@type": "ListItem", "position": 2, "name": "Serviços", "item": "https://alcartel.vercel.app/servicos.html"}]}]}</script>
@@ -85,9 +85,9 @@
   <ul>
     <li><a href="index.html">Início</a></li>
     <li><a href="vagas.html">Vagas</a></li>
+    <li><a href="noticias.html">Notícias</a></li>
     <li><a href="servicos.html" aria-current="page">Serviços</a></li>
     <li><a href="sobre.html">Sobre</a></li>
-    <li><a href="contactos.html">Contacto</a></li>
   </ul>
 </nav>
 
@@ -234,6 +234,7 @@
   <p class="footer-brand">Al<span>c</span>artel</p>
   <p>© 2025 <a href="/">Alcartel</a> – Soluções Digitais Profissionais</p>
   <p style="margin-top:6px;">Uma iniciativa da <strong>Karlyon Enterprise S.A.</strong> · Beira, Moçambique</p>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
 
 <a
@@ -249,5 +250,6 @@
   </svg>
 </a>
 <script src="/js/pedido-form.js" defer></script>
+<script src="/js/contador-visitas.js" defer></script>
 </body>
 </html>

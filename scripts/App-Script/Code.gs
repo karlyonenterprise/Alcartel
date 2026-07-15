@@ -14,6 +14,11 @@
  *      → chamado pelo GitHub Action (.github/workflows/notificar-vagas.yml)
  *        sempre que uma vaga nova é publicada; envia um e-mail a todos os
  *        inscritos cuja categoria corresponda à da vaga.
+ *   3. doGet(e) com {acao:"contar_visita"}
+ *      → chamado pelo rodapé de todas as páginas do site
+ *        (js/contador-visitas.js) em cada carregamento; incrementa e
+ *        devolve o total acumulado de visitas, guardado nas
+ *        Propriedades do Script (chave TOTAL_VISITAS).
  * ══════════════════════════════════════════════════════════════════
  */
 
@@ -41,6 +46,18 @@ function doPost(e) {
   } catch (erro) {
     return respostaJson_({ sucesso: false, erro: "erro_interno" });
   }
+}
+
+// ── Pedidos GET: usado apenas pelo contador de visitas do rodapé.
+//    Um pedido GET simples (via tag <script>, formato JSONP) evita
+//    problemas de CORS que um fetch() normal teria contra um Web App
+//    do Apps Script chamado a partir do browser de cada visitante.
+function doGet(e) {
+  var parametros = (e && e.parameter) || {};
+  if (parametros.acao === "contar_visita") {
+    return contarVisita_(parametros.callback);
+  }
+  return respostaJson_({ sucesso: false, erro: "acao_invalida" });
 }
 
 // ── 1. Registo de inscrição no formulário "Alerta de Vagas" ──────
@@ -183,6 +200,23 @@ function enviarEmailNovaVaga_(destinatario, vaga) {
   MailApp.sendEmail(destinatario, assunto, corpo);
 }
 
+// ── 3. Contador total de visitas do site ─────────────────────────
+// Guardado nas Propriedades do Script (chave TOTAL_VISITAS) — não
+// precisa de folha de cálculo nem de token, é só um número público.
+function contarVisita_(callback) {
+  var total;
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var props = PropertiesService.getScriptProperties();
+    total = Number(props.getProperty("TOTAL_VISITAS") || 0) + 1;
+    props.setProperty("TOTAL_VISITAS", String(total));
+  } finally {
+    lock.releaseLock();
+  }
+  return respostaJsonOuJsonp_({ sucesso: true, total: total }, callback);
+}
+
 // ── Utilitários ────────────────────────────────────────────────
 function obterFolha_() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -202,4 +236,16 @@ function validarEmail_(email) {
 function respostaJson_(objecto) {
   return ContentService.createTextOutput(JSON.stringify(objecto))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Igual a respostaJson_, mas quando existe "callback" (pedido JSONP via
+// tag <script>, usado pelo contador de visitas), envolve o JSON numa
+// chamada de função em JavaScript puro em vez de aplicação/json.
+function respostaJsonOuJsonp_(objecto, callback) {
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + "(" + JSON.stringify(objecto) + ");")
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return respostaJson_(objecto);
 }

@@ -60,7 +60,7 @@ slug:
 
 collections:
   - name: "vagas"
-    label: "Vagas de Emprego"
+    label: "📋 Vagas"
     label_singular: "Vaga"
     folder: "content/vagas"              # cada vaga = 1 ficheiro em /content/vagas/
                                           # ÚNICA fonte de dados de vagas do site —
@@ -252,6 +252,103 @@ collections:
       - { name: "data_publicacao", label: "Data de Publicação (automático)", widget: "hidden", default: "{{now}}" }
       - { name: "estado_vaga", label: "Estado da Vaga (automático)", widget: "hidden", default: "Aberta" }
       - { name: "destaque", label: "Vaga em Destaque (automático)", widget: "hidden", default: false }
+
+  # ══════════════════════════════════════════════════════════
+  # NOTÍCIAS — colecção "Notícias e Dicas de Emprego" apresentada na
+  # homepage (2 mais recentes) e em /noticias (listagem completa) +
+  # /noticias/{slug} (página individual). Mesmo backend/repositório/
+  # regras de slug da colecção "vagas" acima — não é um CMS separado,
+  # apenas uma segunda colecção no MESMO admin/config.yml.
+  # scripts/gerar-site.js lê exactamente esta pasta no build.
+  # ══════════════════════════════════════════════════════════
+  - name: "noticias"
+    label: "📰 Notícias"
+    label_singular: "Notícia"
+    folder: "content/noticias"           # cada notícia = 1 ficheiro em /content/noticias/
+    create: true
+    slug: "{{fields.titulo}}"            # slug automático a partir do título (ex: 5-dicas-para-...)
+    extension: "json"
+    format: "json"
+    summary: "{{fields.titulo}} — {{fields.estado}}"
+    fields:
+      # ── 1. Título ────────────────────────────────────────────
+      - { name: "titulo", label: "Título", widget: "string", required: true }
+
+      # ── 2. Resumo ────────────────────────────────────────────
+      - name: "resumo"
+        label: "Resumo"
+        widget: "text"
+        required: true
+        hint: "Texto curto mostrado nos cartões de notícia (homepage e /noticias). Recomendado até 160 caracteres."
+
+      # ── 3. Conteúdo ──────────────────────────────────────────
+      - name: "conteudo"
+        label: "Conteúdo"
+        widget: "markdown"
+        required: true
+        modes: ["raw"]
+        buttons: ["bold", "bulleted-list"]
+        hint: "Texto completo da notícia. Use o botão de negrito e de marcadores conforme necessário."
+
+      # ── 4. Imagem de Destaque ────────────────────────────────
+      - name: "imagem_destaque"
+        label: "Imagem de Destaque"
+        widget: "image"
+        required: false
+        media_folder: "/assets/noticias"
+        public_folder: "/assets/noticias"
+        hint: "Opcional. Se não for enviada, o site usa a imagem genérica da Alcartel."
+
+      # ── 5. Autor ─────────────────────────────────────────────
+      - { name: "autor", label: "Autor", widget: "string", required: true, default: "Equipa Alcartel" }
+
+      # ── 6. Categoria ─────────────────────────────────────────
+      - name: "categoria"
+        label: "Categoria"
+        widget: "select"
+        required: true
+        options:
+          - "Notícias Alcartel"
+          - "Mercado de Trabalho"
+          - "Dicas de Carreira"
+          - "Currículo e Candidaturas"
+          - "Entrevistas"
+          - "Educação e Formação"
+
+      # ── 7. Data de Publicação ────────────────────────────────
+      - name: "data_publicacao"
+        label: "Data de Publicação"
+        widget: "datetime"
+        required: true
+        default: "{{now}}"
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm"
+        picker_utc: false
+
+      # ── 8. Estado ────────────────────────────────────────────
+      # Só notícias com estado "Publicado" são geradas no site/sitemap
+      # (ver scripts/gerar-site.js). Uma notícia "Rascunho" fica
+      # guardada no repositório mas continua invisível ao público.
+      - name: "estado"
+        label: "Estado"
+        widget: "select"
+        required: true
+        default: "Rascunho"
+        options: ["Rascunho", "Publicado"]
+
+      # ── 9. Meta Título (SEO) ─────────────────────────────────
+      - name: "meta_titulo"
+        label: "Meta Título (SEO)"
+        widget: "string"
+        required: false
+        hint: "Opcional. Se em branco, usa-se \"Título – Alcartel Notícias\"."
+
+      # ── 10. Meta Descrição (SEO) ──────────────────────────────
+      - name: "meta_descricao"
+        label: "Meta Descrição (SEO)"
+        widget: "text"
+        required: false
+        hint: "Opcional. Se em branco, usa-se o Resumo. Recomendado até 160 caracteres."
 
 # NOTA: a colecção "Páginas Institucionais" (edição de sobre.html/servicos.html
 # inteiros por um único campo markdown) foi removida nesta ronda — estes

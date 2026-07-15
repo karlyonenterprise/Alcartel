@@ -7,11 +7,12 @@
  * instalação automático no Android/Chrome
  */
 
-const CACHE_NAME = "alcartel-v1";
+const CACHE_NAME = "alcartel-v2";
 const urlsParaCache = [
   "/",
   "/index.html",
   "/vagas.html",
+  "/noticias.html",
   "/sobre.html",
   "/servicos.html",
   "/contactos.html",

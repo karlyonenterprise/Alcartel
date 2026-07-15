@@ -32,6 +32,11 @@ const ROOT = path.join(__dirname, "..");
 const SITE_URL = "https://alcartel.vercel.app";
 const VAGAS_DIR_FONTE = path.join(ROOT, "content/vagas");
 
+// Fonte única de dados de notícias (Decap CMS grava aqui, colecção
+// "noticias" em admin/config.yml) — 1 ficheiro JSON por notícia, o mesmo
+// padrão usado em content/vagas/.
+const NOTICIAS_DIR_FONTE = path.join(ROOT, "content/noticias");
+
 // Lista de categorias do formulário "Alerta de Vagas" (campo "Categoria da
 // vaga pretendida"). Esta lista é INDEPENDENTE das categorias de vaga do
 // Decap CMS (admin/config.yml) — a pessoa que se inscreve para alertas
@@ -241,6 +246,62 @@ function carregarVagas() {
 }
 
 const vagas = carregarVagas();
+
+// ══════════════════════════════════════════════════════════════
+// NOTÍCIAS — fonte: content/noticias/*.json (colecção "noticias" do
+// Decap CMS). Segue exactamente o mesmo padrão de vagas: normaliza,
+// carrega, ordena da mais recente para a mais antiga, e só entram no
+// site as notícias com estado "Publicado" (um "Rascunho" fica gravado
+// no repositório mas nunca é gerado nem aparece no sitemap). ─────────
+function normalizarNoticia(dados) {
+  return {
+    titulo: dados.titulo || "",
+    resumo: dados.resumo || "",
+    conteudo: dados.conteudo || "",
+    imagem_destaque: dados.imagem_destaque || "",
+    autor: dados.autor || "Equipa Alcartel",
+    categoria: dados.categoria || "Notícias Alcartel",
+    // Mesma rede de segurança usada em data_publicacao das vagas: se o
+    // valor estiver vazio, for o marcador literal "{{now}}" (por criar o
+    // ficheiro fora do fluxo normal do CMS) ou não for uma data válida,
+    // usa-se a data de hoje em vez de partir o build ou o Schema.org.
+    data_publicacao: (() => {
+      const bruto = dados.data_publicacao || "";
+      const valida = bruto && !bruto.includes("{{") && !isNaN(new Date(bruto).getTime());
+      if (!valida && bruto) {
+        console.warn(`⚠️  data_publicacao inválida (\"${bruto}\") numa notícia — a usar a data de hoje como substituto.`);
+      }
+      return valida ? bruto : new Date().toISOString();
+    })(),
+    estado: dados.estado || "Rascunho",
+    meta_titulo: dados.meta_titulo || dados.titulo || "",
+    meta_descricao: dados.meta_descricao || dados.resumo || ""
+  };
+}
+
+function carregarNoticias() {
+  if (!fs.existsSync(NOTICIAS_DIR_FONTE)) return [];
+  return fs.readdirSync(NOTICIAS_DIR_FONTE)
+    .filter(f => f.endsWith(".json"))
+    .map(f => {
+      const bruto = JSON.parse(fs.readFileSync(path.join(NOTICIAS_DIR_FONTE, f), "utf-8"));
+      const dados = normalizarNoticia(bruto);
+      // Tal como em vagas: o nome do ficheiro (gerado pelo Decap a partir
+      // do título, via as regras globais "slug:" do config.yml) é sempre
+      // a fonte da verdade do slug/URL da notícia.
+      dados.slug = f.replace(/\.json$/, "");
+      if (!/^[a-z0-9-]+$/.test(dados.slug)) {
+        console.warn(`⚠️  Slug inválido para URL em \"${f}\": \"${dados.slug}\" — contém caracteres fora de a-z/0-9/\"-\". Corrige o nome do ficheiro.`);
+      }
+      return dados;
+    })
+    // Só notícias explicitamente publicadas aparecem no site — um
+    // "Rascunho" fica guardado no repositório mas invisível ao público.
+    .filter(n => n.estado === "Publicado")
+    .sort((a, b) => new Date(b.data_publicacao) - new Date(a.data_publicacao));
+}
+
+const noticias = carregarNoticias();
 
 function slugify(str) {
   return str
@@ -561,9 +622,9 @@ function paginaVaga(v) {
   <ul>
     <li><a href="/index.html">Início</a></li>
     <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
+    <li><a href="/noticias.html">Notícias</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/contactos.html">Contacto</a></li>
+    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main">
@@ -631,8 +692,10 @@ function paginaVaga(v) {
 <footer class="site-footer" role="contentinfo">
   <p class="footer-brand">Al<span>c</span>artel</p>
   <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
 <script src="/scripts/vaga-share.js" defer></script>
+<script src="/js/contador-visitas.js" defer></script>
 </body>
 </html>
 `;
@@ -791,9 +854,9 @@ function paginaListagem({ tipo, valor, lista }) {
   <ul>
     <li><a href="/index.html">Início</a></li>
     <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
+    <li><a href="/noticias.html">Notícias</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/contactos.html">Contacto</a></li>
+    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main" style="max-width:720px;margin:0 auto;padding:32px 20px;">
@@ -806,8 +869,262 @@ function paginaListagem({ tipo, valor, lista }) {
 <footer class="site-footer" role="contentinfo">
   <p class="footer-brand">Al<span>c</span>artel</p>
   <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
 ${blocoModal(lista)}
+<script src="/js/contador-visitas.js" defer></script>
+</body>
+</html>
+`;
+}
+
+// ══════════════════════════════════════════════════════════════
+// NOTÍCIAS — geração de páginas (mesmos princípios das vagas: URLs
+// absolutas para partilha, meta description exclusiva, Schema.org
+// próprio — aqui NewsArticle em vez de JobPosting). ─────────────────
+function formatarDataPt(iso) {
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  return new Intl.DateTimeFormat("pt-MZ", { day: "2-digit", month: "long", year: "numeric" }).format(d);
+}
+
+// Imagem de destaque da notícia — se não houver nenhuma enviada no CMS,
+// usa a imagem genérica do site (a mesma rede de segurança de imagem
+// aplicada às vagas), para nunca ficar sem imagem de preview/partilha.
+function imagemNoticia(n) {
+  return n.imagem_destaque ? urlAbsoluta(n.imagem_destaque) : `${SITE_URL}/Og-image.jpg`;
+}
+
+function metaDescricaoNoticia(n) {
+  const resumo = n.resumo || markdownParaTextoPlano(n.conteudo);
+  return truncar(n.meta_descricao || resumo || n.titulo, 160);
+}
+
+// ── Cartão de notícia — reaproveita a mesma "casca" visual do cartão de
+//    vaga (.vaga-card, .vaga-card__resumo, .btn) para garantir 100% de
+//    consistência com a secção de Vagas, apenas acrescentando a imagem
+//    de destaque e a data. Usado tanto na homepage (2 mais recentes)
+//    como em /noticias (lista completa). ─────────────────────────────
+function cardNoticia(n) {
+  const imagem = n.imagem_destaque ? escapeHtml(n.imagem_destaque) : "/Og-image.jpg";
+  const resumo = truncar(n.resumo || markdownParaTextoPlano(n.conteudo), 130);
+  return `    <li class="vaga-card noticia-card" role="listitem">
+      <img class="noticia-card__imagem" src="${imagem}" alt="${escapeHtml(n.titulo)}" loading="lazy" width="400" height="220">
+      <div class="noticia-card__corpo">
+        <p class="noticia-card__meta">
+          <span class="vaga-card__badge">${escapeHtml(n.categoria)}</span>
+          <span class="noticia-card__data">${escapeHtml(formatarDataPt(n.data_publicacao))}</span>
+        </p>
+        <h3><a href="/noticias/${n.slug}">${escapeHtml(n.titulo)}</a></h3>
+        <p class="vaga-card__resumo">${escapeHtml(resumo)}</p>
+        <p class="noticia-card__rodape noticia-card__autor">Por ${escapeHtml(n.autor)}</p>
+      </div>
+    </li>`;
+}
+
+// ── Modelo de página individual de notícia, com Schema.org NewsArticle
+//    + BreadcrumbList, meta tags (title/description/OG/Twitter) únicas
+//    por notícia — mesmo padrão SEO já usado nas páginas de vaga. ────
+function paginaNoticia(n) {
+  const url = `${SITE_URL}/noticias/${n.slug}`;
+  const imagem = imagemNoticia(n);
+  const descricao = metaDescricaoNoticia(n);
+  const tituloMeta = n.meta_titulo || `${n.titulo} – Alcartel Notícias`;
+
+  const newsArticle = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: n.titulo,
+    description: descricao,
+    image: [imagem],
+    datePublished: n.data_publicacao,
+    dateModified: n.data_publicacao,
+    author: { "@type": "Person", name: n.autor || "Equipa Alcartel" },
+    publisher: {
+      "@type": "Organization",
+      name: "Alcartel",
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` }
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    articleSection: n.categoria,
+    url
+  };
+
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Notícias", "item": `${SITE_URL}/noticias` },
+      { "@type": "ListItem", "position": 3, "name": n.titulo, "item": url }
+    ]
+  };
+
+  return `<!DOCTYPE html>
+<html lang="pt-MZ" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  ${GSC_META}
+  <title>${escapeHtml(tituloMeta)}</title>
+  <meta name="description" content="${escapeHtml(descricao)}">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="${url}">
+  <meta name="theme-color" content="#0e2818">
+  ${ICONS_HEAD}
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Alcartel">
+  <meta property="og:title" content="${escapeHtml(tituloMeta)}">
+  <meta property="og:description" content="${escapeHtml(descricao)}">
+  <meta property="og:url" content="${url}">
+  <meta property="og:image" content="${imagem}">
+  <meta property="og:image:alt" content="${escapeHtml(n.titulo)}">
+  <meta property="article:published_time" content="${n.data_publicacao}">
+  <meta property="article:author" content="${escapeHtml(n.autor)}">
+  <meta property="og:locale" content="pt_MZ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(tituloMeta)}">
+  <meta name="twitter:description" content="${escapeHtml(descricao)}">
+  <meta name="twitter:image" content="${imagem}">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">${JSON.stringify(newsArticle)}</script>
+  <script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>
+  ${ANALYTICS_HEAD}
+</head>
+<body>
+<header class="site-header" role="banner">
+  <a href="/" aria-label="Alcartel – Página inicial">
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="300" height="90"></picture>
+  </a>
+</header>
+<nav class="site-nav" role="navigation" aria-label="Navegação principal">
+  <ul>
+    <li><a href="/index.html">Início</a></li>
+    <li><a href="/vagas.html">Vagas</a></li>
+    <li><a href="/noticias.html" aria-current="page">Notícias</a></li>
+    <li><a href="/servicos.html">Serviços</a></li>
+    <li><a href="/sobre.html">Sobre</a></li>
+  </ul>
+</nav>
+<main role="main">
+  <article style="max-width:720px;margin:0 auto;padding:32px 20px;">
+    <nav aria-label="Breadcrumb" style="font-size:0.85rem;margin-bottom:16px;">
+      <a href="/index.html">Início</a> › <a href="/noticias">Notícias</a> ›
+      <span>${escapeHtml(n.titulo)}</span>
+    </nav>
+    <p class="vaga-pagina-badges">
+      <span class="vaga-card__badge">${escapeHtml(n.categoria)}</span>
+    </p>
+    <h1 class="vaga-pagina-titulo"><span>${escapeHtml(n.titulo)}</span></h1>
+    <p class="noticia-pagina-meta">Por ${escapeHtml(n.autor)} · Publicado em ${escapeHtml(formatarDataPt(n.data_publicacao))}</p>
+    ${n.imagem_destaque ? `<img class="noticia-pagina-imagem" src="${escapeHtml(n.imagem_destaque)}" alt="${escapeHtml(n.titulo)}">` : ""}
+    <div class="divider"></div>
+    <div class="noticia-texto">${markdownParaHtml(n.conteudo) || `<p>${escapeHtml(n.resumo)}</p>`}</div>
+  </article>
+</main>
+<footer class="site-footer" role="contentinfo">
+  <p class="footer-brand">Al<span>c</span>artel</p>
+  <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
+</footer>
+<script src="/js/contador-visitas.js" defer></script>
+</body>
+</html>
+`;
+}
+
+// ── Modelo da página /noticias (listagem completa, mais recente
+//    primeiro), com o mesmo grid/estilo visual das vagas. ────────────
+function paginaListagemNoticias(lista) {
+  const url = `${SITE_URL}/noticias`;
+  const cards = lista.length
+    ? lista.map(cardNoticia).join("\n")
+    : `    <li class="vaga-card vaga-card--vazio"><p>Sem notícias publicadas de momento. Volte em breve.</p></li>`;
+
+  const collectionPage = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collectionpage`,
+    "url": url,
+    "name": "Notícias e Dicas de Emprego – Alcartel",
+    "description": "Notícias, dicas de carreira e conteúdos sobre o mercado de emprego em Moçambique, pela Alcartel.",
+    "inLanguage": "pt-MZ",
+    "isPartOf": { "@id": `${SITE_URL}/#website` },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": lista.map((n, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "url": `${SITE_URL}/noticias/${n.slug}`,
+        "name": n.titulo
+      }))
+    }
+  };
+
+  return `<!DOCTYPE html>
+<html lang="pt-MZ" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  ${GSC_META}
+  <title>Notícias e Dicas de Emprego – Alcartel</title>
+  <meta name="description" content="Fique a par das últimas notícias do mercado de emprego em Moçambique e receba dicas de carreira da Alcartel.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${url}">
+  <meta name="theme-color" content="#0e2818">
+  ${ICONS_HEAD}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Alcartel">
+  <meta property="og:title" content="Notícias e Dicas de Emprego – Alcartel">
+  <meta property="og:description" content="Fique a par das últimas notícias do mercado de emprego em Moçambique e receba dicas de carreira da Alcartel.">
+  <meta property="og:url" content="${url}">
+  <meta property="og:image" content="${SITE_URL}/Og-image.jpg">
+  <meta property="og:locale" content="pt_MZ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Notícias e Dicas de Emprego – Alcartel">
+  <meta name="twitter:description" content="Fique a par das últimas notícias do mercado de emprego em Moçambique e receba dicas de carreira da Alcartel.">
+  <meta name="twitter:image" content="${SITE_URL}/Og-image.jpg">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">${JSON.stringify(collectionPage)}</script>
+  ${ANALYTICS_HEAD}
+</head>
+<body>
+<header class="site-header" role="banner">
+  <a href="/" aria-label="Alcartel – Página inicial">
+    <picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="Alcartel" width="300" height="90"></picture>
+  </a>
+</header>
+<nav class="site-nav" role="navigation" aria-label="Navegação principal">
+  <ul>
+    <li><a href="index.html">Início</a></li>
+    <li><a href="vagas.html">Vagas</a></li>
+    <li><a href="noticias.html" aria-current="page">Notícias</a></li>
+    <li><a href="servicos.html">Serviços</a></li>
+    <li><a href="sobre.html">Sobre</a></li>
+  </ul>
+</nav>
+<main role="main" id="noticias" style="padding:36px 24px;">
+  <h1 class="section-title" style="text-align:center;">📰 Notícias e Dicas de Emprego</h1>
+  <div class="divider divider--center divider--ouro"></div>
+  <ul class="vagas-grid" role="list" aria-label="Lista de notícias">
+    ${cards}
+  </ul>
+</main>
+<footer class="site-footer" role="contentinfo">
+  <p class="footer-brand">Al<span>c</span>artel</p>
+  <div class="footer-divider"></div>
+  <p>© 2026 <a href="/" aria-label="Alcartel">Alcartel</a> — O Motor de Empregos de Moçambique</p>
+  <nav class="footer-links" aria-label="Ligações do rodapé">
+    <a href="/contactos.html" title="Contacto">contacto</a>
+    <a href="/privacidade.html" title="Política de Privacidade">privacidade</a>
+    <a href="/termos.html" title="Termos de Uso">termos</a>
+    <a href="/cookies.html" title="Política de Cookies">cookies</a>
+  </nav>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
+</footer>
+<script src="/js/contador-visitas.js" defer></script>
 </body>
 </html>
 `;
@@ -880,19 +1197,82 @@ function injetarCategoriasAlerta(nomeFicheiro, categorias) {
   fs.writeFileSync(caminho, comOpcoes, "utf-8");
 }
 
-function gerarSitemap(urlsExtra) {
-  const paginasEstaticas = [
-    "", "vagas.html", "sobre.html", "servicos.html",
-    "contactos.html", "privacidade.html", "termos.html", "cookies.html"
-  ].map(p => `${SITE_URL}/${p}`);
+// ── Injecta o grid de "Notícias e Dicas de Emprego" na homepage, entre
+//    <!-- NOTICIAS:START --> e <!-- NOTICIAS:END -->, sempre com as 2
+//    notícias mais recentes já publicadas (lista vem pré-cortada). ────
+function injetarSecaoNoticiasHome(nomeFicheiro, lista) {
+  const caminho = path.join(ROOT, nomeFicheiro);
+  if (!fs.existsSync(caminho)) {
+    console.warn(`⚠️  ${nomeFicheiro} não encontrado — secção de notícias não injectada.`);
+    return;
+  }
+  let html = fs.readFileSync(caminho, "utf-8");
+  const cards = lista.length
+    ? lista.map(cardNoticia).join("\n")
+    : `    <li class="vaga-card vaga-card--vazio"><p>Sem notícias publicadas de momento. Volte em breve.</p></li>`;
+  const comGrid = injetarEntreMarcadores(html, "<!-- NOTICIAS:START -->", "<!-- NOTICIAS:END -->", cards);
+  if (comGrid === null) {
+    console.warn(`⚠️  Marcadores NOTICIAS:START/END não encontrados em ${nomeFicheiro} — secção de notícias não injectada.`);
+    return;
+  }
+  fs.writeFileSync(caminho, comGrid, "utf-8");
+}
 
-  const todas = [...paginasEstaticas, ...urlsExtra];
+// ── Gera sitemap.xml 100% conforme o protocolo sitemaps.org, com
+//    <lastmod>, <changefreq> e <priority> calculados por tipo de página —
+//    não apenas <loc>. Chamado automaticamente no fim de cada build
+//    (main()), por isso nunca precisa de edição manual: uma vaga nova
+//    entra, uma vaga removida sai, sempre que "node scripts/gerar-site.js"
+//    correr (local, CI ou build da Vercel). ──────────────────────────────
+const HOJE_ISO = new Date().toISOString().slice(0, 10);
+
+// Prioridade/frequência por tipo de página estática — ajustadas à
+// importância real de cada uma para SEO, não um valor genérico igual
+// para todas.
+const PAGINAS_ESTATICAS_META = [
+  { p: "", changefreq: "daily", priority: "1.0" },
+  { p: "vagas.html", changefreq: "daily", priority: "0.9" },
+  { p: "noticias", changefreq: "daily", priority: "0.8" },
+  { p: "servicos.html", changefreq: "monthly", priority: "0.5" },
+  { p: "sobre.html", changefreq: "monthly", priority: "0.4" },
+  { p: "contactos.html", changefreq: "monthly", priority: "0.3" },
+  { p: "termos.html", changefreq: "yearly", priority: "0.1" },
+  { p: "privacidade.html", changefreq: "yearly", priority: "0.1" },
+  { p: "cookies.html", changefreq: "yearly", priority: "0.1" }
+];
+
+function gerarSitemap(entradasExtra) {
+  // NOTA sobre <lastmod> nas páginas estáticas: este projecto não tem
+  // histórico de commits disponível neste ambiente para saber a data real
+  // da última edição de cada página institucional, por isso usa-se a data
+  // do build (HOJE_ISO) como valor seguro e sempre válido. Se ligares isto
+  // ao Git no pipeline de deploy, troca por "git log -1 --format=%cs
+  // <ficheiro>" para um lastmod fiel à realidade.
+  const estaticas = PAGINAS_ESTATICAS_META.map(m => ({
+    loc: `${SITE_URL}/${m.p}`,
+    lastmod: HOJE_ISO,
+    changefreq: m.changefreq,
+    priority: m.priority
+  }));
+
+  const todas = [...estaticas, ...entradasExtra];
+
+  const escapeXml = (s) => String(s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${todas.map(u => `  <url><loc>${u}</loc></url>`).join("\n")}
+${todas.map(u => `  <url>
+    <loc>${escapeXml(u.loc)}</loc>
+    <lastmod>${u.lastmod}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join("\n")}
 </urlset>
 `;
   fs.writeFileSync(path.join(ROOT, "sitemap.xml"), xml, "utf-8");
+  return todas.length;
 }
 
 function limparDir(dir) {
@@ -916,9 +1296,23 @@ function main() {
   const porCategoria = {};
   const porCidade = {};
 
+  // lastmod de uma listagem = data de publicação mais recente entre as
+  // vagas que ela contém (reflecte com precisão quando o CONTEÚDO da
+  // página realmente mudou pela última vez, não a data do build).
+  const lastmodMaisRecente = (lista) =>
+    lista.reduce((max, v) => {
+      const d = (v.data_publicacao || "").slice(0, 10);
+      return d && d > max ? d : max;
+    }, lista[0]?.data_publicacao?.slice(0, 10) || HOJE_ISO);
+
   for (const v of vagas) {
     fs.writeFileSync(path.join(vagasDir, `${v.slug}.html`), paginaVaga(v), "utf-8");
-    urlsGeradas.push(`${SITE_URL}/vagas/${v.slug}.html`);
+    urlsGeradas.push({
+      loc: `${SITE_URL}/vagas/${v.slug}.html`,
+      lastmod: (v.data_publicacao || HOJE_ISO).slice(0, 10),
+      changefreq: "weekly",
+      priority: "0.8"
+    });
     if (v.categoria) (porCategoria[v.categoria] ||= []).push(v);
     if (v.cidade) (porCidade[v.cidade] ||= []).push(v);
   }
@@ -926,13 +1320,23 @@ function main() {
   for (const [categoria, lista] of Object.entries(porCategoria)) {
     const slug = slugify(categoria);
     fs.writeFileSync(path.join(categoriaDir, `${slug}.html`), paginaListagem({ tipo: "categoria", valor: categoria, lista }), "utf-8");
-    urlsGeradas.push(`${SITE_URL}/categoria/${slug}.html`);
+    urlsGeradas.push({
+      loc: `${SITE_URL}/categoria/${slug}.html`,
+      lastmod: lastmodMaisRecente(lista),
+      changefreq: "weekly",
+      priority: "0.6"
+    });
   }
 
   for (const [cidade, lista] of Object.entries(porCidade)) {
     const slug = slugify(cidade);
     fs.writeFileSync(path.join(cidadeDir, `${slug}.html`), paginaListagem({ tipo: "cidade", valor: cidade, lista }), "utf-8");
-    urlsGeradas.push(`${SITE_URL}/cidade/${slug}.html`);
+    urlsGeradas.push({
+      loc: `${SITE_URL}/cidade/${slug}.html`,
+      lastmod: lastmodMaisRecente(lista),
+      changefreq: "weekly",
+      priority: "0.6"
+    });
   }
 
   // Homepage: só as vagas em destaque aparecem como cartões (mesma regra
@@ -954,12 +1358,36 @@ function main() {
   // pretendida.
   injetarCategoriasAlerta("index.html", CATEGORIAS_OFICIAIS);
 
-  gerarSitemap(urlsGeradas);
+  // ── Notícias: mesma lógica de limpeza/geração das vagas — /noticias/
+  //    é sempre reconstruída do zero a partir de content/noticias/, para
+  //    uma notícia despublicada/apagada não deixar página órfã no ar. ──
+  const noticiasDir = path.join(ROOT, "noticias");
+  ensureDir(noticiasDir);
+  limparDir(noticiasDir);
+
+  for (const n of noticias) {
+    fs.writeFileSync(path.join(noticiasDir, `${n.slug}.html`), paginaNoticia(n), "utf-8");
+    urlsGeradas.push({
+      loc: `${SITE_URL}/noticias/${n.slug}`,
+      lastmod: (n.data_publicacao || HOJE_ISO).slice(0, 10),
+      changefreq: "monthly",
+      priority: "0.6"
+    });
+  }
+
+  fs.writeFileSync(path.join(ROOT, "noticias.html"), paginaListagemNoticias(noticias), "utf-8");
+
+  // Homepage: só as 2 notícias mais recentes publicadas.
+  injetarSecaoNoticiasHome("index.html", noticias.slice(0, 2));
+
+  const totalSitemap = gerarSitemap(urlsGeradas);
 
   console.log(`✅ Fonte: content/vagas/ (${vagas.length} vaga(s) válida(s) encontrada(s))`);
   console.log(`✅ ${vagas.length} vaga(s), ${Object.keys(porCategoria).length} categoria(s), ${Object.keys(porCidade).length} cidade(s) geradas.`);
   console.log(`✅ Grid injectado em index.html (${paraHomepage.length} vaga(s) em destaque) e vagas.html (${vagas.length} vaga(s)).`);
-  console.log(`✅ sitemap.xml atualizado com ${urlsGeradas.length + 8} URLs.`);
+  console.log(`✅ Fonte: content/noticias/ (${noticias.length} notícia(s) publicada(s) encontrada(s))`);
+  console.log(`✅ noticias.html gerado (listagem completa) + ${noticias.length} página(s) individual(is) em /noticias/. Secção da homepage com as ${Math.min(2, noticias.length)} mais recentes.`);
+  console.log(`✅ sitemap.xml gerado com ${totalSitemap} URLs (${PAGINAS_ESTATICAS_META.length} estáticas + ${urlsGeradas.length} dinâmicas), com lastmod/changefreq/priority.`);
 }
 
 main();
