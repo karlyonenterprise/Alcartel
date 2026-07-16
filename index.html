@@ -180,6 +180,19 @@
   <!-- Google AdSense -->
   <meta name="google-adsense-account" content="ca-pub-5846610296337932">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5846610296337932" crossorigin="anonymous"></script>
+
+  <!-- OneSignal Web Push SDK -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function (OneSignal) {
+      await OneSignal.init({
+        appId: "4acbb458-0b9e-49b2-922b-8fbe392514d4",
+        notifyButton: { enable: false },
+        allowLocalhostAsSecureOrigin: true
+      });
+    });
+  </script>
 </head>
 <body>
 
