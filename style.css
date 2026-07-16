@@ -475,20 +475,28 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .footer-links {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  align-items: center;
+  gap: 14px;
   margin-top: 16px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 4px;
 }
+.footer-links::-webkit-scrollbar { display: none; }
 
 .footer-links a {
   color: var(--ouro);
   text-decoration: none;
-  font-size: 0.78rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-transform: lowercase;
+  white-space: nowrap;
   transition: all 0.2s ease;
   border-bottom: 2px solid transparent;
+  flex-shrink: 0;
 }
 
 .footer-links a:hover {
@@ -534,6 +542,56 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 
 @media (prefers-reduced-motion: reduce) {
   .whatsapp-float { animation: none; }
+}
+
+/* ================================================================
+   CONTADOR DE VISITAS — CARD FLUTUANTE (lado oposto ao WhatsApp)
+================================================================ */
+.visits-float {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 16px;
+  background: rgba(14,14,14,0.92);
+  border: 1px solid var(--ouro);
+  border-radius: 999px;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.74rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.visits-float:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45);
+}
+.visits-float svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--ouro);
+  flex-shrink: 0;
+}
+.visits-float span {
+  color: var(--ouro);
+  font-weight: 700;
+}
+
+@media (max-width: 420px) {
+  .visits-float {
+    left: 12px;
+    bottom: 12px;
+    padding: 8px 12px;
+    font-size: 0.68rem;
+  }
+  .whatsapp-float {
+    right: 12px;
+    bottom: 12px;
+  }
 }
 
 
