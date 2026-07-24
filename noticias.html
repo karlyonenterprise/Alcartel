@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +31,7 @@
   <meta name="twitter:description" content="Fique a par das últimas notícias do mercado de emprego em Moçambique e receba dicas de carreira da Alcartel.">
   <meta name="twitter:image" content="https://alcartel.vercel.app/Og-image.jpg">
   <link rel="stylesheet" href="style.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/noticias#collectionpage","url":"https://alcartel.vercel.app/noticias","name":"Notícias e Dicas de Emprego – Alcartel","description":"Notícias, dicas de carreira e conteúdos sobre o mercado de emprego em Moçambique, pela Alcartel.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/noticias/5-dicas-para-um-curriculo-vencedor-em-mocambique","name":"5 Dicas para um Currículo Vencedor em Moçambique"},{"@type":"ListItem","position":2,"url":"https://alcartel.vercel.app/noticias/como-se-preparar-para-uma-entrevista-de-emprego","name":"Como se Preparar para uma Entrevista de Emprego"}]}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/noticias#collectionpage","url":"https://alcartel.vercel.app/noticias","name":"Notícias e Dicas de Emprego – Alcartel","description":"Notícias, dicas de carreira e conteúdos sobre o mercado de emprego em Moçambique, pela Alcartel.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/noticias/nove-jovens-mocambicanos-reforcam-competencias-no-japao-atraves-de-programa-de-intercambio","name":"Nove jovens moçambicanos reforçam competências no Japão através de programa de intercâmbio"},{"@type":"ListItem","position":2,"url":"https://alcartel.vercel.app/noticias/5-dicas-para-um-curriculo-vencedor-em-mocambique","name":"5 Dicas para um Currículo Vencedor em Moçambique"},{"@type":"ListItem","position":3,"url":"https://alcartel.vercel.app/noticias/como-se-preparar-para-uma-entrevista-de-emprego","name":"Como se Preparar para uma Entrevista de Emprego"}]}}</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-12XX7764TS"></script>
   <script>
@@ -63,7 +64,25 @@
   <div class="divider divider--center divider--ouro"></div>
   <ul class="vagas-grid" role="list" aria-label="Lista de notícias">
         <li class="vaga-card noticia-card" role="listitem">
-      <img class="noticia-card__imagem" src="/Og-image.jpg" alt="5 Dicas para um Currículo Vencedor em Moçambique" loading="lazy" width="400" height="220">
+      <span class="noticia-card__midia">
+        <img class="noticia-card__imagem" src="/assets/noticias/1136066-1080x570.jpg" alt="Nove jovens moçambicanos reforçam competências no Japão através de programa de intercâmbio" loading="lazy" width="400" height="220">
+        
+      </span>
+      <div class="noticia-card__corpo">
+        <p class="noticia-card__meta">
+          <span class="vaga-card__badge">Notícias Alcartel</span>
+          <span class="noticia-card__data">16 de julho de 2026</span>
+        </p>
+        <h3><a href="/noticias/nove-jovens-mocambicanos-reforcam-competencias-no-japao-atraves-de-programa-de-intercambio">Nove jovens moçambicanos reforçam competências no Japão através de programa de intercâmbio</a></h3>
+        <p class="vaga-card__resumo">Nove jovens moçambicanos concluíram um programa de intercâmbio no Japão no âmbito do Ship for World Youth (SWY), uma iniciativa de…</p>
+        <p class="noticia-card__rodape noticia-card__autor">Por Equipa Alcartel</p>
+      </div>
+    </li>
+    <li class="vaga-card noticia-card" role="listitem">
+      <span class="noticia-card__midia">
+        <img class="noticia-card__imagem" src="/assets/noticias/images.jpeg" alt="5 Dicas para um Currículo Vencedor em Moçambique" loading="lazy" width="400" height="220">
+        
+      </span>
       <div class="noticia-card__corpo">
         <p class="noticia-card__meta">
           <span class="vaga-card__badge">Dicas de Carreira</span>
@@ -75,7 +94,10 @@
       </div>
     </li>
     <li class="vaga-card noticia-card" role="listitem">
-      <img class="noticia-card__imagem" src="/Og-image.jpg" alt="Como se Preparar para uma Entrevista de Emprego" loading="lazy" width="400" height="220">
+      <span class="noticia-card__midia">
+        <img class="noticia-card__imagem" src="/assets/noticias/images-1-.jpeg" alt="Como se Preparar para uma Entrevista de Emprego" loading="lazy" width="400" height="220">
+        
+      </span>
       <div class="noticia-card__corpo">
         <p class="noticia-card__meta">
           <span class="vaga-card__badge">Mercado de Trabalho</span>
@@ -98,14 +120,16 @@
     <a href="/termos.html" title="Termos de Uso">termos</a>
     <a href="/cookies.html" title="Política de Cookies">cookies</a>
   </nav>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
-
-<div class="visits-float" aria-label="Número de visitas ao site">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-    <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/>
-  </svg>
-  <span id="contador-visitas">…</span> visitas
-</div>
 <script src="/js/contador-visitas.js" defer></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'ewaxgcbqul',
+    });
+    aclib.runAutoTag({
+        zoneId: 'gru6wslftp',
+    });
+</script>
 </body>
 </html>
