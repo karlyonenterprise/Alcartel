@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +35,7 @@
   <meta name="twitter:image" content="https://alcartel.vercel.app/Og-image.jpg">
   <link rel="stylesheet" href="../style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://alcartel.vercel.app/"},{"@type":"ListItem","position":2,"name":"Vagas","item":"https://alcartel.vercel.app/vagas.html"},{"@type":"ListItem","position":3,"name":"Chimoio","item":"https://alcartel.vercel.app/cidade/chimoio.html"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/cidade/chimoio.html#collectionpage","url":"https://alcartel.vercel.app/cidade/chimoio.html","name":"Vagas em Chimoio – Alcartel","description":"Confira todas as vagas de emprego disponíveis em Chimoio na Alcartel, o motor de empregos de Moçambique.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/vagas/mentora-comunitaria-manica.html","name":"Mentora Comunitária — Programa Eu Sou Capaz"}]}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/cidade/chimoio.html#collectionpage","url":"https://alcartel.vercel.app/cidade/chimoio.html","name":"Vagas em Chimoio – Alcartel","description":"Confira todas as vagas de emprego disponíveis em Chimoio na Alcartel, o motor de empregos de Moçambique.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/vagas/consultor-individual-para-implementacao-do-plano-de-accao-de-reassentamento-par-chimoio-provincia-de-manica.html","name":"Consultor Individual para Implementação do Plano de Acção de Reassentamento (PAR)"},{"@type":"ListItem","position":2,"url":"https://alcartel.vercel.app/vagas/a-servtec-sbm-esta-a-recrutar-ajudantes-de-armazem-para-integrar-uma-industria-fabril-em-chimoio-chimoio-provincia-de-manica.html","name":"A Servtec SBM está a recrutar Ajudantes de Armazém para integrar uma indústria fabril em Chimoio,"}]}}</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-12XX7764TS"></script>
   <script>
@@ -57,9 +58,9 @@
   <ul>
     <li><a href="/index.html">Início</a></li>
     <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
+    <li><a href="/noticias.html">Notícias</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/contactos.html">Contacto</a></li>
+    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main" style="max-width:720px;margin:0 auto;padding:32px 20px;">
@@ -68,20 +69,38 @@
   <ul class="vagas-grid" style="list-style:none;padding:0;">
         <li class="vaga-card" role="listitem">
       <div class="vaga-card__topo">
-        <span class="vaga-card__logo vaga-card__logo--placeholder" aria-hidden="true">A</span>
+        <img class="vaga-card__logo" src="/assets/empresas/images-4-.jpeg" alt="Águas de Moçambique, IP (AdeM, IP)" loading="lazy" width="48" height="48">
         <div>
-          <h3><a href="/vagas/mentora-comunitaria-manica.html">Mentora Comunitária — Programa Eu Sou Capaz</a></h3>
-          <p>Associação H2n — Chimoio, Manica</p>
+          <h3><a href="/vagas/consultor-individual-para-implementacao-do-plano-de-accao-de-reassentamento-par-chimoio-provincia-de-manica.html">Consultor Individual para Implementação do Plano de Acção de Reassentamento (PAR)</a></h3>
+          <p>Águas de Moçambique, IP (AdeM, IP) — Chimoio, Província de Manica</p>
         </div>
       </div>
-      <p class="vaga-card__resumo">A Associação H2n procura 77 Mentoras Comunitárias para o programa &quot;Eu Sou Capaz&quot;, financiado pelo Banco Mundia…</p>
+      <p class="vaga-card__resumo">A Águas de Moçambique, IP pretende contratar um Consultor Individual para apoiar a implementação do Plano de A…</p>
       
       <div class="vaga-card__rodape">
         <span class="vaga-card__badges">
-          <span class="vaga-card__badge">Educação</span>
+          <span class="vaga-card__badge">Outros</span>
           
         </span>
-        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="mentora-comunitaria-manica">Ver mais</button>
+        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="consultor-individual-para-implementacao-do-plano-de-accao-de-reassentamento-par-chimoio-provincia-de-manica">Ver mais</button>
+      </div>
+    </li>
+    <li class="vaga-card" role="listitem">
+      <div class="vaga-card__topo">
+        <img class="vaga-card__logo" src="/assets/empresas/images-1-.png" alt="Servtec SBM" loading="lazy" width="48" height="48">
+        <div>
+          <h3><a href="/vagas/a-servtec-sbm-esta-a-recrutar-ajudantes-de-armazem-para-integrar-uma-industria-fabril-em-chimoio-chimoio-provincia-de-manica.html">A Servtec SBM está a recrutar Ajudantes de Armazém para integrar uma indústria fabril em Chimoio,</a></h3>
+          <p>Servtec SBM — Chimoio, Província de Manica</p>
+        </div>
+      </div>
+      <p class="vaga-card__resumo">A Servtec SBM pretende contratar Ajudantes de Armazém para apoiar as operações logísticas de uma indústria fab…</p>
+      
+      <div class="vaga-card__rodape">
+        <span class="vaga-card__badges">
+          <span class="vaga-card__badge">Transportes e Logística</span>
+          
+        </span>
+        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="a-servtec-sbm-esta-a-recrutar-ajudantes-de-armazem-para-integrar-uma-industria-fabril-em-chimoio-chimoio-provincia-de-manica">Ver mais</button>
       </div>
     </li>
   </ul>
@@ -89,6 +108,7 @@
 <footer class="site-footer" role="contentinfo">
   <p class="footer-brand">Al<span>c</span>artel</p>
   <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
 
 <div id="vaga-modal" class="vaga-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="vaga-modal-titulo">
@@ -98,8 +118,17 @@
     <div class="vaga-modal__conteudo"></div>
   </div>
 </div>
-<script id="vagas-dados" type="application/json">{"mentora-comunitaria-manica":{"titulo":"Mentora Comunitária — Programa Eu Sou Capaz","empresa":"Associação H2n","imagem_empresa":"","cidade":"Chimoio","provincia":"Manica","pais":"Moçambique","categoria":"Educação","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A Associação H2n procura 77 Mentoras Comunitárias para o programa \"Eu Sou Capaz\", financiado pelo Banco Mundial através do Instituto Nacional da Juventude, com actuação em 812 escolas da província de Manica. O programa visa o empoderamento e a retenção da rapariga na escola.\n\nAcompanhamento e mentoria de raparigas em idade escolar num distrito da província de Manica, no âmbito do programa \"Eu Sou Capaz\".","responsabilidades":"","requisitos_obrigatorios":"Sem histórico de fraude ou corrupção. Disponibilidade para actuar num distrito da província de Manica.\n\n- **Competências comportamentais:** Empatia, boa capacidade de comunicação e trabalho comunitário\n- **Idiomas:** Português","requisitos_desejaveis":"","escolaridade":"","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"mentora comunitária, eu sou capaz, emprego manica, emprego chimoio, associação h2n","data_publicacao":"2026-05-01","data_validade":"","link_candidatura":"","candidatura_email":"recrutamento@icrhm.org.mz","candidatura_link":"","slug":"mentora-comunitaria-manica"}}</script>
+<script id="vagas-dados" type="application/json">{"consultor-individual-para-implementacao-do-plano-de-accao-de-reassentamento-par-chimoio-provincia-de-manica":{"titulo":"Consultor Individual para Implementação do Plano de Acção de Reassentamento (PAR)","empresa":"Águas de Moçambique, IP (AdeM, IP)","imagem_empresa":"/assets/empresas/images-4-.jpeg","cidade":"Chimoio","provincia":"Província de Manica","pais":"Moçambique","categoria":"Outros","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A Águas de Moçambique, IP pretende contratar um Consultor Individual para apoiar a implementação do Plano de Acção de Reassentamento (PAR) no âmbito do Projecto de Saneamento Urbano Inclusivo de Chimoio. O consultor deverá assegurar que todas as actividades sejam executadas em conformidade com a legislação moçambicana e com as Salvaguardas Ambientais e Sociais do Banco Africano de Desenvolvimento, garantindo uma implementação eficaz, inclusiva e dentro dos prazos estabelecidos.","responsabilidades":"Coordenar a implementação do Plano de Acção de Reassentamento (PAR);\nGarantir o cumprimento da legislação nacional e das salvaguardas ambientais e sociais do Banco Africano de Desenvolvimento;\nAcompanhar processos de reassentamento, compensação e restauração dos meios de subsistência;\nPromover o envolvimento das partes interessadas e a divulgação de informação;\nApoiar a gestão do Mecanismo de Resolução de Reclamações, incluindo casos relacionados com Violência Baseada no Género (VBG), Exploração e Abuso Sexual (EAS) e Assédio Sexual (AS);\nElaborar relatórios técnicos e acompanhar a execução das actividades do projecto.","requisitos_obrigatorios":"Mestrado em Ciências Sociais ou área relacionada;\nExperiência em projectos financiados pelo Banco Africano de Desenvolvimento ou outras agências internacionais;\nMínimo de 15 anos de experiência em planeamento ou avaliação de reassentamento e compensação em projectos de infra-estruturas;\nExperiência significativa em Moçambique;\nExperiência comprovada na elaboração e implementação de Planos de Acção de Reassentamento;\nConhecimentos em compensação, restauração de meios de subsistência, participação comunitária e gestão de partes interessadas;\nExperiência em recolha e análise de dados relacionados com reassentamentos voluntários e involuntários.","requisitos_desejaveis":"","escolaridade":"Mestrado","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Manifestação de Interesse;\nCurriculum Vitae actualizado.","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Consultor Individual, Plano de Acção de Reassentamento, PAR, Águas de Moçambique, AdeM, Banco Africano de Desenvolvimento, Consultoria em Moçambique, Reassentamento, Ciências Sociais, Projecto de Saneamento Urbano, Chimoio, Consultoria Freelancer, Emprego em Moçambique.","data_publicacao":"2026-07-24T23:21:31.997Z","data_validade":"2026-08-04","link_candidatura":"https://njobs.co.mz/vaga/consultoria-para-implementacao-do-par/","candidatura_email":"procurement.ciusp.aias@gmail.com","candidatura_link":"https://njobs.co.mz/vaga/consultoria-para-implementacao-do-par/","slug":"consultor-individual-para-implementacao-do-plano-de-accao-de-reassentamento-par-chimoio-provincia-de-manica"},"a-servtec-sbm-esta-a-recrutar-ajudantes-de-armazem-para-integrar-uma-industria-fabril-em-chimoio-chimoio-provincia-de-manica":{"titulo":"A Servtec SBM está a recrutar Ajudantes de Armazém para integrar uma indústria fabril em Chimoio,","empresa":"Servtec SBM","imagem_empresa":"/assets/empresas/images-1-.png","cidade":"Chimoio","provincia":"Província de Manica","pais":"Moçambique","categoria":"Transportes e Logística","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A Servtec SBM pretende contratar Ajudantes de Armazém para apoiar as operações logísticas de uma indústria fabril em Chimoio. Os profissionais seleccionados serão responsáveis pela recepção, movimentação, organização e conferência de mercadorias, contribuindo para a eficiência e organização do armazém.","responsabilidades":"Receber, movimentar e organizar mercadorias;\nRealizar carga e descarga de materiais;\nSeparar e conferir produtos;\nManter a limpeza e organização do armazém;\nApoiar as actividades logísticas da operação.","requisitos_obrigatorios":"Residir em Chimoio (factor eliminatório);\nEnsino Secundário Geral (10.ª Classe) concluído;\nDisponibilidade para trabalhar em horários rotativos, incluindo fins-de-semana;\nBoa condição física para trabalhos manuais;\nSentido de responsabilidade, pontualidade e espírito de equipa.","requisitos_desejaveis":"","escolaridade":"Ensino Secundário (12º ano)","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Curriculum Vitae actualizado.","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Ajudante de Armazém, Servtec SBM, Emprego em Chimoio, Vagas em Manica, Logística, Armazém, Indústria Fabril, Carga e Descarga, Emprego em Moçambique, Operador de Armazém, Recrutamento Servtec, Vagas 2026.","data_publicacao":"2026-07-24T23:21:31.995Z","data_validade":"2026-07-25","link_candidatura":"https://njobs.co.mz/vaga/ajudantesde-armazem/","candidatura_email":"mocambique@servtec-international.com","candidatura_link":"https://njobs.co.mz/vaga/ajudantesde-armazem/","slug":"a-servtec-sbm-esta-a-recrutar-ajudantes-de-armazem-para-integrar-uma-industria-fabril-em-chimoio-chimoio-provincia-de-manica"}}</script>
 <script src="/scripts/vaga-modal.js" defer></script>
 <script src="/scripts/vaga-pesquisa.js" defer></script>
+<script src="/js/contador-visitas.js" defer></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'ewaxgcbqul',
+    });
+    aclib.runAutoTag({
+        zoneId: 'gru6wslftp',
+    });
+</script>
 </body>
 </html>

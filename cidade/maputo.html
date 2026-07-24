@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +35,7 @@
   <meta name="twitter:image" content="https://alcartel.vercel.app/Og-image.jpg">
   <link rel="stylesheet" href="../style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://alcartel.vercel.app/"},{"@type":"ListItem","position":2,"name":"Vagas","item":"https://alcartel.vercel.app/vagas.html"},{"@type":"ListItem","position":3,"name":"Maputo","item":"https://alcartel.vercel.app/cidade/maputo.html"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/cidade/maputo.html#collectionpage","url":"https://alcartel.vercel.app/cidade/maputo.html","name":"Vagas em Maputo – Alcartel","description":"Confira todas as vagas de emprego disponíveis em Maputo na Alcartel, o motor de empregos de Moçambique.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/vagas/supervisor-de-vendas-nas-redes-de-lojas-maputo.html","name":"Supervisor de Vendas nas Redes de Lojas"}]}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/cidade/maputo.html#collectionpage","url":"https://alcartel.vercel.app/cidade/maputo.html","name":"Vagas em Maputo – Alcartel","description":"Confira todas as vagas de emprego disponíveis em Maputo na Alcartel, o motor de empregos de Moçambique.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/vagas/consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo.html","name":"Consultor de Gestão – Qualidade e Segurança da Informação"}]}}</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-12XX7764TS"></script>
   <script>
@@ -68,20 +69,20 @@
   <ul class="vagas-grid" style="list-style:none;padding:0;">
         <li class="vaga-card" role="listitem">
       <div class="vaga-card__topo">
-        <img class="vaga-card__logo" src="/assets/empresas/images.jpeg" alt="Recruit Manpower" loading="lazy" width="48" height="48">
+        <img class="vaga-card__logo" src="/assets/empresas/images.jpeg" alt="Exponencial" loading="lazy" width="48" height="48">
         <div>
-          <h3><a href="/vagas/supervisor-de-vendas-nas-redes-de-lojas-maputo.html">Supervisor de Vendas nas Redes de Lojas</a></h3>
-          <p>Recruit Manpower — Maputo, Maputo</p>
+          <h3><a href="/vagas/consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo.html">Consultor de Gestão – Qualidade e Segurança da Informação</a></h3>
+          <p>Exponencial — Maputo, Maputo</p>
         </div>
       </div>
-      <p class="vaga-card__resumo">Gerir o relacionamento com os gestores de categoria e compradores das cadeias de lojas, assegurando parcerias…</p>
-      
+      <p class="vaga-card__resumo">Pretende-se contratar um Consultor de Gestão – Qualidade e Segurança da Informação para apoiar organizações na…</p>
+      <p class="vaga-card__salario">25.000.00MZN - 35.000.00MZN</p>
       <div class="vaga-card__rodape">
         <span class="vaga-card__badges">
-          <span class="vaga-card__badge">Comércio e Vendas</span>
+          <span class="vaga-card__badge">Tecnologias de Informação</span>
           
         </span>
-        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="supervisor-de-vendas-nas-redes-de-lojas-maputo">Ver mais</button>
+        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo">Ver mais</button>
       </div>
     </li>
   </ul>
@@ -89,14 +90,8 @@
 <footer class="site-footer" role="contentinfo">
   <p class="footer-brand">Al<span>c</span>artel</p>
   <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
-
-<div class="visits-float" aria-label="Número de visitas ao site">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-    <path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/>
-  </svg>
-  <span id="contador-visitas">…</span> visitas
-</div>
 
 <div id="vaga-modal" class="vaga-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="vaga-modal-titulo">
   <div class="vaga-modal__overlay" data-fechar-modal></div>
@@ -105,9 +100,17 @@
     <div class="vaga-modal__conteudo"></div>
   </div>
 </div>
-<script id="vagas-dados" type="application/json">{"supervisor-de-vendas-nas-redes-de-lojas-maputo":{"titulo":"Supervisor de Vendas nas Redes de Lojas","empresa":"Recruit Manpower","imagem_empresa":"/assets/empresas/images.jpeg","cidade":"Maputo","provincia":"Maputo","pais":"Moçambique","categoria":"Comércio e Vendas","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"Gerir o relacionamento com os gestores de categoria e compradores das cadeias de lojas, assegurando parcerias comerciais sólidas e a introdução bem-sucedida de novos SKUs.\nLiderar a equipa de vendas do canal moderno para atingir as metas semanais e mensais de volume de vendas nas cadeias de supermercados sob sua responsabilidade.\nMonitorar os níveis de stock nas lojas para evitar rupturas de stock e acompanhar as ordens de compra desde a sua emissão até à entrega.\nSupervisionar promotores e merchandisers para garantir excelente visibilidade dos produtos, preços correctos, adequada execução nas prateleiras e cumprimento da rotação de stock pelo método FIFO.\nCoordenar e monitorar promoções em loja, activações de produtos, degustações e campanhas de marketing, maximizando o retorno sobre o investimento (ROI).\nAnalisar o desempenho das vendas, acompanhar os preços e as actividades promocionais da concorrência e elaborar relatórios semanais de inteligência de mercado para o Gestor de Vendas.","responsabilidades":"","requisitos_obrigatorios":"Gerir o relacionamento com os gestores de categoria e compradores das cadeias de lojas, assegurando parcerias comerciais sólidas e a introdução bem-sucedida de novos SKUs.\nLiderar a equipa de vendas do canal moderno para atingir as metas semanais e mensais de volume de vendas nas cadeias de supermercados sob sua responsabilidade.\nMonitorar os níveis de stock nas lojas para evitar rupturas de stock e acompanhar as ordens de compra desde a sua emissão até à entrega.\nSupervisionar promotores e merchandisers para garantir excelente visibilidade dos produtos, preços correctos, adequada execução nas prateleiras e cumprimento da rotação de stock pelo método FIFO.\nCoordenar e monitorar promoções em loja, activações de produtos, degustações e campanhas de marketing, maximizando o retorno sobre o investimento (ROI).\nAnalisar o desempenho das vendas, acompanhar os preços e as actividades promocionais da concorrência e elaborar relatórios semanais de inteligência de mercado para o Gestor de Vendas.","requisitos_desejaveis":"","escolaridade":"","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Envie seu currículo (inglês e português), foto e carta de apresentação para os e-mails:","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Vagas, supervisor de Vendas, Maputo vagas, emprego Moçambique, supervisor de Vendas ","data_publicacao":"2026-07-13T00:00:00.000Z","data_validade":"2026-07-19","link_candidatura":"https://njobs.co.mz/vaga/supervisor-de-vendas-nas-redes-de-lojas/","candidatura_email":"emprego@cservercorp.net ou  hire@cservercorp.net","candidatura_link":"https://njobs.co.mz/vaga/supervisor-de-vendas-nas-redes-de-lojas/","slug":"supervisor-de-vendas-nas-redes-de-lojas-maputo"}}</script>
+<script id="vagas-dados" type="application/json">{"consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo":{"titulo":"Consultor de Gestão – Qualidade e Segurança da Informação","empresa":"Exponencial","imagem_empresa":"/assets/empresas/images.jpeg","cidade":"Maputo","provincia":"Maputo","pais":"Moçambique","categoria":"Tecnologias de Informação","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Prestação de Serviços","descricao":"Pretende-se contratar um Consultor de Gestão – Qualidade e Segurança da Informação para apoiar organizações na implementação, manutenção e melhoria de Sistemas de Gestão da Qualidade e Sistemas de Gestão de Segurança da Informação. O profissional será responsável por garantir a conformidade com normas internacionais, promover a melhoria contínua, realizar auditorias e apoiar a gestão de riscos.","responsabilidades":"Implementar e manter sistemas de gestão da qualidade e segurança da informação;\nRealizar auditorias internas e avaliações de conformidade;\nElaborar políticas, procedimentos e documentação técnica;\nIdentificar riscos e propor medidas de mitigação;\nApoiar processos de certificação ISO;\nMinistrar formações e acções de sensibilização;\nElaborar relatórios técnicos e planos de melhoria contínua.","requisitos_obrigatorios":"Licenciatura em área relevante;\nExperiência em consultoria de sistemas de gestão;\nConhecimentos das normas ISO 9001 e ISO/IEC 27001;\nBoa capacidade de comunicação, organização e análise;\nDomínio das ferramentas Microsoft Office;\nCapacidade para trabalhar em equipa e cumprir prazos;\nDisponibilidade para deslocações.","requisitos_desejaveis":"","escolaridade":"Licenciatura","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"25.000.00MZN - 35.000.00MZN","beneficios":"","documentos_exigidos":"Curriculum Vitae actualizado;\nCarta de apresentação;\nCertificados académicos e profissionais (quando solicitados).","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Consultor de Gestão, Qualidade, Segurança da Informação, ISO 9001, ISO 27001, Auditoria, Gestão de Riscos, Sistemas de Gestão, Consultoria, Emprego em Moçambique, Vagas TIC, Cibersegurança.","data_publicacao":"2026-07-24T23:21:31.996Z","data_validade":"2026-08-11","link_candidatura":"https://www.emprego.co.mz/vaga/consultor-de-gestao-qualidade-e-seguranca-de-informacao","candidatura_email":"","candidatura_link":"https://www.emprego.co.mz/vaga/consultor-de-gestao-qualidade-e-seguranca-de-informacao","slug":"consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo"}}</script>
 <script src="/scripts/vaga-modal.js" defer></script>
 <script src="/scripts/vaga-pesquisa.js" defer></script>
 <script src="/js/contador-visitas.js" defer></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'ewaxgcbqul',
+    });
+    aclib.runAutoTag({
+        zoneId: 'gru6wslftp',
+    });
+</script>
 </body>
 </html>

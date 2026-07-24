@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +35,7 @@
   <meta name="twitter:image" content="https://alcartel.vercel.app/Og-image.jpg">
   <link rel="stylesheet" href="../style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://alcartel.vercel.app/"},{"@type":"ListItem","position":2,"name":"Vagas","item":"https://alcartel.vercel.app/vagas.html"},{"@type":"ListItem","position":3,"name":"Pemba","item":"https://alcartel.vercel.app/cidade/pemba.html"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/cidade/pemba.html#collectionpage","url":"https://alcartel.vercel.app/cidade/pemba.html","name":"Vagas em Pemba – Alcartel","description":"Confira todas as vagas de emprego disponíveis em Pemba na Alcartel, o motor de empregos de Moçambique.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/vagas/operador-maquinas-pesadas-pemba.html","name":"Operador de Máquinas Pesadas (Diversas Posições)"}]}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/cidade/pemba.html#collectionpage","url":"https://alcartel.vercel.app/cidade/pemba.html","name":"Vagas em Pemba – Alcartel","description":"Confira todas as vagas de emprego disponíveis em Pemba na Alcartel, o motor de empregos de Moçambique.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/vagas/representante-de-vendas-pemba-provincia-de-cabo-delgado.html","name":"Representante de Vendas"}]}}</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-12XX7764TS"></script>
   <script>
@@ -57,9 +58,9 @@
   <ul>
     <li><a href="/index.html">Início</a></li>
     <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
+    <li><a href="/noticias.html">Notícias</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/contactos.html">Contacto</a></li>
+    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main" style="max-width:720px;margin:0 auto;padding:32px 20px;">
@@ -68,20 +69,20 @@
   <ul class="vagas-grid" style="list-style:none;padding:0;">
         <li class="vaga-card" role="listitem">
       <div class="vaga-card__topo">
-        <span class="vaga-card__logo vaga-card__logo--placeholder" aria-hidden="true">M</span>
+        <img class="vaga-card__logo" src="/assets/empresas/heineken-mocambique.jpg" alt="HEINEKEN Moçambique" loading="lazy" width="48" height="48">
         <div>
-          <h3><a href="/vagas/operador-maquinas-pesadas-pemba.html">Operador de Máquinas Pesadas (Diversas Posições)</a></h3>
-          <p>Montepuez Ruby Mining — Pemba, Cabo Delgado</p>
+          <h3><a href="/vagas/representante-de-vendas-pemba-provincia-de-cabo-delgado.html">Representante de Vendas</a></h3>
+          <p>HEINEKEN Moçambique — Pemba, Província de Cabo Delgado</p>
         </div>
       </div>
-      <p class="vaga-card__resumo">A Montepuez Ruby Mining (MRM), do Grupo Gemfields, está a recrutar profissionais para 159 posições técnicas e…</p>
+      <p class="vaga-card__resumo">A HEINEKEN Moçambique pretende recrutar um(a) Representante de Vendas para assegurar a gestão da carteira de c…</p>
       
       <div class="vaga-card__rodape">
         <span class="vaga-card__badges">
-          <span class="vaga-card__badge">Mineração e Petróleo e Gás</span>
+          <span class="vaga-card__badge">Comércio e Vendas</span>
           
         </span>
-        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="operador-maquinas-pesadas-pemba">Ver mais</button>
+        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="representante-de-vendas-pemba-provincia-de-cabo-delgado">Ver mais</button>
       </div>
     </li>
   </ul>
@@ -89,6 +90,7 @@
 <footer class="site-footer" role="contentinfo">
   <p class="footer-brand">Al<span>c</span>artel</p>
   <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
+  <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
 
 <div id="vaga-modal" class="vaga-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="vaga-modal-titulo">
@@ -98,8 +100,17 @@
     <div class="vaga-modal__conteudo"></div>
   </div>
 </div>
-<script id="vagas-dados" type="application/json">{"operador-maquinas-pesadas-pemba":{"titulo":"Operador de Máquinas Pesadas (Diversas Posições)","empresa":"Montepuez Ruby Mining","imagem_empresa":"","cidade":"Pemba","provincia":"Cabo Delgado","pais":"Moçambique","categoria":"Mineração e Petróleo e Gás","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Temporário","descricao":"A Montepuez Ruby Mining (MRM), do Grupo Gemfields, está a recrutar profissionais para 159 posições técnicas e operacionais na província de Cabo Delgado, incluindo operadores de máquinas pesadas.","responsabilidades":"","requisitos_obrigatorios":"Carta de condução válida e certificados que qualifiquem para operar as máquinas indicadas.\n\n- **Experiência:** Experiência comprovada na operação das máquinas pesadas indicadas\n- **Competências técnicas:** Operação de máquinas pesadas\n- **Idiomas:** Português\n- **Certificações:** Carta de condução válida e certificados de operação de máquinas pesadas","requisitos_desejaveis":"","escolaridade":"","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"operador de máquinas pesadas, montepuez ruby mining, emprego pemba, emprego cabo delgado","data_publicacao":"2026-05-27","data_validade":"","link_candidatura":"https://vagademprego.com/vagas/provincia/cabo-delgado/page/4/","candidatura_email":"","candidatura_link":"https://vagademprego.com/vagas/provincia/cabo-delgado/page/4/","slug":"operador-maquinas-pesadas-pemba"}}</script>
+<script id="vagas-dados" type="application/json">{"representante-de-vendas-pemba-provincia-de-cabo-delgado":{"titulo":"Representante de Vendas","empresa":"HEINEKEN Moçambique","imagem_empresa":"/assets/empresas/heineken-mocambique.jpg","cidade":"Pemba","provincia":"Província de Cabo Delgado","pais":"Moçambique","categoria":"Comércio e Vendas","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A HEINEKEN Moçambique pretende recrutar um(a) Representante de Vendas para assegurar a gestão da carteira de clientes, aumentar o volume de vendas, implementar estratégias comerciais e garantir a correcta execução das marcas nos pontos de venda. O profissional será responsável por desenvolver relações duradouras com os clientes, negociar condições comerciais e contribuir para o crescimento sustentável do negócio.","responsabilidades":"Gerir reclamações e expectativas dos clientes, promovendo a sua satisfação;\nDesenvolver e manter relações comerciais sólidas com os clientes;\nCumprir as metas de vendas e participação de mercado;\nImplementar e acompanhar campanhas promocionais;\nGarantir a correcta execução da imagem das marcas nos pontos de venda;\nMonitorizar preços de acordo com as políticas da empresa;\nAcompanhar os padrões de qualidade dos produtos;\nUtilizar dados para orientar as actividades comerciais;\nGerir equipamentos afectos às vendas, como geleiras e torneiras de cerveja;\nCumprir o plano de visitas comerciais;\nActualizar e manter a base de dados de clientes;\nNegociar termos comerciais com parceiros de vendas. ","requisitos_obrigatorios":"12.ª Classe concluída;\nFormação superior será considerada uma vantagem;\nExperiência mínima de 1 ano em vendas no sector FMCG;\nCarta de condução de ligeiros (Categoria B);\nPelo menos 6 meses de experiência na condução de viaturas com caixa manual;\nResidir em Pemba ou ter disponibilidade para residência permanente;\nConhecimentos de análise e tratamento de dados serão valorizados;\nElevada capacidade de adaptação, resiliência e orientação para resultados;\nExcelente capacidade de comunicação e relacionamento interpessoal.","requisitos_desejaveis":"","escolaridade":"Ensino Secundário (12º ano)","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Representante de Vendas, HEINEKEN Moçambique, Emprego em Pemba, Vagas em Cabo Delgado, Comercial e Vendas, FMCG, Marketing, Gestor de Clientes, Emprego HEINEKEN, Vagas de Emprego em Moçambique, Sales Representative, Emprego 2026.","data_publicacao":"2026-07-24T23:21:31.998Z","data_validade":"2026-07-27","link_candidatura":"https://njobs.co.mz/vaga/representante-de-vendas/","candidatura_email":"","candidatura_link":"https://njobs.co.mz/vaga/representante-de-vendas/","slug":"representante-de-vendas-pemba-provincia-de-cabo-delgado"}}</script>
 <script src="/scripts/vaga-modal.js" defer></script>
 <script src="/scripts/vaga-pesquisa.js" defer></script>
+<script src="/js/contador-visitas.js" defer></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'ewaxgcbqul',
+    });
+    aclib.runAutoTag({
+        zoneId: 'gru6wslftp',
+    });
+</script>
 </body>
 </html>
