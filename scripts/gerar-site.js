@@ -259,6 +259,8 @@ function normalizarNoticia(dados) {
     resumo: dados.resumo || "",
     conteudo: dados.conteudo || "",
     imagem_destaque: dados.imagem_destaque || "",
+    video_destaque: dados.video_destaque || "",
+    tipo_midia: dados.tipo_midia || "Nenhuma",
     autor: dados.autor || "Equipa Alcartel",
     categoria: dados.categoria || "Notícias Alcartel",
     // Mesma rede de segurança usada em data_publicacao das vagas: se o
@@ -580,6 +582,7 @@ function paginaVaga(v) {
   return `<!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -696,6 +699,14 @@ function paginaVaga(v) {
 </footer>
 <script src="/scripts/vaga-share.js" defer></script>
 <script src="/js/contador-visitas.js" defer></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'ewaxgcbqul',
+    });
+    aclib.runAutoTag({
+        zoneId: 'gru6wslftp',
+    });
+</script>
 </body>
 </html>
 `;
@@ -815,6 +826,7 @@ function paginaListagem({ tipo, valor, lista }) {
   return `<!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -873,6 +885,14 @@ function paginaListagem({ tipo, valor, lista }) {
 </footer>
 ${blocoModal(lista)}
 <script src="/js/contador-visitas.js" defer></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'ewaxgcbqul',
+    });
+    aclib.runAutoTag({
+        zoneId: 'gru6wslftp',
+    });
+</script>
 </body>
 </html>
 `;
@@ -895,6 +915,32 @@ function imagemNoticia(n) {
   return n.imagem_destaque ? urlAbsoluta(n.imagem_destaque) : `${SITE_URL}/Og-image.jpg`;
 }
 
+// ── Vídeo de destaque — aceita URL "normal" do YouTube/Vimeo (não só
+//    /embed/) e devolve sempre um URL de embed pronto a colocar num
+//    <iframe>, além de uma miniatura (quando existir) para os cartões.
+//    Um "Vídeo Customizado" (ex.: .mp4) é tratado à parte com <video>. ──
+function videoNoticia(n) {
+  const url = (n.video_destaque || "").trim();
+  if (!url || !n.tipo_midia || n.tipo_midia === "Nenhuma" || n.tipo_midia === "Imagem") return null;
+
+  let m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
+  if (m) {
+    return {
+      tipo: "youtube",
+      embed: `https://www.youtube.com/embed/${m[1]}`,
+      thumb: `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`
+    };
+  }
+
+  m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (m) {
+    return { tipo: "vimeo", embed: `https://player.vimeo.com/video/${m[1]}`, thumb: null };
+  }
+
+  // "Vídeo Customizado" — ficheiro de vídeo directo (.mp4, etc.).
+  return { tipo: "custom", embed: url, thumb: null };
+}
+
 function metaDescricaoNoticia(n) {
   const resumo = n.resumo || markdownParaTextoPlano(n.conteudo);
   return truncar(n.meta_descricao || resumo || n.titulo, 160);
@@ -906,10 +952,16 @@ function metaDescricaoNoticia(n) {
 //    de destaque e a data. Usado tanto na homepage (2 mais recentes)
 //    como em /noticias (lista completa). ─────────────────────────────
 function cardNoticia(n) {
-  const imagem = n.imagem_destaque ? escapeHtml(n.imagem_destaque) : "/Og-image.jpg";
+  const video = videoNoticia(n);
+  const imagem = video && video.thumb
+    ? escapeHtml(video.thumb)
+    : (n.imagem_destaque ? escapeHtml(n.imagem_destaque) : "/Og-image.jpg");
   const resumo = truncar(n.resumo || markdownParaTextoPlano(n.conteudo), 130);
   return `    <li class="vaga-card noticia-card" role="listitem">
-      <img class="noticia-card__imagem" src="${imagem}" alt="${escapeHtml(n.titulo)}" loading="lazy" width="400" height="220">
+      <span class="noticia-card__midia">
+        <img class="noticia-card__imagem" src="${imagem}" alt="${escapeHtml(n.titulo)}" loading="lazy" width="400" height="220">
+        ${video ? `<span class="noticia-card__play" aria-hidden="true">▶</span>` : ""}
+      </span>
       <div class="noticia-card__corpo">
         <p class="noticia-card__meta">
           <span class="vaga-card__badge">${escapeHtml(n.categoria)}</span>
@@ -928,6 +980,14 @@ function cardNoticia(n) {
 function paginaNoticia(n) {
   const url = `${SITE_URL}/noticias/${n.slug}`;
   const imagem = imagemNoticia(n);
+  const video = videoNoticia(n);
+  const midiaHtml = video
+    ? (video.tipo === "custom"
+        ? `<video class="noticia-pagina-video" src="${escapeHtml(video.embed)}" controls preload="metadata" style="width:100%;border-radius:8px;"></video>`
+        : `<div class="noticia-pagina-video-wrap" style="position:relative;padding-top:56.25%;border-radius:8px;overflow:hidden;">
+        <iframe src="${escapeHtml(video.embed)}" title="${escapeHtml(n.titulo)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+      </div>`)
+    : (n.imagem_destaque ? `<img class="noticia-pagina-imagem" src="${escapeHtml(n.imagem_destaque)}" alt="${escapeHtml(n.titulo)}">` : "");
   const descricao = metaDescricaoNoticia(n);
   const tituloMeta = n.meta_titulo || `${n.titulo} – Alcartel Notícias`;
 
@@ -963,6 +1023,7 @@ function paginaNoticia(n) {
   return `<!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -1018,7 +1079,7 @@ function paginaNoticia(n) {
     </p>
     <h1 class="vaga-pagina-titulo"><span>${escapeHtml(n.titulo)}</span></h1>
     <p class="noticia-pagina-meta">Por ${escapeHtml(n.autor)} · Publicado em ${escapeHtml(formatarDataPt(n.data_publicacao))}</p>
-    ${n.imagem_destaque ? `<img class="noticia-pagina-imagem" src="${escapeHtml(n.imagem_destaque)}" alt="${escapeHtml(n.titulo)}">` : ""}
+    ${midiaHtml}
     <div class="divider"></div>
     <div class="noticia-texto">${markdownParaHtml(n.conteudo) || `<p>${escapeHtml(n.resumo)}</p>`}</div>
   </article>
@@ -1029,6 +1090,14 @@ function paginaNoticia(n) {
   <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
 <script src="/js/contador-visitas.js" defer></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'ewaxgcbqul',
+    });
+    aclib.runAutoTag({
+        zoneId: 'gru6wslftp',
+    });
+</script>
 </body>
 </html>
 `;
@@ -1065,6 +1134,7 @@ function paginaListagemNoticias(lista) {
   return `<!DOCTYPE html>
 <html lang="pt-MZ" dir="ltr">
 <head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -1125,6 +1195,14 @@ function paginaListagemNoticias(lista) {
   <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
 </footer>
 <script src="/js/contador-visitas.js" defer></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'ewaxgcbqul',
+    });
+    aclib.runAutoTag({
+        zoneId: 'gru6wslftp',
+    });
+</script>
 </body>
 </html>
 `;
