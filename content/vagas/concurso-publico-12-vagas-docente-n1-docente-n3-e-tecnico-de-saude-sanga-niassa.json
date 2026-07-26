@@ -1,0 +1,28 @@
+{
+  "palavras_chave": "concurso público Sanga 2026, vagas docente Niassa, técnico de saúde Moçambique, função pública Moçambique, emprego docente N1 N3, Governo Distrito de Sanga",
+  "destaque": false,
+  "candidatura": {
+    "link": "https//:Alcartel.vercel.app/"
+  },
+  "tipo_contrato": "Tempo Inteiro",
+  "empresa": "Governo do Distrito de Sanga",
+  "descricao": "O Governo do Distrito de Sanga, Niassa, torna público o concurso de ingresso no aparelho do Estado para provimento de doze vagas por via de substituição, nos casos decorrentes de morte e aposentação, por despacho de 08 de Julho de 2026, ao abrigo do Decreto nº 1/2026, de 23 de Janeiro, conjugado com o Estatuto Geral dos Funcionários e Agentes do Estado (Lei nº 4/2022). As vagas distribuem-se por três carreiras: Docente N1, Docente N3 e Técnico de Saúde, conforme detalhado abaixo.",
+  "nivel_academico": "Formação Profissional",
+  "numero_vagas": 12,
+  "local": "Sanga, Niassa",
+  "video_ficheiro": "/assets/empresas/fb_img_1785090623514.jpg",
+  "data_publicacao": "{{now}}",
+  "requisitos": "Distribuição das vagas por carreira e especialidade:\nDocente N1 — Ensino de Filosofia: 1 vaga\nDocente N1 — Ensino de Francês: 1 vaga\nDocente N1 — Ensino de História: 1 vaga\nDocente N3 — Curso de FP-Modelo (12ª+1/10ª+3 anos): 7 vagas\nTécnico de Saúde — Medicina Geral: 2 vagas\nRequisitos gerais (para todas as carreiras):\nNacionalidade moçambicana\nIdade igual ou superior a 18 anos, permitindo completar no mínimo 180 contribuições para efeitos de aposentação\nNão ter sido aposentado\nTer situação militar regularizada\nTer sanidade mental e capacidade física compatível com a actividade\nRequisitos específicos:\nDocente N1: nível de licenciatura na área de ensino correspondente (Filosofia, Francês ou História), com formação psicopedagógica; aprovação em concurso de formação profissional para carreira docente com nível de licenciatura\nDocente N3: nível médio do Subsistema de Formação de Professores, graduado dos Institutos de Formação de Professores (IFPs) ou Escolas de Professores do Futuro (EPF–ADPP)\nTécnico de Saúde: curso técnico profissional de nível médio em Saúde, graduado dos Institutos de Formação de Saúde; aprovação em concurso de ingresso\nConhecer a legislação e regulamentação básica da respectiva actividade (educativa ou de saúde)",
+  "categoria": "Educação e Professorado",
+  "responsabilidades": "Docente N1 (Filosofia, Francês, História) — leccionar a respectiva disciplina no âmbito do Subsistema de Ensino\nDocente N3 — leccionar no âmbito do Subsistema de Formação de Professores, com especialidade em educação de infância, atendimento a crianças com deficiência físico-mental ou educação de adultos\nTécnico de Saúde (Medicina Geral) — prestar assistência técnica nas unidades sanitárias do Distrito de Sanga\nCumprir a legislação e regulamentação básica da respectiva área de actividade (educativa ou de saúde)\nParticipar em actividades pedagógicas/clínicas e administrativas da instituição\nContribuir para o processo de ensino-aprendizagem ou prestação de cuidados de saúde à população",
+  "idioma": "Português",
+  "galeria_imagens": [
+    "/assets/empresas/fb_img_1785090607243.jpg",
+    "/assets/empresas/fb_img_1785090619852.jpg"
+  ],
+  "titulo": "Concurso Público — 12 Vagas: Docente N1, Docente N3 e Técnico de Saúde",
+  "imagem_empresa": "/assets/empresas/file_00000000e7f88209a0fcf5089752021b.png",
+  "estado_vaga": "Aberta",
+  "documentos": "Certificado de Habilitações Literárias (autenticado)\nFotocópia do Bilhete de Identidade (autenticada)\nFotocópia do NUIT (autenticada, caso em cartão)\nDeclaração Sob Compromisso de Honra de não estar aposentado (autenticada)\nCurriculum Vitae (CV)\nDispensados no acto de entrega: atestado de sanidade mental, certificado de registo criminal e declaração militar\nCritério de Selecção: avaliação curricular seguida de entrevista profissional. A lista de aprovados tem validade de três anos.\nLocal de Entrega: Secretaria Distrital de Sanga, Repartição de Administração Local e Função Pública, no horário normal de expediente.\nData Limite para Candidatura: 2026-08-07\nCategoria: Educação e Professorado (nota: o campo só permite uma categoria — como 10 das 12 vagas são de docência, sugiro esta; posso gerar uma segunda publicação só para \"Saúde\" se preferir manter as categorias separadas para efeitos de indexação em /categoria/)",
+  "data_limite": "2026-08-07"
+}
