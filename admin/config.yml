@@ -86,6 +86,45 @@ collections:
         required: false
         hint: "Opcional. Se não for enviada, o site usa o logótipo da Alcartel como imagem por defeito."
 
+      # ── 3b. Galeria de Imagens ───────────────────────────────
+      # Permite anexar mais do que uma imagem à vaga (ex.: cartaz do
+      # aviso, fotos do local de trabalho, instalações). Cada imagem
+      # fica guardada em "assets/empresas" (mesma pasta definida em
+      # media_folder/public_folder no topo deste ficheiro). Campo
+      # opcional — se vazio, a vaga mostra apenas o logótipo/imagem
+      # por defeito. scripts/gerar-site.js precisa de ler
+      # dados.galeria_imagens (array de { imagem, legenda }) para
+      # renderizar esta galeria na página da vaga.
+      - name: "galeria_imagens"
+        label: "Galeria de Imagens"
+        widget: "list"
+        required: false
+        hint: "Opcional. Anexe uma ou mais imagens (ex.: cartaz do aviso, fotos do local). Pode adicionar quantas quiser."
+        field:
+          name: "imagem"
+          label: "Imagem"
+          widget: "image"
+
+      # ── 3c. Vídeo da Vaga ────────────────────────────────────
+      # Duas formas alternativas de associar vídeo à vaga: upload
+      # directo do ficheiro (guardado no repositório/store via
+      # media_folder) ou um link externo (YouTube, Vimeo, etc.).
+      # Ambos os campos são opcionais e independentes — preencha
+      # apenas o que preferir usar. scripts/gerar-site.js precisa de
+      # ler dados.video_ficheiro e/ou dados.video_link para embutir
+      # o vídeo na página da vaga.
+      - name: "video_ficheiro"
+        label: "Vídeo (carregar ficheiro)"
+        widget: "file"
+        required: false
+        hint: "Opcional. Carregue directamente um ficheiro de vídeo (ex.: mp4). Alternativa ao link de vídeo abaixo — preencha apenas um dos dois."
+
+      - name: "video_link"
+        label: "Vídeo (link externo)"
+        widget: "string"
+        required: false
+        hint: "Opcional. Cole aqui o link do vídeo (YouTube, Vimeo, etc.), caso prefira não carregar um ficheiro. Ex: https://www.youtube.com/embed/xxxxxxx"
+
       # ── 4. Local da Vaga ─────────────────────────────────────
       - { name: "local", label: "Local da Vaga", widget: "string", required: true, hint: "Ex: Beira, Sofala" }
 
@@ -298,6 +337,27 @@ collections:
         media_folder: "/assets/noticias"
         public_folder: "/assets/noticias"
         hint: "Opcional. Se não for enviada, o site usa a imagem genérica da Alcartel."
+
+      # ── 4b. Vídeo de Destaque ────────────────────────────────
+      - name: "video_destaque"
+        label: "Vídeo de Destaque"
+        widget: "string"
+        required: false
+        hint: "Opcional. URL do vídeo (YouTube, Vimeo, etc.). Ex: https://www.youtube.com/embed/dQw4w9WgXcQ ou https://vimeo.com/123456789"
+
+      # ── 4c. Tipo de Mídia ────────────────────────────────────
+      - name: "tipo_midia"
+        label: "Tipo de Mídia Destaque"
+        widget: "select"
+        required: false
+        options:
+          - "Nenhuma"
+          - "Imagem"
+          - "Vídeo YouTube"
+          - "Vídeo Vimeo"
+          - "Vídeo Customizado"
+        default: "Nenhuma"
+        hint: "Selecione se quer mostrar uma imagem ou vídeo como destaque da notícia."
 
       # ── 5. Autor ─────────────────────────────────────────────
       - { name: "autor", label: "Autor", widget: "string", required: true, default: "Equipa Alcartel" }
