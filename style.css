@@ -50,6 +50,8 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -59,7 +61,17 @@ body {
   color: var(--texto);
   background: var(--off-white);
   text-align: justify;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
 }
+
+/* ── Rede de segurança extra: media/embeds de terceiros (anúncios,
+   iframes, vídeos) que tentem ser mais largos do que o ecrã ficam
+   contidos em vez de alargar a página inteira e deixar espaço em
+   branco ao lado do conteúdo em telemóveis. ──────────────── */
+img, iframe, video, svg, embed, object { max-width: 100%; height: auto; }
 
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
