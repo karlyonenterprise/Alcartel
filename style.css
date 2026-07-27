@@ -504,6 +504,111 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   border-bottom-color: var(--ouro);
 }
 
+/* ── Rodapé — grelha (marca / links / legal+app) ── */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 28px;
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: left;
+  padding-bottom: 24px;
+}
+
+.footer-col__title {
+  color: var(--branco);
+  font-family: var(--font-titulo);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.footer-col .footer-links--stack {
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: visible;
+  gap: 9px;
+  margin-top: 0;
+}
+.footer-col .footer-links--stack a {
+  text-transform: none;
+  font-size: 0.82rem;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+.footer-social__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ouro);
+  background: rgba(247,107,0,0.08);
+  transition: transform 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+.footer-social__link svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--ouro);
+  transition: fill 0.2s;
+}
+.footer-social__link:hover {
+  background: var(--ouro);
+  transform: translateY(-2px);
+}
+.footer-social__link:hover svg { fill: var(--preto); }
+
+.footer-app-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 9px 14px;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius);
+  color: var(--branco) !important;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: none !important;
+  transition: border-color 0.2s, background 0.2s;
+}
+.footer-app-badge svg { width: 18px; height: 18px; fill: var(--ouro); flex-shrink: 0; }
+.footer-app-badge:hover {
+  border-color: var(--ouro);
+  background: rgba(247,107,0,0.08);
+  color: var(--ouro) !important;
+}
+.footer-app-badge small { display: block; font-weight: 500; opacity: 0.7; font-size: 0.62rem; }
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 18px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+@media (max-width: 720px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; text-align: left; }
+  .footer-col--brand { grid-column: 1 / -1; text-align: center; }
+  .footer-col--brand .footer-social { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-col--brand { text-align: center; }
+}
+
 /* ================================================================
    WHATSAPP FLUTUANTE
 ================================================================ */
