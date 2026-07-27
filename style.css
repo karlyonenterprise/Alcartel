@@ -14,20 +14,20 @@
 }
 
 :root {
-  /* Cores principais */
-  --verde-escuro:  #0a3d1f;
-  --verde-header:  #07311b;
-  --verde-medio:   #145a32;
-  --verde-accent:  #7dc142;
-  --ouro:          #c9a84c;
-  --preto:         #080e0a;
+  /* Cores principais — paleta alinhada com o logótipo Alcartel (azul-marinho + laranja) */
+  --verde-escuro:  #163a66;
+  --verde-header:  #0a1b33;
+  --verde-medio:   #1f4e8c;
+  --verde-accent:  #4c8fe0;
+  --ouro:          #f76b00;
+  --preto:         #0a0f1a;
   --vermelho:      #a8202c;
   --vermelho-escuro: #7a1620;
-  --off-white:     #f6f8f6;
-  --cinza-claro:   #eef1ee;
-  --cinza-borda:   #d4ddd4;
-  --texto:         #1c2a1e;
-  --texto-suave:   #4a6050;
+  --off-white:     #f5f7fa;
+  --cinza-claro:   #eef1f6;
+  --cinza-borda:   #d7dee8;
+  --texto:         #16232f;
+  --texto-suave:   #51637a;
   --branco:        #ffffff;
   --whatsapp:      #25D366;
 
@@ -142,7 +142,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 
 .site-nav a {
   display: inline-block;
-  color: #b8d8c4;
+  color: #c7d6ec;
   padding: 13px 20px;
   font-size: 0.8rem;
   font-weight: 700;
@@ -155,7 +155,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .site-nav a:hover,
 .site-nav a[aria-current="page"] {
   color: var(--branco);
-  background: rgba(201,168,76,0.10);
+  background: rgba(247,107,0,0.10);
 }
 
 .site-nav a[aria-current="page"] {
@@ -248,7 +248,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   color: var(--preto);
 }
 .btn--ouro:hover {
-  background: #d4b45a;
+  background: #d95e00;
 }
 .btn--full { width: 100%; text-align: center; }
 
@@ -312,9 +312,9 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
    SERVIÇOS — FORMULÁRIO DE PEDIDO
 ================================================================ */
 .pedido-section {
-  background: #071a0d;
+  background: #0a1b33;
   padding: 56px 24px 64px;
-  border-top: 1px solid rgba(201,168,76,0.18);
+  border-top: 1px solid rgba(247,107,0,0.18);
 }
 .pedido-section .section-title,
 .pedido-section .eyebrow { color: var(--branco); }
@@ -337,7 +337,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .pedido-form select,
 .pedido-form textarea {
   padding: 13px 14px;
-  border: 1.5px solid rgba(201,168,76,0.3);
+  border: 1.5px solid rgba(247,107,0,0.3);
   border-radius: var(--radius);
   font-size: 0.92rem;
   font-family: var(--font-corpo);
@@ -361,12 +361,12 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .pedido-form .full { grid-column: 1 / -1; }
 
 .pedido-form .alerta-tel {
-  border-color: rgba(201,168,76,0.3);
+  border-color: rgba(247,107,0,0.3);
   background: rgba(255,255,255,0.05);
 }
 .pedido-form .alerta-tel__prefixo {
   background: rgba(255,255,255,0.08);
-  border-right-color: rgba(201,168,76,0.3);
+  border-right-color: rgba(247,107,0,0.3);
   color: var(--branco);
 }
 .pedido-form .alerta-tel input { background: transparent; color: var(--branco); }
@@ -395,7 +395,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   height: 48px;
   border-radius: 50%;
   border: 1.5px solid var(--ouro);
-  background: rgba(201,168,76,0.08);
+  background: rgba(247,107,0,0.08);
   transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
 }
 .social-links__link svg {
@@ -407,7 +407,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .social-links__link:hover {
   background: var(--ouro);
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(201,168,76,0.35);
+  box-shadow: 0 6px 16px rgba(247,107,0,0.35);
 }
 .social-links__link:hover svg { fill: var(--preto); }
 
@@ -440,7 +440,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   color: var(--ouro);
   transition: color 0.2s;
 }
-.site-footer a:hover { color: #e6cd7a; }
+.site-footer a:hover { color: #ff8a3d; }
 
 .site-footer strong { color: rgba(255,255,255,0.8); }
 
@@ -500,7 +500,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 }
 
 .footer-links a:hover {
-  color: #e6cd7a;
+  color: #ff8a3d;
   border-bottom-color: var(--ouro);
 }
 
@@ -757,6 +757,91 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   color: var(--texto-suave);
 }
 
+/* ── Slider infinito das notícias (homepage) ─────────────────────────
+   .noticias-track é o mesmo <ul id="noticias-grid"> gerado por
+   scripts/gerar-site.js, já com a lista duplicada uma vez para o loop
+   ficar contínuo. O deslize é controlado por scripts/noticias-slider.js
+   (scrollLeft incremental + reset a meio da largura), não por animação
+   CSS pura — assim as setas e o botão de pausa conseguem interromper e
+   retomar o mesmo movimento sem conflito. ─────────────────────────── */
+.noticias-slider {
+  position: relative;
+  max-width: var(--max-width);
+  margin: 8px auto 0;
+  padding: 0 46px;
+}
+.noticias-slider__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+}
+.noticias-slider__viewport::-webkit-scrollbar { display: none; }
+.noticias-track {
+  display: flex;
+  gap: 20px;
+  padding: 6px 2px 16px;
+  text-align: left;
+}
+.noticias-track .noticia-card {
+  flex: 0 0 250px;
+  max-width: 250px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 620px) {
+  .noticias-track .noticia-card { flex-basis: 300px; max-width: 300px; }
+}
+.noticias-slider__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--verde-escuro);
+  color: var(--branco);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.2s, transform 0.2s;
+  z-index: 2;
+}
+.noticias-slider__nav:hover { background: var(--ouro); transform: translateY(-50%) scale(1.06); }
+.noticias-slider__nav--prev { left: 0; }
+.noticias-slider__nav--next { right: 0; }
+.noticias-slider__toggle {
+  position: absolute;
+  top: -38px;
+  right: 46px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--cinza-borda);
+  background: var(--branco);
+  color: var(--verde-escuro);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.noticias-slider__toggle:hover { border-color: var(--ouro); color: var(--ouro); }
+.noticias-slider__toggle[aria-pressed="true"] { color: var(--ouro); border-color: var(--ouro); }
+@media (max-width: 480px) {
+  .noticias-slider { padding: 0 40px; }
+  .noticias-slider__toggle { right: 40px; }
+}
+
 /* Página individual e listagem completa de notícias */
 .noticia-pagina-imagem {
   width: 100%;
@@ -803,7 +888,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
 }
 .vaga-card:hover {
-  box-shadow: 0 10px 30px rgba(201, 168, 76, 0.28);
+  box-shadow: 0 10px 30px rgba(247, 107, 0, 0.28);
   transform: translateY(-3px);
   border-color: var(--preto);
 }
@@ -945,7 +1030,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .vaga-share__icon--x        { background: #000000; }
 .vaga-share__icon--telegram { background: #26a5e4; }
 .vaga-share__icon--copiar   { background: var(--ouro); }
-.vaga-share__icon--copiado  { background: var(--verde-accent, #2e8b57); }
+.vaga-share__icon--copiado  { background: var(--verde-accent, #4c8fe0); }
 /* ── Modal "Ver mais" (detalhe rápido da vaga) ─────────────── */
 .vaga-modal {
   position: fixed;
@@ -960,7 +1045,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .vaga-modal__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(8, 14, 10, 0.72);
+  background: rgba(10, 15, 26, 0.72);
 }
 .vaga-modal__caixa {
   position: relative;
@@ -1068,6 +1153,54 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .vaga-pagina-contacto {
   margin-top: 18px;
   word-wrap: break-word;
+}
+
+/* ── Vídeo e galeria de imagens da vaga (campos "video_link"/
+   "video_ficheiro"/"galeria_imagens" de admin/config.yml). ─────────── */
+.vaga-pagina-video {
+  width: 100%;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  background: var(--preto);
+}
+.vaga-pagina-video-wrap {
+  position: relative;
+  padding-top: 56.25%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: var(--preto);
+}
+.vaga-pagina-video-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.vaga-pagina-galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.vaga-pagina-galeria__item {
+  margin: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--cinza-borda);
+  background: var(--off-white);
+}
+.vaga-pagina-galeria__item img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+}
+.vaga-pagina-galeria__item figcaption {
+  font-size: 0.75rem;
+  color: var(--texto-suave);
+  padding: 6px 8px;
 }
 
 .vaga-card__badge--estado {
@@ -1353,7 +1486,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
    SOBRE — HERO
 ================================================================ */
 .page-hero {
-  background: linear-gradient(135deg, var(--verde-escuro) 0%, var(--verde-medio) 65%, #1e7a42 100%);
+  background: linear-gradient(135deg, var(--verde-escuro) 0%, var(--verde-medio) 65%, #123058 100%);
   padding: 56px 24px 40px;
   text-align: center;
   position: relative;
@@ -1436,7 +1569,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 .section-body {
   font-size: 1rem;
   line-height: 1.85;
-  color: #505a52;
+  color: #4c5c70;
 }
 .section-body p + p { margin-top: 16px; }
 
@@ -1473,7 +1606,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 }
 .mvv-card p {
   font-size: 0.93rem;
-  color: #505a52;
+  color: #4c5c70;
   line-height: 1.75;
 }
 
@@ -1547,7 +1680,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 }
 .step-content p {
   font-size: 0.88rem;
-  color: #5a6a5c;
+  color: #4c5c70;
   line-height: 1.65;
 }
 
@@ -1635,7 +1768,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 }
 .parceria-card p {
   font-size: 0.92rem;
-  color: #505a52;
+  color: #4c5c70;
   line-height: 1.75;
 }
 .parceria-card p + p { margin-top: 10px; }
@@ -1667,7 +1800,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
    SERVIÇOS — HERO ALTERNATIVO (fundo escuro com ouro)
 ================================================================ */
 .hero-dark {
-  background: linear-gradient(135deg, #08200f 0%, var(--verde-escuro) 60%, #0e3a1a 100%);
+  background: linear-gradient(135deg, #05101f 0%, var(--verde-escuro) 60%, #10294a 100%);
   padding: 56px 24px 44px;
   text-align: center;
   position: relative;
@@ -1728,7 +1861,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 
 /* Serviços cards secção */
 .servicos-section {
-  background: #071a0d;
+  background: #0a1b33;
   padding: 56px 24px;
 }
 
@@ -1742,7 +1875,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 
 .servico-card {
   background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(201,168,76,0.22);
+  border: 1px solid rgba(247,107,0,0.22);
   border-radius: var(--radius-lg);
   padding: 32px 28px;
   transition: transform 0.25s, background 0.25s;
@@ -1819,7 +1952,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 
 .contacto-card {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(201,168,76,0.22);
+  border: 1px solid rgba(247,107,0,0.22);
   border-radius: var(--radius-lg);
   padding: 28px 24px;
   text-align: center;
@@ -1947,7 +2080,7 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   right: 16px;
   max-width: 400px;
   margin: 0 auto;
-  background: linear-gradient(135deg, var(--verde-escuro) 0%, #1a3a28 100%);
+  background: linear-gradient(135deg, var(--verde-escuro) 0%, #16304f 100%);
   border: 1px solid var(--ouro);
   border-radius: 12px;
   padding: 16px 20px;
@@ -2003,9 +2136,9 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
 }
 
 .install-btn--install:hover {
-  background-color: #f0d081;
+  background-color: #ffb066;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(218, 165, 32, 0.4);
+  box-shadow: 0 4px 12px rgba(247, 107, 0, 0.4);
 }
 
 .install-btn--install:active {
