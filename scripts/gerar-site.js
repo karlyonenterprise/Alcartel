@@ -212,7 +212,16 @@ function normalizarVaga(dados) {
     // Campos técnicos de topo
     cargo: dados.cargo || "",
     imagem_empresa: dados.imagem_empresa || "",
-    destaque: dados.destaque || false
+    destaque: dados.destaque || false,
+
+    // Galeria de imagens e vídeo da vaga — campos existentes em
+    // admin/config.yml (widgets "galeria_imagens", "video_ficheiro" e
+    // "video_link") que não estavam a ser lidos por este script, por
+    // isso nunca apareciam na página pública da vaga apesar de
+    // preenchíveis no CMS.
+    galeria_imagens: Array.isArray(dados.galeria_imagens) ? dados.galeria_imagens : [],
+    video_ficheiro: dados.video_ficheiro || "",
+    video_link: dados.video_link || ""
   };
 }
 
@@ -527,6 +536,50 @@ function blocoPartilha(v, url) {
 }
 
 // ── Modelo de página individual de vaga ──────────────────────
+// ── Vídeo da vaga — mesma lógica de detecção usada em videoNoticia()
+//    (YouTube/Vimeo/ficheiro directo), aplicada aos campos "video_link"
+//    e "video_ficheiro" definidos em admin/config.yml. Estes dois campos
+//    existiam no CMS mas nunca eram lidos/mostrados na página da vaga. ──
+function videoVaga(v) {
+  const url = (v.video_link || "").trim();
+  if (url) {
+    let m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
+    if (m) return { tipo: "youtube", embed: `https://www.youtube.com/embed/${m[1]}` };
+    m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    if (m) return { tipo: "vimeo", embed: `https://player.vimeo.com/video/${m[1]}` };
+    return { tipo: "custom", embed: url };
+  }
+  if (v.video_ficheiro) return { tipo: "custom", embed: v.video_ficheiro };
+  return null;
+}
+
+// ── Bloco de vídeo + galeria de imagens da vaga (campos "video_link"/
+//    "video_ficheiro"/"galeria_imagens" de admin/config.yml). Mostrado
+//    logo a seguir à partilha, antes dos "Detalhes da Vaga". Devolve ""
+//    quando a vaga não tem nenhum dos dois, para não deixar espaço vazio. ──
+function blocoVideoGaleriaVaga(v) {
+  const video = videoVaga(v);
+  const videoHtml = video
+    ? (video.tipo === "custom"
+        ? `<video class="vaga-pagina-video" src="${escapeHtml(video.embed)}" controls preload="metadata"></video>`
+        : `<div class="vaga-pagina-video-wrap">
+        <iframe src="${escapeHtml(video.embed)}" title="${escapeHtml(v.titulo)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>`)
+    : "";
+
+  const galeria = (v.galeria_imagens || []).filter(g => g && g.imagem);
+  const galeriaHtml = galeria.length
+    ? `<div class="vaga-pagina-galeria">
+      ${galeria.map(g => `<figure class="vaga-pagina-galeria__item">
+        <img src="${escapeHtml(g.imagem)}" alt="${escapeHtml(g.legenda || v.titulo)}" loading="lazy">
+        ${g.legenda ? `<figcaption>${escapeHtml(g.legenda)}</figcaption>` : ""}
+      </figure>`).join("\n")}
+    </div>`
+    : "";
+
+  return `${videoHtml}${galeriaHtml}`;
+}
+
 function paginaVaga(v) {
   const url = `${SITE_URL}/vagas/${v.slug}.html`;
   const local = textoLocal(v) || v.pais || "Moçambique";
@@ -592,7 +645,7 @@ function paginaVaga(v) {
   ${v.palavras_chave ? `<meta name="keywords" content="${escapeHtml(v.palavras_chave)}">` : ""}
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="${url}">
-  <meta name="theme-color" content="#0e2818">
+  <meta name="theme-color" content="#0a1b33">
   ${ICONS_HEAD}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Alcartel">
@@ -618,7 +671,7 @@ function paginaVaga(v) {
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="300" height="90"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="640" height="322"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
@@ -651,6 +704,7 @@ function paginaVaga(v) {
     </p>
     ${blocoPartilha(v, url)}
     <div class="divider"></div>
+    ${blocoVideoGaleriaVaga(v)}
 
     <h2>Detalhes da Vaga</h2>
     ${quadroDetalhes([
@@ -705,6 +759,12 @@ function paginaVaga(v) {
     });
     aclib.runAutoTag({
         zoneId: 'gru6wslftp',
+    });
+    aclib.runAutoTag({
+        zoneId: 'k4oh1stfge',
+    });
+    aclib.runAutoTag({
+        zoneId: 'f9xdvntcc0',
     });
 </script>
 </body>
@@ -835,7 +895,7 @@ function paginaListagem({ tipo, valor, lista }) {
   <meta name="description" content="Confira todas as vagas de emprego disponíveis em ${escapeHtml(valor)} na Alcartel, o motor de empregos de Moçambique.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${url}">
-  <meta name="theme-color" content="#0e2818">
+  <meta name="theme-color" content="#0a1b33">
   ${ICONS_HEAD}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Alcartel">
@@ -859,7 +919,7 @@ function paginaListagem({ tipo, valor, lista }) {
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel" width="300" height="90"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel" width="640" height="322"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
@@ -891,6 +951,12 @@ ${blocoModal(lista)}
     });
     aclib.runAutoTag({
         zoneId: 'gru6wslftp',
+    });
+    aclib.runAutoTag({
+        zoneId: 'k4oh1stfge',
+    });
+    aclib.runAutoTag({
+        zoneId: 'f9xdvntcc0',
     });
 </script>
 </body>
@@ -1032,7 +1098,7 @@ function paginaNoticia(n) {
   <meta name="description" content="${escapeHtml(descricao)}">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="${url}">
-  <meta name="theme-color" content="#0e2818">
+  <meta name="theme-color" content="#0a1b33">
   ${ICONS_HEAD}
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Alcartel">
@@ -1056,7 +1122,7 @@ function paginaNoticia(n) {
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="300" height="90"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="640" height="322"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
@@ -1096,6 +1162,12 @@ function paginaNoticia(n) {
     });
     aclib.runAutoTag({
         zoneId: 'gru6wslftp',
+    });
+    aclib.runAutoTag({
+        zoneId: 'k4oh1stfge',
+    });
+    aclib.runAutoTag({
+        zoneId: 'f9xdvntcc0',
     });
 </script>
 </body>
@@ -1143,7 +1215,7 @@ function paginaListagemNoticias(lista) {
   <meta name="description" content="Fique a par das últimas notícias do mercado de emprego em Moçambique e receba dicas de carreira da Alcartel.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${url}">
-  <meta name="theme-color" content="#0e2818">
+  <meta name="theme-color" content="#0a1b33">
   ${ICONS_HEAD}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Alcartel">
@@ -1163,7 +1235,7 @@ function paginaListagemNoticias(lista) {
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="Alcartel" width="300" height="90"></picture>
+    <picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="Alcartel" width="640" height="322"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
@@ -1201,6 +1273,12 @@ function paginaListagemNoticias(lista) {
     });
     aclib.runAutoTag({
         zoneId: 'gru6wslftp',
+    });
+    aclib.runAutoTag({
+        zoneId: 'k4oh1stfge',
+    });
+    aclib.runAutoTag({
+        zoneId: 'f9xdvntcc0',
     });
 </script>
 </body>
@@ -1285,9 +1363,23 @@ function injetarSecaoNoticiasHome(nomeFicheiro, lista) {
     return;
   }
   let html = fs.readFileSync(caminho, "utf-8");
-  const cards = lista.length
-    ? lista.map(cardNoticia).join("\n")
-    : `    <li class="vaga-card vaga-card--vazio"><p>Sem notícias publicadas de momento. Volte em breve.</p></li>`;
+  let cards;
+  if (!lista.length) {
+    cards = `    <li class="vaga-card vaga-card--vazio"><p>Sem notícias publicadas de momento. Volte em breve.</p></li>`;
+  } else {
+    // ── Slider infinito: o track mostra a lista real seguida de uma cópia
+    //    idêntica (marcada aria-hidden, fora da ordem de tabulação) para
+    //    que a animação CSS possa deslocar exactamente 50% da largura e
+    //    voltar ao início sem qualquer salto visível. Os cartões
+    //    duplicados usam tabindex="-1" nos links para não serem
+    //    alcançados duas vezes pelo teclado/leitores de ecrã. ──────────
+    const cardsOriginais = lista.map(cardNoticia).join("\n");
+    const cardsDuplicados = lista.map(n => cardNoticia(n)
+      .replace('<li class="vaga-card noticia-card" role="listitem">', '<li class="vaga-card noticia-card" role="listitem" aria-hidden="true" tabindex="-1">')
+      .replace(/<a href/g, '<a tabindex="-1" href')
+    ).join("\n");
+    cards = `${cardsOriginais}\n${cardsDuplicados}`;
+  }
   const comGrid = injetarEntreMarcadores(html, "<!-- NOTICIAS:START -->", "<!-- NOTICIAS:END -->", cards);
   if (comGrid === null) {
     console.warn(`⚠️  Marcadores NOTICIAS:START/END não encontrados em ${nomeFicheiro} — secção de notícias não injectada.`);
@@ -1456,7 +1548,7 @@ function main() {
   fs.writeFileSync(path.join(ROOT, "noticias.html"), paginaListagemNoticias(noticias), "utf-8");
 
   // Homepage: só as 2 notícias mais recentes publicadas.
-  injetarSecaoNoticiasHome("index.html", noticias.slice(0, 2));
+  injetarSecaoNoticiasHome("index.html", noticias.slice(0, 6));
 
   const totalSitemap = gerarSitemap(urlsGeradas);
 
@@ -1464,7 +1556,7 @@ function main() {
   console.log(`✅ ${vagas.length} vaga(s), ${Object.keys(porCategoria).length} categoria(s), ${Object.keys(porCidade).length} cidade(s) geradas.`);
   console.log(`✅ Grid injectado em index.html (${paraHomepage.length} vaga(s) em destaque) e vagas.html (${vagas.length} vaga(s)).`);
   console.log(`✅ Fonte: content/noticias/ (${noticias.length} notícia(s) publicada(s) encontrada(s))`);
-  console.log(`✅ noticias.html gerado (listagem completa) + ${noticias.length} página(s) individual(is) em /noticias/. Secção da homepage com as ${Math.min(2, noticias.length)} mais recentes.`);
+  console.log(`✅ noticias.html gerado (listagem completa) + ${noticias.length} página(s) individual(is) em /noticias/. Secção da homepage (slider) com as ${Math.min(6, noticias.length)} mais recentes.`);
   console.log(`✅ sitemap.xml gerado com ${totalSitemap} URLs (${PAGINAS_ESTATICAS_META.length} estáticas + ${urlsGeradas.length} dinâmicas), com lastmod/changefreq/priority.`);
 }
 
