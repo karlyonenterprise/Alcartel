@@ -1,6 +1,4 @@
-# Alcartel
-# Empregos em Moçambique 
-# Vagas para Beira 
+# Alcartel – Motor de Empregos de Moçambique
 
 O Alcartel é uma plataforma de empregos criada para ligar candidatos e empregadores em todo o território moçambicano.
 
