@@ -810,6 +810,12 @@ function paginaVaga(v) {
     aclib.runAutoTag({
         zoneId: 'f9xdvntcc0',
     });
+    aclib.runAutoTag({
+        zoneId: 'rvcu0hukr8',
+    });
+    aclib.runAutoTag({
+        zoneId: '91svjmnxe0',
+    });
 </script>
 </body>
 </html>
@@ -1045,6 +1051,12 @@ ${blocoModal(lista)}
     });
     aclib.runAutoTag({
         zoneId: 'f9xdvntcc0',
+    });
+    aclib.runAutoTag({
+        zoneId: 'rvcu0hukr8',
+    });
+    aclib.runAutoTag({
+        zoneId: '91svjmnxe0',
     });
 </script>
 </body>
@@ -1301,6 +1313,12 @@ function paginaNoticia(n) {
     aclib.runAutoTag({
         zoneId: 'f9xdvntcc0',
     });
+    aclib.runAutoTag({
+        zoneId: 'rvcu0hukr8',
+    });
+    aclib.runAutoTag({
+        zoneId: '91svjmnxe0',
+    });
 </script>
 </body>
 </html>
@@ -1448,6 +1466,12 @@ function paginaListagemNoticias(lista) {
     });
     aclib.runAutoTag({
         zoneId: 'f9xdvntcc0',
+    });
+    aclib.runAutoTag({
+        zoneId: 'rvcu0hukr8',
+    });
+    aclib.runAutoTag({
+        zoneId: '91svjmnxe0',
     });
 </script>
 </body>
