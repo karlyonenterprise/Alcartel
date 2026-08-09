@@ -59,14 +59,14 @@
 
   <!-- ── APPLE META ── -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Alcartel">
+  <meta name="apple-mobile-web-app-title" content="Alcartel Digital">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
   <!-- ── MICROSOFT META ── -->
   <meta name="msapplication-TileColor" content="#0a1b33">
   <meta name="msapplication-TileImage" content="/mstile-144x144.png">
   <meta name="msapplication-config" content="/browserconfig.xml">
-  <meta name="application-name" content="Alcartel">
+  <meta name="application-name" content="Alcartel Digital">
 
   <!-- ── FAVICONS ── -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -218,13 +218,10 @@
 
 <nav class="site-nav" id="site-nav" role="navigation" aria-label="Navegação principal">
   <ul>
-    <li><a href="index.html">Início</a></li>
     <li><a href="vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="noticias.html">Notícias</a></li>
-    <li><a href="servicos.html">Serviços</a></li>
     <li><a href="saude.html">Saúde e Bem-Estar</a></li>
     <li><a href="cinema.html">Cinema</a></li>
-    <li><a href="sobre.html">Sobre</a></li>
+    <li><a href="servicos.html">Serviços</a></li>
   </ul>
 </nav>
 
@@ -234,208 +231,33 @@
   <div class="divider divider--center divider--ouro"></div>
 
   <div class="search-row" role="search">
-    <label for="campo-pesquisa" class="sr-only">O que procura?</label>
+    <label for="campo-pesquisa" class="sr-only">Cargo, profissão ou palavra-chave</label>
     <input
       id="campo-pesquisa"
       type="search"
       name="q"
-      placeholder="O que procura?"
+      placeholder="Cargo, profissão ou palavra-chave"
     >
-    <label for="provincia-pesquisa" class="sr-only">Província ou distrito</label>
+    <label for="provincia-pesquisa" class="sr-only">Província</label>
     <select id="provincia-pesquisa" name="provincia">
-      <option value="">Todas as Províncias de Moçambique</option>
-      <optgroup label="Cabo Delgado">
-        <option value="cabo-delgado">Toda a Província de Cabo Delgado</option>
-        <option value="cabo-delgado">Ancuabe</option>
-        <option value="cabo-delgado">Balama</option>
-        <option value="cabo-delgado">Chiúre</option>
-        <option value="cabo-delgado">Ibo</option>
-        <option value="cabo-delgado">Macomia</option>
-        <option value="cabo-delgado">Mecúfi</option>
-        <option value="cabo-delgado">Meluco</option>
-        <option value="cabo-delgado">Metuge</option>
-        <option value="cabo-delgado">Mocímboa da Praia</option>
-        <option value="cabo-delgado">Montepuez</option>
-        <option value="cabo-delgado">Mueda</option>
-        <option value="cabo-delgado">Muidumbe</option>
-        <option value="cabo-delgado">Namuno</option>
-        <option value="cabo-delgado">Nangade</option>
-        <option value="cabo-delgado">Palma</option>
-        <option value="cabo-delgado">Pemba</option>
-        <option value="cabo-delgado">Quissanga</option>
-      </optgroup>
-      <optgroup label="Niassa">
-        <option value="niassa">Toda a Província de Niassa</option>
-        <option value="niassa">Cuamba</option>
-        <option value="niassa">Lago</option>
-        <option value="niassa">Lichinga</option>
-        <option value="niassa">Majune</option>
-        <option value="niassa">Mandimba</option>
-        <option value="niassa">Marrupa</option>
-        <option value="niassa">Maúa</option>
-        <option value="niassa">Mavago</option>
-        <option value="niassa">Mecanhelas</option>
-        <option value="niassa">Mecula</option>
-        <option value="niassa">Metarica</option>
-        <option value="niassa">Muembe</option>
-        <option value="niassa">Ngauma</option>
-        <option value="niassa">Nipepe</option>
-        <option value="niassa">Sanga</option>
-        <option value="niassa">Chimbonila</option>
-      </optgroup>
-      <optgroup label="Nampula">
-        <option value="nampula">Toda a Província de Nampula</option>
-        <option value="nampula">Angoche</option>
-        <option value="nampula">Eráti</option>
-        <option value="nampula">Ilha de Moçambique</option>
-        <option value="nampula">Lalaua</option>
-        <option value="nampula">Larde</option>
-        <option value="nampula">Liúpo</option>
-        <option value="nampula">Malema</option>
-        <option value="nampula">Meconta</option>
-        <option value="nampula">Mecubúri</option>
-        <option value="nampula">Memba</option>
-        <option value="nampula">Mogincual</option>
-        <option value="nampula">Mogovolas</option>
-        <option value="nampula">Moma</option>
-        <option value="nampula">Monapo</option>
-        <option value="nampula">Mossuril</option>
-        <option value="nampula">Muecate</option>
-        <option value="nampula">Murrupula</option>
-        <option value="nampula">Nacala-a-Velha</option>
-        <option value="nampula">Nacala Porto</option>
-        <option value="nampula">Nacarôa</option>
-        <option value="nampula">Nampula</option>
-        <option value="nampula">Rapale</option>
-        <option value="nampula">Ribáuè</option>
-      </optgroup>
-      <optgroup label="Zambézia">
-        <option value="zambezia">Toda a Província de Zambézia</option>
-        <option value="zambezia">Alto Molócuè</option>
-        <option value="zambezia">Chinde</option>
-        <option value="zambezia">Derre</option>
-        <option value="zambezia">Gilé</option>
-        <option value="zambezia">Gurué</option>
-        <option value="zambezia">Ile</option>
-        <option value="zambezia">Inhassunge</option>
-        <option value="zambezia">Lugela</option>
-        <option value="zambezia">Maganja da Costa</option>
-        <option value="zambezia">Milange</option>
-        <option value="zambezia">Mocuba</option>
-        <option value="zambezia">Mocubela</option>
-        <option value="zambezia">Molumbo</option>
-        <option value="zambezia">Mopeia</option>
-        <option value="zambezia">Morrumbala</option>
-        <option value="zambezia">Namacurra</option>
-        <option value="zambezia">Namarroi</option>
-        <option value="zambezia">Nicoadala</option>
-        <option value="zambezia">Pebane</option>
-        <option value="zambezia">Quelimane</option>
-      </optgroup>
-      <optgroup label="Tete">
-        <option value="tete">Toda a Província de Tete</option>
-        <option value="tete">Angónia</option>
-        <option value="tete">Cahora-Bassa</option>
-        <option value="tete">Changara</option>
-        <option value="tete">Chifunde</option>
-        <option value="tete">Chiuta</option>
-        <option value="tete">Dôa</option>
-        <option value="tete">Macanga</option>
-        <option value="tete">Magoé</option>
-        <option value="tete">Marara</option>
-        <option value="tete">Marávia</option>
-        <option value="tete">Moatize</option>
-        <option value="tete">Mutarara</option>
-        <option value="tete">Tete</option>
-        <option value="tete">Tsangano</option>
-        <option value="tete">Zumbo</option>
-      </optgroup>
-      <optgroup label="Manica">
-        <option value="manica">Toda a Província de Manica</option>
-        <option value="manica">Bárue</option>
-        <option value="manica">Chimoio</option>
-        <option value="manica">Gondola</option>
-        <option value="manica">Guro</option>
-        <option value="manica">Machaze</option>
-        <option value="manica">Macate</option>
-        <option value="manica">Macossa</option>
-        <option value="manica">Manica</option>
-        <option value="manica">Mossurize</option>
-        <option value="manica">Sussundenga</option>
-        <option value="manica">Tambara</option>
-        <option value="manica">Vanduzi</option>
-      </optgroup>
-      <optgroup label="Sofala">
-        <option value="sofala">Toda a Província de Sofala</option>
-        <option value="sofala">Beira</option>
-        <option value="sofala">Búzi</option>
-        <option value="sofala">Caia</option>
-        <option value="sofala">Chemba</option>
-        <option value="sofala">Cheringoma</option>
-        <option value="sofala">Chibabava</option>
-        <option value="sofala">Dondo</option>
-        <option value="sofala">Gorongosa</option>
-        <option value="sofala">Machanga</option>
-        <option value="sofala">Marromeu</option>
-        <option value="sofala">Maringué</option>
-        <option value="sofala">Muanza</option>
-        <option value="sofala">Nhamatanda</option>
-      </optgroup>
-      <optgroup label="Inhambane">
-        <option value="inhambane">Toda a Província de Inhambane</option>
-        <option value="inhambane">Funhalouro</option>
-        <option value="inhambane">Govuro</option>
-        <option value="inhambane">Homoíne</option>
-        <option value="inhambane">Inhambane</option>
-        <option value="inhambane">Inharrime</option>
-        <option value="inhambane">Inhassoro</option>
-        <option value="inhambane">Jangamo</option>
-        <option value="inhambane">Mabote</option>
-        <option value="inhambane">Massinga</option>
-        <option value="inhambane">Maxixe</option>
-        <option value="inhambane">Morrumbene</option>
-        <option value="inhambane">Panda</option>
-        <option value="inhambane">Vilankulo</option>
-        <option value="inhambane">Zavala</option>
-      </optgroup>
-      <optgroup label="Gaza">
-        <option value="gaza">Toda a Província de Gaza</option>
-        <option value="gaza">Bilene</option>
-        <option value="gaza">Chibuto</option>
-        <option value="gaza">Chicualacuala</option>
-        <option value="gaza">Chigubo</option>
-        <option value="gaza">Chókwè</option>
-        <option value="gaza">Guijá</option>
-        <option value="gaza">Mabalane</option>
-        <option value="gaza">Manjacaze</option>
-        <option value="gaza">Mapai</option>
-        <option value="gaza">Massangena</option>
-        <option value="gaza">Massingir</option>
-        <option value="gaza">Xai-Xai</option>
-      </optgroup>
-      <optgroup label="Maputo Província">
-        <option value="maputo-provincia">Toda a Maputo Província</option>
-        <option value="maputo-provincia">Boane</option>
-        <option value="maputo-provincia">Magude</option>
-        <option value="maputo-provincia">Manhiça</option>
-        <option value="maputo-provincia">Marracuene</option>
-        <option value="maputo-provincia">Matola</option>
-        <option value="maputo-provincia">Matutuíne</option>
-        <option value="maputo-provincia">Moamba</option>
-        <option value="maputo-provincia">Namaacha</option>
-      </optgroup>
-      <optgroup label="Maputo Cidade">
-        <option value="maputo-cidade">Todo o Maputo Cidade</option>
-        <option value="maputo-cidade">KaMpfumo</option>
-        <option value="maputo-cidade">Nlhamankulu</option>
-        <option value="maputo-cidade">KaMaxaquene</option>
-        <option value="maputo-cidade">KaMavota</option>
-        <option value="maputo-cidade">KaMubukwana</option>
-        <option value="maputo-cidade">KaTembe</option>
-        <option value="maputo-cidade">KaNyaka</option>
-      </optgroup>
+      <option value="">Todas as Províncias</option>
+      <option value="cabo-delgado">Cabo Delgado</option>
+      <option value="niassa">Niassa</option>
+      <option value="nampula">Nampula</option>
+      <option value="zambezia">Zambézia</option>
+      <option value="tete">Tete</option>
+      <option value="manica">Manica</option>
+      <option value="sofala">Sofala</option>
+      <option value="inhambane">Inhambane</option>
+      <option value="gaza">Gaza</option>
+      <option value="maputo-provincia">Maputo Província</option>
+      <option value="maputo-cidade">Maputo Cidade</option>
     </select>
-    <button class="btn" type="button" aria-label="Pesquisar vagas">Pesquisar</button>
+    <label for="distrito-pesquisa" class="sr-only">Distrito ou cidade</label>
+    <select id="distrito-pesquisa" name="distrito">
+      <option value="">Distrito/Cidade</option>
+    </select>
+    <button class="btn btn--ouro" type="button" aria-label="Pesquisar vagas">Pesquisar Emprego</button>
   </div>
 </section>
 
@@ -882,7 +704,18 @@
 </div>
 <script id="vagas-dados" type="application/json">{"vaga-disponivel-para-analista-de-compras-beira-sofala":{"titulo":"Vaga disponível para Analista de Compras ","empresa":"Aldelia","imagem_empresa":"/assets/empresas/483ba5f58aa249bcb0b04de91b7d44c088991b437179822987f7392d4968f936.png","cidade":"Beira","provincia":"Sofala","pais":"Moçambique","categoria":"Transportes e Logística","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"Apoiar o Superintendente de Operações na supervisão de todas as actividades operacionais, de manutenção, HSSE e administrativas nos armazéns de lubrificantes sob a gestão da Puma Energy Moçambique. Como Supervisor, você liderará a equipa do armazém, garantindo a recepção, armazenamento, manuseamento e expedição segura e eficiente de lubrificantes embalados, mantendo um controlo rigoroso de stocks e assegurando o cumprimento das políticas, procedimentos e normas de HSSE da empresa.","responsabilidades":"Operações\nGarantir recepção conforme os processos e procedimentos da empresa\nCoordenar com Abastecimento e Transporte para entregas atempadas\nSupervisionar operações diárias, arrumação e armazenamento\nGarantir manuseamento seguro dos produtos\nExecutar expedições com total conformidade contratual\nRegistar correctamente todas as actividades\nAntecipar e monitorizar problemas operacionais\nHSSE\nCumprir todas as regras de segurança e ambiente\nPromover cultura forte de HSSE e desempenho\nParticipar em simulacros de emergência\nResponder a situações de emergência\nComunicar quase acidentes e actos inseguros\nGarantir PTW para manutenção\nManter equipamentos de HSSE em perfeito estado\nManutenção\nDesenvolver plano de inspecção para armazém e equipamentos\nCriar listas de verificação de inspecção e manutenção\nManter limpeza e organização ao nível máximo\nSupervisionar intervenções de manutenção\nGarantir conformidade com normas HSSE\nInspecção periódica de equipamentos\nRegistar todas as manutenções realizadas\nStocks e Admin\nRegistar completa e correctamente todas as actividades\nLiderar contagens regulares de stocks\nComunicar ganhos ou perdas anormais\nApoiar reconciliações e inventários físicos\nManter dashboards e KPIs de desempenho\nManter equipamentos registados no inventário\nRegistar actividades operacionais não essenciais","requisitos_obrigatorios":"Experiência: mínimo 3 a 5 anos em operações de armazém, preferencialmente em produtos petrolíferos embalados, lubrificantes ou químicos industriais similares\nFormação: diploma técnico ou equivalente em Logística, Gestão de Armazéns, Engenharia Industrial, Manutenção ou área relacionada (vantajosa)\nCompetências técnicas: Microsoft Office (Word, Excel, Outlook); experiência com sistemas de gestão de stocks é uma vantagem\nCompetências interpessoais: capacidade de interagir com gestão a todos os níveis e contactos externos, sobretudo transportadores e clientes\nCompetências analíticas: capacidade de identificar problemas, investigar variações e propor soluções práticas\nIdiomas: fluente em português; inglês é uma forte vantagem\nOrientação para resultados, excelência operacional e satisfação do cliente\nDisponibilidade para contacto fora do horário normal e deslocações ocasionais dentro de Moçambique","requisitos_desejaveis":"","escolaridade":"Diploma/Bacharelato","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"emprego beira, supervisor armazém, logística, lubrificantes, aldelia, puma energy, vagas sofala","data_publicacao":"2026-08-09T06:08:58.424Z","data_validade":"2026-08-28","link_candidatura":"https://njobs.co.mz/vaga/supervisor-do-armazem-de-lubrificantes/ ","candidatura_email":"https://wa.me/258831190119","candidatura_link":"https://njobs.co.mz/vaga/supervisor-do-armazem-de-lubrificantes/ ","slug":"vaga-disponivel-para-analista-de-compras-beira-sofala"},"vagas-de-motorista-2-vagas-maputo-e-manica":{"titulo":"Vagas de Motorista (2 vagas)","empresa":"Motorista (2 vagas)","imagem_empresa":"/assets/empresas/images.jpeg","cidade":"Maputo e Manica","provincia":"Maputo e Manica","pais":"Moçambique","categoria":"Transportes e Logística","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":2,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A N'weti, Organização Não Governamental Moçambicana dedicada à melhoria da saúde reprodutiva nas comunidades, pretende recrutar dois Motoristas para as províncias de Maputo e Manica. O(A) Motorista deverá garantir o transporte dos colaboradores e do expediente do Projecto de forma adequada e zelosa, em observância das políticas da Organização e do Código de Estrada.","responsabilidades":"Cumprir rigorosamente as Políticas e Procedimentos de Uso de Viaturas da Organização e o Código de Estrada em vigor\nTransportar colaboradores e expediente diverso em segurança, conforme planos fornecidos\nGarantir a manutenção regular da viatura e realizar inspeções de rotina para detectar anomalias\nManter registo consistente do log book (quilometragem, combustível, destinos, etc.)\nElaborar relatórios periódicos de gastos e funcionamento da viatura\nAssegurar que a viatura tenha todos os documentos necessários e actualizados\nGarantir a existência de equipamento essencial na viatura (ferramentas, kit de primeiros socorros)\nOutras atividades inerentes ao cargo","requisitos_obrigatorios":"Mínimo de 12.ª Classe ou equivalente em experiência, preferencialmente com formação em mecânica automóvel\nCarta de condução profissional atualizada, sem registo de infrações graves\nExperiência profissional comprovada de, no mínimo, 5 anos como motorista em ONG ou projetos comunitários\nDomínio do Código de Estrada em vigor no país\nConhecimento de mecânica auto ou habilidades básicas de revisão e manutenção de veículos\nConhecimento geográfico da província/distrito de alocação e das condições das vias\nCompreensão básica sobre o contexto dos serviços de saúde na comunidade\nBoas habilidades de relacionamento interpessoal e comunicação\nFluência em português; noções básicas de inglês\nSentido de responsabilidade, discrição e integridade\nDisponibilidade para horários flexíveis e viagens ocasionais de longa distância\nVantagem: ser residente na província de candidatura e fluente nas línguas locais","requisitos_desejaveis":"","escolaridade":"Ensino Secundário (12º ano)","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Carta de motivação (com indicação da província)\nCurriculum Vitae atualizado\nCertificado de habilitações\nCarta de condução profissional","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"motorista, vaga motorista Maputo, vaga motorista Manica, N'weti, ONG Moçambique, condutor, transporte","data_publicacao":"2026-08-09T06:08:58.424Z","data_validade":"2026-08-31","link_candidatura":"https://emprego.mmo.co.mz/vaga/para-motoristas-nweti/","candidatura_email":"https://go.mmo.co.mz/gp3h","candidatura_link":"https://emprego.mmo.co.mz/vaga/para-motoristas-nweti/","slug":"vagas-de-motorista-2-vagas-maputo-e-manica"},"vendedor-a-produtos-opticos-e-ambientais-fontes-de-luz-para-semicondutores-niassa-mocambique":{"titulo":"Vendedor(a) — Produtos Ópticos e Ambientais (Fontes de Luz para Semicondutores)","empresa":"Iwasaki Electric Co., Ltd.","imagem_empresa":"/assets/empresas/logo-2.png","cidade":"Niassa","provincia":"Moçambique","pais":"Moçambique","categoria":"Comércio e Vendas","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A Iwasaki Electric Co., Ltd. procura profissional para gerir atividades de vendas de fontes de luz utilizadas em equipamentos semicondutores, atuando no Departamento de Vendas de Produtos Ópticos e Ambientais, Terceira Seção de Vendas, em Tóquio.","responsabilidades":"Proposta e venda de lâmpadas halógenas de aquecimento e lâmpadas UV para fabricantes de semicondutores nacionais e internacionais (vendas diretas e através de empresas comerciais/parceiros)\nProposta e venda de lâmpadas UV de baixa pressão para fabricantes de equipamentos de tratamento de água para semicondutores\nProposta e venda de produtos ópticos diversos: lâmpadas halógenas, produtos de película fina e LEDs\nProposta e venda de lâmpadas halógenas de infravermelho médio","requisitos_obrigatorios":"Experiência em vendas em empresa fabricante ou comercial, com foco em fabricantes de semicondutores e equipamentos de fabricação de semicondutores (processos front-end)\nCarteira de habilitação (carta de condução)\nDiploma do ensino médio ou equivalente","requisitos_desejaveis":"","escolaridade":"Ensino Secundário (12º ano)","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Currículo (com foto)\nHistórico profissional\nCópias de certificados de qualificação\nBónus duas vezes ao ano (junho e dezembro)\nHorário: 8h50 às 17h20\nFins de semana completos (sábado e domingo) + feriados nacionais + férias de verão e fim de ano\nFérias remuneradas: 10 dias no primeiro ano, até 20 dias a partir do segundo ano (máx. 25 dias)\nLicença-maternidade, licença parental, licença para cuidar de familiares\nSeguro saúde, seguro de previdência privada, fundo de pensão, seguro de acidentes de trabalho\nResorts conveniados da empresa, plano de poupança, financiamento imobiliário","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"vendas, Iwasaki Electric, semicondutores, produtos ópticos, lâmpadas UV, vaga Japão, Tóquio","data_publicacao":"2026-08-09T06:08:58.424Z","data_validade":"2026-08-18","link_candidatura":"https://mz.linkedin.com/jobs/view/%E5%96%B6%E6%A5%AD-%E5%85%89%E3%83%BB%E7%92%B0%E5%A2%83%E4%BA%8B%E6%A5%AD-at-%E5%B2%A9%E5%B4%8E%E9%9B%BB%E6%B0%97%EF%BC%88%E6%A0%AA%EF%BC%89-4435380759?refId=2RFQUctgDEvY1AR6oS4E7Q%3D%3D&trackingId=9kyKkmUjIBCQQK%2FhiUF7bw%3D%3D","candidatura_email":"karlyonenterprise@gmail.com","candidatura_link":"https://mz.linkedin.com/jobs/view/%E5%96%B6%E6%A5%AD-%E5%85%89%E3%83%BB%E7%92%B0%E5%A2%83%E4%BA%8B%E6%A5%AD-at-%E5%B2%A9%E5%B4%8E%E9%9B%BB%E6%B0%97%EF%BC%88%E6%A0%AA%EF%BC%89-4435380759?refId=2RFQUctgDEvY1AR6oS4E7Q%3D%3D&trackingId=9kyKkmUjIBCQQK%2FhiUF7bw%3D%3D","slug":"vendedor-a-produtos-opticos-e-ambientais-fontes-de-luz-para-semicondutores-niassa-mocambique"},"voluntario-para-aconselhamento-de-negocios-programa-mangwana-distrito-de-manica-provincia-de-manica-mocambiqu":{"titulo":"Voluntário para Aconselhamento de Negócios – Programa Mangwana","empresa":"TechnoServe","imagem_empresa":"/assets/empresas/img-7951-1024x768.jpg","cidade":"Distrito de Manica","provincia":"Província de Manica","pais":"Moçambique","categoria":"Tecnologias de Informação","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Estágio","descricao":"A TechnoServe procura um(a) voluntário(a) para integrar o Programa Mangwana, apoiando actividades de formação e aconselhamento empresarial dirigidas a micro e pequenas empresas e pequenos agricultores comerciais, contribuindo para o fortalecimento da segurança alimentar, geração de emprego e desenvolvimento económico sustentável no Corredor da Beira.","responsabilidades":"Apoiar a identificação e selecção de Village Based Advisors (VBAs);\nParticipar na capacitação em gestão de negócios e alfabetização financeira;\nApoiar acções de educação de adultos e elaboração de planos de negócio;\nColaborar em actividades de agricultura como negócio;\nPrestar apoio técnico às equipas do programa durante as actividades de campo.","requisitos_obrigatorios":"Licenciatura em área relevante;\nRecém-graduado com até 3 anos de experiência;\nResidência preferencial na Província ou Distrito de Manica;\nInteresse pelo desenvolvimento rural;\nFluência em Português e línguas locais;\nDisponibilidade para deslocações nacionais (até 10% do tempo). ","requisitos_desejaveis":"","escolaridade":"Licenciatura","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Voluntário para Aconselhamento de Negócios, TechnoServe, Programa Mangwana, emprego em Manica, voluntariado Moçambique, desenvolvimento de negócios, gestão empresarial, micro e pequenas empresas, segurança alimentar, recém-graduados, Corredor da Beira, oportunidades de emprego em Moçambique","data_publicacao":"2026-08-09T06:08:58.424Z","data_validade":"2026-08-11","link_candidatura":"https://www.emprego.co.mz/vaga/voluntarios-para-aconselhamento-de-negocios","candidatura_email":"","candidatura_link":"https://www.emprego.co.mz/vaga/voluntarios-para-aconselhamento-de-negocios","slug":"voluntario-para-aconselhamento-de-negocios-programa-mangwana-distrito-de-manica-provincia-de-manica-mocambiqu"},"oficial-de-reducao-do-risco-de-desastres-e-adaptacao-as-alteracoes-climaticas-mocimboa-da-praia-provincia-de-cabo-delgado":{"titulo":"Oficial de Redução do Risco de Desastres e Adaptação às Alterações Climáticas","empresa":"Humanity & Inclusion (HI) – Handicap International","imagem_empresa":"/assets/empresas/img_bandeaux_page_tablette-logo_humanity_en.jpg","cidade":"Mocímboa da Praia","provincia":"Província de Cabo Delgado","pais":"Moçambique","categoria":"Outros","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A Humanity & Inclusion pretende recrutar um(a) Oficial de Redução do Risco de Desastres e Adaptação às Alterações Climáticas para apoiar a implementação técnica de actividades de Redução do Risco de Desastres (RRD), Adaptação às Alterações Climáticas (AAC), Sistemas de Alerta Precoce (SAP) e Acção Antecipatória (AA). O profissional trabalhará em estreita colaboração com autoridades locais, comunidades e parceiros humanitários, contribuindo para o fortalecimento da preparação e resposta a desastres naturais.","responsabilidades":"Planear, coordenar e implementar actividades do projecto no terreno;\nApoiar a identificação e selecção de beneficiários em coordenação com o INGD;\nOrganizar formações para comités comunitários de gestão de risco;\nFortalecer os sistemas de alerta precoce e os planos de contingência;\nRealizar visitas de monitoria e acompanhamento às comunidades;\nEstabelecer ligação com autoridades locais e parceiros humanitários;\nApoiar auditorias de acessibilidade e actividades de inclusão;\nRecolher, gerir e arquivar dados do projecto de forma segura;\nElaborar relatórios técnicos e de actividades;\nRepresentar a organização em reuniões técnicas e de coordenação.","requisitos_obrigatorios":"Licenciatura ou formação técnico-média em área relevante;\nExperiência mínima de 2 anos em funções similares;\nExperiência em Redução do Risco de Desastres, Gestão de Riscos, Protecção, Inclusão ou Acção Humanitária;\nExperiência de trabalho em Cabo Delgado;\nExperiência em formação e reforço de capacidades comunitárias;\nExperiência em avaliações de necessidades humanitárias;\nCapacidade de planificação, organização e definição de prioridades;\nBoa capacidade de comunicação e trabalho em equipa;\nConhecimentos de Microsoft Word, Excel, PowerPoint, Outlook e Internet;\nEspírito de iniciativa, flexibilidade e autonomia.","requisitos_desejaveis":"","escolaridade":"Licenciatura","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Carta de candidatura;\nCurriculum Vitae em língua portuguesa.","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Oficial de Redução do Risco de Desastres, Humanity & Inclusion, Handicap International, Emprego em Cabo Delgado, Mocímboa da Praia, Acção Humanitária, Alterações Climáticas, Gestão de Riscos, Sistemas de Alerta Precoce, Inclusão, ONG, Vagas de Emprego em Moçambique, Protecção Comunitária.","data_publicacao":"2026-08-09T06:08:58.423Z","data_validade":"2026-08-16","link_candidatura":"","candidatura_email":"recrutamento@mozambique.hi.org","candidatura_link":"","slug":"oficial-de-reducao-do-risco-de-desastres-e-adaptacao-as-alteracoes-climaticas-mocimboa-da-praia-provincia-de-cabo-delgado"},"operador-de-caldeiras-maputo-maputo":{"titulo":"Operador de Caldeiras – Maputo","empresa":"CONTACT","imagem_empresa":"/assets/empresas/operador-de-caldeiras-maputo-contact-2026.webp","cidade":"Maputo","provincia":"Maputo","pais":"Moçambique","categoria":"Electricidade e Electrónica","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A CONTACT está a recrutar, para um cliente do sector industrial em Maputo, um(a) Operador(a) de Caldeiras, em regime de contrato de 3 meses, por turnos. O profissional reportará ao Supervisor da Área e será responsável pela operação, monitorização e optimização das caldeiras, garantindo eficiência e segurança durante o turno.","responsabilidades":"Operar, monitorar e optimizar o funcionamento das caldeiras, assegurando eficiência do processo durante o turno\nGerir resíduos e subprodutos resultantes da operação\nGarantir o cumprimento das normas de Segurança, Saúde e Ambiente\nAssegurar comunicação eficaz entre a equipa e durante a passagem de turno\nAplicar procedimentos de escalonamento para resposta atempada a ocorrências operacionais\nExecutar actividades de melhoria contínua (ferramentas VPO, OWS, Team Rooms e 5S)\nContribuir para o cumprimento dos objectivos operacionais e indicadores de desempenho\nAssegurar a correcta aplicação dos procedimentos administrativos e operacionais\nParticipar na identificação e resolução de problemas\nGarantir que acções correctivas sejam iniciadas conforme os procedimentos estabelecidos\nContribuir para o desenvolvimento contínuo das próprias competências e da equipa","requisitos_obrigatorios":"Nível Técnico Médio em Electricidade ou Mecânica\nExperiência em operação de caldeiras\nConhecimentos de Segurança, Saúde e Ambiente\nBons conhecimentos de inglês\nBoa capacidade de comunicação e relacionamento interpessoal\nElevado sentido de responsabilidade, organização e dinamismo\nDisponibilidade para trabalhar por turnos\nDisponibilidade para trabalhar por um período de 3 meses\nNacionalidade moçambicana (requisito obrigatório)","requisitos_desejaveis":"","escolaridade":"Ensino Secundário (12º ano)","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Link para Candidatura — através do portal da CONTACT (URL específico não fornecido no texto extraído; verificar página original)","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"operador de caldeiras, vaga Maputo, CONTACT, contrato temporário, técnico industrial, vaga verificada","data_publicacao":"2026-08-09T06:08:58.423Z","data_validade":"2026-08-09","link_candidatura":"https://www.contact.co.mz/pt/recrutamento/oferta-de-emprego/E076B75B91/operador-de-caldeiras-m-f-01-vaga","candidatura_email":"https://www.contact.co.mz/pt/recrutamento/oferta-de-emprego/E076B75B91/operador-de-caldeiras-m-f-01-vaga","candidatura_link":"https://www.contact.co.mz/pt/recrutamento/oferta-de-emprego/E076B75B91/operador-de-caldeiras-m-f-01-vaga","slug":"operador-de-caldeiras-maputo-maputo"},"controlador-de-documentos-de-obra-afungi-afungi-cabo-delgado":{"titulo":"Controlador de Documentos de Obra – Afungi","empresa":"CONTACT","imagem_empresa":"/assets/empresas/controlador-de-documentos-afungi-contact-2026.webp","cidade":"Afungi","provincia":"Cabo Delgado","pais":"Moçambique","categoria":"Construção Civil","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"A CONTACT está a recrutar, para um cliente do sector de Óleo e Gás, um(a) Controlador(a) de Documentos de Obra (Site Document Controller) para colocação em Afungi. O profissional reportará ao Gestor de Serviços de Projecto onshore e será responsável pelo controlo documental do estaleiro, assegurando a gestão eficiente, rigorosa e segura de toda a documentação do projecto, em conformidade com os procedimentos e normas da empresa.","responsabilidades":"Gerir a integração dos empreiteiros locais no novo sistema PRODOM\nAssegurar a implementação dos processos e normas de controlo documental do projecto\nGarantir a integridade e completude da informação do projecto no sistema electrónico de gestão documental (EDMS)\nExecutar a recepção, registo, codificação, distribuição e rastreio de documentos\nAssegurar o cumprimento dos requisitos de entrega de informação do projecto\nApoiar a preparação e controlo da documentação red-line e as-built\nApoiar a transferência de informação para as operações\nResponder a pedidos de documentos e informação das partes interessadas do projecto\nManter os registos mestres de documentos e as matrizes de distribuição\nArticular com empreiteiros e equipas internas de controlo documental\nApoiar a formação de utilizadores internos e externos no novo PRODOM\nAssegurar o cumprimento rigoroso das normas de HSSE, ética e código de conduta da empresa","requisitos_obrigatorios":"Ensino Secundário completo ou equivalente (mínimo)\nMínimo de 5 anos de experiência em projectos de Óleo e Gás como Controlador de Documentos\nPelo menos 2 anos de experiência numa função sénior de controlo documental\nExperiência em projectos de engenharia, construção ou operações industriais de grande escala\nExperiência com Sistemas Electrónicos de Gestão Documental (EDMS)\nConhecimento do sistema New Prodom (vantagem)\nDomínio de MS Office, Adobe Acrobat e ferramentas de digitalização\nFluência em inglês (obrigatória); língua local (vantagem)\nFortes competências de organização, atenção ao detalhe e rigor\nCapacidade de trabalhar em ambientes multiculturais e de elevada pressão\nFortes competências de comunicação e relacionamento interpessoal\nNacionalidade moçambicana (requisito obrigatório)","requisitos_desejaveis":"","escolaridade":"Ensino Secundário (12º ano)","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Link para Candidatura — através do portal da CONTACT (URL específico não fornecido no texto extraído; verificar página original","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"controlador de documentos, document controller, Afungi, Cabo Delgado, óleo e gás, CONTACT, EDMS, PRODOM, vaga verificada","data_publicacao":"2026-08-09T06:08:58.421Z","data_validade":"2026-08-09","link_candidatura":"https://vagademprego.com/vagas/controlador-documentos-obra-afungi-contact/","candidatura_email":"https://www.contact.co.mz/pt/recrutamento/oferta-de-emprego/E3289C9428/site-document-controller-m-f-01-vacancy","candidatura_link":"https://vagademprego.com/vagas/controlador-documentos-obra-afungi-contact/","slug":"controlador-de-documentos-de-obra-afungi-afungi-cabo-delgado"},"digitador-a-de-dados-rapale-nampula-rapale-nampula-province-mozambique":{"titulo":"Digitador(a) de Dados – Rapale, Nampula","empresa":"CONTACT (recrutamento para cliente do sector de saúde","imagem_empresa":"/assets/empresas/a486db198f1dfbd2f2a3bbf26fba7b2b.jpg","cidade":"Rapale","provincia":"Nampula Province","pais":"Moçambique","categoria":"Saúde","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"O cliente da CONTACT é uma prestigiada instituição do sector da saúde. O(A) Digitador(a) de Dados será responsável por garantir a actualização diária, completa e oportuna da informação clínica das utentes em seguimento na Unidade Sanitária (US), no Módulo de PF do SIS-RME, assegurando elevados padrões de qualidade (consistência, integridade, completude e pontualidade).\n A possibilidade de trabalhar numa instituição que oferece condições salariais compatíveis com o grau de experiência e nível de responsabilidade da função, bem como, oportunidades de desenvolvimento pessoal.\n\nDATA LIMITE DE CANDIDATURA: 13 de Agosto de 2026.","responsabilidades":"Garantir a actualização diária, completa e oportuna da informação clínica das utentes em seguimento na Unidade Sanitária\nRegistar dados no Módulo de PF do SIS-RME\nAssegurar consistência, integridade, completude e atempamento da informação inserida","requisitos_obrigatorios":"Mínimo da 12ª classe ou equivalente\nMínimo de 1 ano de experiência na digitação de dados na área de saúde\nExperiência no uso de pacotes informáticos como Excel e Access e/ou outros sistemas informáticos\nCapacidade e maturidade para trabalhar em ambiente multifacetado e sob pressão\nResidência no local da vaga (requisito obrigatório)\nDisponibilidade para Contrato a Prazo Certo, com possibilidade de renovação","requisitos_desejaveis":"","escolaridade":"Ensino Secundário (12º ano)","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"digitador de dados, vaga Nampula, Rapale, SIS-RME, saúde, CONTACT, PF, dados clínicos","data_publicacao":"2026-08-09T06:08:58.421Z","data_validade":"2026-08-13","link_candidatura":"https://contact.workable.com/jobs/6018204/candidates/new","candidatura_email":"https://apply.workable.com/contact/j/2B6E43BDC1/apply","candidatura_link":"https://contact.workable.com/jobs/6018204/candidates/new","slug":"digitador-a-de-dados-rapale-nampula-rapale-nampula-province-mozambique"},"engenheiro-de-projetos-5-vagas-engenheiro-de-vendas-2-vagas-unidade-de-negocios-asia-pacifico-niassa-mocambique":{"titulo":"Engenheiro de Projetos (5 vagas) – Engenheiro de Vendas (2 vagas) – Unidade de Negócios Ásia-Pacífico","empresa":"ARC Solutions Thailand Co., Ltd.","imagem_empresa":"/assets/empresas/1767553049191.jpeg","cidade":"Niassa","provincia":"Moçambique","pais":"Moçambique","categoria":"Outros","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":5,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"Empresa de serviços técnicos internacional especializada em certificação e homologação automotiva, com atuação na Tailândia, Vietname, Indonésia e outros mercados do Sudeste Asiático. Procura Engenheiros de Projetos para integrar a Unidade de Negócios do Grupo Ásia-Pacífico","responsabilidades":"Gestão e acompanhamento de projetos de engenharia na área automotiva\nApoio técnico em processos de certificação e homologação de veículos/componentes\nCoordenação com equipas técnicas internacionais","requisitos_obrigatorios":"Formação em Engenharia de Veículos de Nova Energia, Engenharia de Serviços Automotivos, Engenharia de Máquinas de Construção, Engenharia de Motocicletas ou Engenharia de Motores\nBoa comunicação\nInglês nível CET-4 ou superior (nota: CET-4 é um certificado de proficiência em inglês usado na China; não é padrão em Moçambique — pode indicar que o processo seletivo é gerido por uma equipa de RH chinesa)\nFormação em Marketing, Engenharia de Serviços Automotivos ou áreas afins","requisitos_desejaveis":"","escolaridade":"Licenciatura","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"US$ 6.000/mês + comissão","beneficios":"","documentos_exigidos":"","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"engenharia automotiva, engenheiro de projetos, ARC Solutions Thailand, vagas Ásia-Pacífico, certificação automotiva, Niassa","data_publicacao":"2026-08-09T06:08:58.421Z","data_validade":"2026-08-12","link_candidatura":"https://mz.linkedin.com/jobs/view/%E4%BA%9A%E9%94%90%E9%9B%86%E5%9B%A2%E4%BA%8B%E4%B8%9A%E9%83%A8-at-arc-solutions-thailand-co-ltd-4446305109?trk=public_jobs_topcard-title","candidatura_email":"karlyonenterprise@gmail.com","candidatura_link":"https://mz.linkedin.com/jobs/view/%E4%BA%9A%E9%94%90%E9%9B%86%E5%9B%A2%E4%BA%8B%E4%B8%9A%E9%83%A8-at-arc-solutions-thailand-co-ltd-4446305109?trk=public_jobs_topcard-title","slug":"engenheiro-de-projetos-5-vagas-engenheiro-de-vendas-2-vagas-unidade-de-negocios-asia-pacifico-niassa-mocambique"},"consultor-a-para-producao-de-videos-programa-igual-chiure-cabo-delgado-nhamatanda-sofala-maputo-cidade-e-manhica-maputo":{"titulo":"Consultor(a) para Produção de Vídeos – Programa IGUAL","empresa":"Centro de Aprendizagem e Capacitação da Sociedade Civil (CESC)","imagem_empresa":"/assets/empresas/images-1-.jpeg","cidade":"Chiúre (Cabo Delgado)","provincia":"Nhamatanda (Sofala)","pais":"Moçambique","categoria":"Comunicação e Marketing","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Prestação de Serviços","descricao":"O CESC pretende contratar um(a) Consultor(a) para produzir vídeos documentando os resultados das actividades de consolidação de cinco iniciativas juvenis no âmbito da extensão do Programa IGUAL (Direitos e Democracia), implementado com apoio da Embaixada do Reino dos Países Baixos. A consultoria tem duração de 10 dias úteis e envolve filmagens em quatro locais: Chiúre, Nhamatanda, Manhiça e Maputo Cidade.","responsabilidades":"Principais Responsabilidades\nElaborar o plano de filmagem e o roteiro de captação\nCoordenar a agenda de filmagens com o CESC e as iniciativas juvenis\nRealizar captação de imagens, entrevistas e imagens de apoio (b-roll)\nEditar e pós-produzir os vídeos\nIncorporar até duas rondas de comentários do CESC antes da aprovação final\nEntregar todos os produtos nos formatos acordados\n\nEntregáveis:\n\n1 vídeo final (~20 min) com os resultados gerais\n5 vídeos individuais (7–10 min cada), um por iniciativa juvenil\nFormato: Full HD ou 4K, MP4 (H.264), versões horizontal (16:9) e vertical (9:16), legendas em português, com logótipos do CESC, Programa IGUAL e EKN","requisitos_obrigatorios":"ormação Superior em Comunicação, Jornalismo, Cinema ou áreas afins\nExperiência comprovada na produção de vídeos institucionais e documentários (planeamento, filmagem e edição)\nCapacidade de elaborar roteiros e narrativas audiovisuais\nDomínio de técnicas de captação de imagem e som\nCompetência em edição de vídeo com software profissional\nExperiência na realização de entrevistas e recolha de testemunhos\nCapacidade de trabalhar no terreno e interagir com comunidades\nConhecimento das normas éticas de produção audiovisual (consentimento de imagem, protecção de dados, sensibilidade cultural)\nPortefólio comprovativo de trabalhos semelhantes\nMínimo de 3 referências de trabalhos anteriores de complexidade comparável","requisitos_desejaveis":"","escolaridade":"Licenciatura","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Proposta Técnica:\n\nMetodologia detalhada\nPlano de trabalho e cronograma\nPerfil do Consultor\nDocumentação de elegibilidade: CV, BI, NUIT (para consultor singular)\n\nProposta Financeira:\n\nNúmero de dias\nLogística (transporte, consumíveis), se aplicável\nOrçamento detalhado, incluindo impostos\nValidade mínima de 60 dias","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"consultor vídeo, produção audiovisual, CESC, Programa IGUAL, Cabo Delgado, Sofala, Maputo, consultoria comunicação, RFP","data_publicacao":"2026-08-09T06:08:58.420Z","data_validade":"2026-08-09","link_candidatura":"https://emprego.mmo.co.mz/vaga/para-consultor-para-producao-de-videos-cesc/","candidatura_email":"procurement@cescmoz.or","candidatura_link":"https://emprego.mmo.co.mz/vaga/para-consultor-para-producao-de-videos-cesc/","slug":"consultor-a-para-producao-de-videos-programa-igual-chiure-cabo-delgado-nhamatanda-sofala-maputo-cidade-e-manhica-maputo"},"consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo":{"titulo":"Consultor de Gestão – Qualidade e Segurança da Informação","empresa":"Exponencial","imagem_empresa":"/assets/empresas/images.jpeg","cidade":"Maputo","provincia":"Maputo","pais":"Moçambique","categoria":"Tecnologias de Informação","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Prestação de Serviços","descricao":"Pretende-se contratar um Consultor de Gestão – Qualidade e Segurança da Informação para apoiar organizações na implementação, manutenção e melhoria de Sistemas de Gestão da Qualidade e Sistemas de Gestão de Segurança da Informação. O profissional será responsável por garantir a conformidade com normas internacionais, promover a melhoria contínua, realizar auditorias e apoiar a gestão de riscos.","responsabilidades":"Implementar e manter sistemas de gestão da qualidade e segurança da informação;\nRealizar auditorias internas e avaliações de conformidade;\nElaborar políticas, procedimentos e documentação técnica;\nIdentificar riscos e propor medidas de mitigação;\nApoiar processos de certificação ISO;\nMinistrar formações e acções de sensibilização;\nElaborar relatórios técnicos e planos de melhoria contínua.","requisitos_obrigatorios":"Licenciatura em área relevante;\nExperiência em consultoria de sistemas de gestão;\nConhecimentos das normas ISO 9001 e ISO/IEC 27001;\nBoa capacidade de comunicação, organização e análise;\nDomínio das ferramentas Microsoft Office;\nCapacidade para trabalhar em equipa e cumprir prazos;\nDisponibilidade para deslocações.","requisitos_desejaveis":"","escolaridade":"Licenciatura","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"25.000.00MZN - 35.000.00MZN","beneficios":"","documentos_exigidos":"Curriculum Vitae actualizado;\nCarta de apresentação;\nCertificados académicos e profissionais (quando solicitados).","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Consultor de Gestão, Qualidade, Segurança da Informação, ISO 9001, ISO 27001, Auditoria, Gestão de Riscos, Sistemas de Gestão, Consultoria, Emprego em Moçambique, Vagas TIC, Cibersegurança.","data_publicacao":"2026-08-09T06:08:58.420Z","data_validade":"2026-08-11","link_candidatura":"https://www.emprego.co.mz/vaga/consultor-de-gestao-qualidade-e-seguranca-de-informacao","candidatura_email":"","candidatura_link":"https://www.emprego.co.mz/vaga/consultor-de-gestao-qualidade-e-seguranca-de-informacao","slug":"consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo"}}</script>
 <script src="/scripts/vaga-modal.js" defer></script>
+<script src="/js/localizacao.js" defer></script>
 <script src="/scripts/vaga-pesquisa.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.AlcartelLocalizacao) {
+    window.AlcartelLocalizacao.ligarSelectsDependentes(
+      document.getElementById("provincia-pesquisa"),
+      document.getElementById("distrito-pesquisa")
+    );
+  }
+});
+</script>
 <!-- VAGA_MODAL:END -->
 <script src="/js/contador-visitas.js" defer></script>
 <script type="text/javascript">

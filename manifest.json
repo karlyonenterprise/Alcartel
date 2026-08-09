@@ -1,7 +1,7 @@
 {
-  "name": "Alcartel – O Motor de Empregos de Moçambique",
-  "short_name": "Alcartel",
-  "description": "A principal plataforma de emprego de Moçambique. Encontre vagas em todas as províncias.",
+  "name": "Alcartel – Plataforma Digital de Emprego e Saúde de Moçambique",
+  "short_name": "Alcartel Digital",
+  "description": "A principal plataforma digital de emprego e saúde de Moçambique. Encontre vagas em todas as províncias.",
   "start_url": "/index.html",
   "id": "/index.html",
   "scope": "/",
