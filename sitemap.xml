@@ -2,217 +2,223 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://alcartel.vercel.app/</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/vagas.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/noticias</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/servicos.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/sobre.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/contactos.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/termos.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/privacidade.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/cookies.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>
   </url>
   <url>
+    <loc>https://alcartel.vercel.app/vagas/vaga-disponivel-para-analista-de-compras-beira-sofala.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alcartel.vercel.app/vagas/vagas-de-motorista-2-vagas-maputo-e-manica.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alcartel.vercel.app/vagas/vendedor-a-produtos-opticos-e-ambientais-fontes-de-luz-para-semicondutores-niassa-mocambique.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://alcartel.vercel.app/vagas/voluntario-para-aconselhamento-de-negocios-programa-mangwana-distrito-de-manica-provincia-de-manica-mocambiqu.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/vagas/oficial-de-reducao-do-risco-de-desastres-e-adaptacao-as-alteracoes-climaticas-mocimboa-da-praia-provincia-de-cabo-delgado.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/vagas/representante-de-vendas-pemba-provincia-de-cabo-delgado.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/vagas/operador-de-caldeiras-maputo-maputo.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/vagas/o-colegio-arte-do-saber-esta-a-recrutar-agentes-de-servico-bairro-chingodzi-zona-do-gpz-proximo-da-esquina-do-gpz-cidade-de-tete.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/vagas/controlador-de-documentos-de-obra-afungi-afungi-cabo-delgado.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/vagas/o-colegio-arte-do-saber-esta-a-recrutar-profissionais-para-integrar-a-sua-incubadora-de-profissionais-nas-areas-de-ensino-bairro-chingodzi-zona-do-gpz-proximo-da-esquina-do-gpz-cidade-de-tete.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/vagas/digitador-a-de-dados-rapale-nampula-rapale-nampula-province-mozambique.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/vagas/gestor-administrativo-vendas-nampula.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/vagas/engenheiro-de-projetos-5-vagas-engenheiro-de-vendas-2-vagas-unidade-de-negocios-asia-pacifico-niassa-mocambique.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/vagas/gestor-de-operacoes-beira-sofala.html</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://alcartel.vercel.app/vagas/consultor-individual-para-implementacao-do-plano-de-accao-de-reassentamento-par-chimoio-provincia-de-manica.html</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://alcartel.vercel.app/vagas/facilitador-comunitario-de-wash-beira-buzi.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/vagas/consultor-a-para-producao-de-videos-programa-igual-chiure-cabo-delgado-nhamatanda-sofala-maputo-cidade-e-manhica-maputo.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/vagas/consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/vagas/concurso-publico-12-vagas-docente-n1-docente-n3-e-tecnico-de-saude-sanga-niassa.html</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://alcartel.vercel.app/categoria/tecnologias-de-informacao.html</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://alcartel.vercel.app/categoria/outros.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/categoria/transportes-e-logistica.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/categoria/comercio-e-vendas.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/categoria/limpeza-e-servicos-gerais.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/categoria/tecnologias-de-informacao.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/categoria/educacao-e-professorado.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/categoria/outros.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/categoria/transportes-e-logistica.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/categoria/electricidade-e-electronica.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alcartel.vercel.app/categoria/construcao-civil.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/categoria/saude.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/cidade/distrito-de-manica.html</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://alcartel.vercel.app/cidade/mocimboa-da-praia.html</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://alcartel.vercel.app/cidade/pemba.html</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://alcartel.vercel.app/cidade/bairro-chingodzi.html</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://alcartel.vercel.app/cidade/nampula.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/categoria/comunicacao-e-marketing.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/cidade/beira.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/cidade/chimoio.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/cidade/maputo-e-manica.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alcartel.vercel.app/cidade/niassa.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alcartel.vercel.app/cidade/distrito-de-manica.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alcartel.vercel.app/cidade/mocimboa-da-praia.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://alcartel.vercel.app/cidade/maputo.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://alcartel.vercel.app/cidade/sanga.html</loc>
-    <lastmod>2026-07-27</lastmod>
+    <loc>https://alcartel.vercel.app/cidade/afungi.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alcartel.vercel.app/cidade/rapale.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://alcartel.vercel.app/cidade/chiure-cabo-delgado.html</loc>
+    <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

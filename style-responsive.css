@@ -14,13 +14,14 @@
 }
 
 :root {
-  --verde-escuro:  #163a66;
-  --verde-header:  #0a1b33;
-  --verde-medio:   #1f4e8c;
-  --verde-accent:  #4c8fe0;
-  --ouro:          #f76b00;
+  --verde-escuro:  #0c2c5c;
+  --verde-header:  #071a38;
+  --verde-medio:   #123c78;
+  --verde-accent:  #2f6fb5;
+  --verde-bandeira: #00873e;
+  --ouro:          #f5b800;
   --preto:         #0a0f1a;
-  --vermelho:      #a8202c;
+  --vermelho:      #ce1126;
   --off-white:     #f5f7fa;
   --cinza-claro:   #eef1f6;
   --cinza-borda:   #d7dee8;

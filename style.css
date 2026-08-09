@@ -14,15 +14,17 @@
 }
 
 :root {
-  /* Cores principais — paleta alinhada com o logótipo Alcartel (azul-marinho + laranja) */
-  --verde-escuro:  #163a66;
-  --verde-header:  #0a1b33;
-  --verde-medio:   #1f4e8c;
-  --verde-accent:  #4c8fe0;
-  --ouro:          #f76b00;
+  /* Cores principais — paleta alinhada com o novo logótipo Alcartel e com as
+     cores da bandeira de Moçambique (azul-marinho + verde + ouro + vermelho + preto) */
+  --verde-escuro:  #0c2c5c;
+  --verde-header:  #071a38;
+  --verde-medio:   #123c78;
+  --verde-accent:  #2f6fb5;
+  --verde-bandeira: #00873e;
+  --ouro:          #f5b800;
   --preto:         #0a0f1a;
-  --vermelho:      #a8202c;
-  --vermelho-escuro: #7a1620;
+  --vermelho:      #ce1126;
+  --vermelho-escuro: #8f0c1c;
   --off-white:     #f5f7fa;
   --cinza-claro:   #eef1f6;
   --cinza-borda:   #d7dee8;
@@ -130,6 +132,32 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   margin: 0 auto;
 }
 
+/* ── Banner de topo (foto + logótipo + CTA de pesquisa), acima do menu de
+   páginas — substitui o cabeçalho apenas-logótipo na homepage. Ocupa toda a
+   largura, sem padding do .site-header genérico, e adapta-se a qualquer
+   ecrã mantendo a proporção original da imagem (evita CLS). ── */
+.site-header--banner {
+  padding: 0;
+  background: var(--branco);
+}
+.site-header--banner::before,
+.site-header--banner::after {
+  content: none;
+}
+.site-header--banner a {
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+.site-header__banner-img {
+  display: block;
+  width: 100% !important;
+  height: auto;
+  max-width: none !important;
+  margin: 0 !important;
+  aspect-ratio: 1983 / 793;
+}
+
 
 /* ================================================================
    NAVEGAÇÃO
@@ -228,9 +256,13 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   padding: 0 24px;
 }
 
-/* Botão principal */
+/* Botão principal — área de toque confortável, animação suave, estados hover/focus */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
   padding: 13px 28px;
   background: var(--verde-escuro);
   color: var(--branco);
@@ -240,11 +272,23 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   font-weight: 700;
   letter-spacing: 0.5px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .btn:hover {
   background: var(--verde-medio);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--ouro);
+  outline-offset: 2px;
 }
 .btn--outline {
   background: transparent;
@@ -263,6 +307,35 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   background: #d95e00;
 }
 .btn--full { width: 100%; text-align: center; }
+
+/* Bloco "Em breve" (Saúde e Bem-Estar / Cinema) */
+.coming-soon {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.coming-soon__icon {
+  font-size: 2.75rem;
+  line-height: 1;
+  width: 84px;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--cinza-claro);
+  border: 2px solid var(--cinza-borda);
+  margin-bottom: 4px;
+}
+.coming-soon p {
+  max-width: 640px;
+  text-align: center;
+}
+.coming-soon .btn {
+  margin-top: 8px;
+}
 
 /* Skip link acessibilidade */
 .skip-link {
@@ -990,6 +1063,39 @@ p, li, h1, h2, h3, h4, h5, h6, blockquote {
   max-width: var(--max-width);
   margin: 18px auto 0;
   text-align: left;
+}
+
+/* ── Subsecções de vagas.html: Recentes / Activas / Expiradas ── */
+.vagas-subsecao {
+  margin-bottom: 40px;
+}
+
+.vagas-subsecao--expiradas {
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--cinza-borda);
+}
+
+.vagas-subsecao--expiradas summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vagas-subsecao--expiradas summary::-webkit-details-marker { display: none; }
+.vagas-subsecao--expiradas summary::before {
+  content: '▸';
+  color: var(--texto-suave);
+  transition: transform 0.15s;
+}
+.vagas-subsecao--expiradas details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.vagas-grid--expiradas .vaga-card {
+  opacity: 0.65;
+  filter: grayscale(35%);
 }
 
 .vaga-card {
