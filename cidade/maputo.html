@@ -51,16 +51,19 @@
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel" width="640" height="322"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel" width="640" height="559"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
-  <ul>
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
     <li><a href="/index.html">Início</a></li>
-    <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/noticias.html">Notícias</a></li>
+    <li><a href="/vagas.html" aria-current="page">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="/cinemas.html">Cinemas</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main" style="max-width:720px;margin:0 auto;padding:32px 20px;">
@@ -90,9 +93,9 @@
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
     <div class="footer-col footer-col--brand">
-      <p class="footer-brand">Al<span>c</span>artel</p>
-      <p>O Motor de Empregos de Moçambique</p>
-      <p style="margin-top:6px;">Uma iniciativa da <strong>Karlyon Enterprise S.A.</strong> · Beira, Moçambique</p>
+      <p class="footer-brand">Al<span>c</span>artel <span style="font-size:0.6em;">Digital</span></p>
+      <p>A plataforma digital de empregos, saúde e cinema de Moçambique</p>
+      <p style="margin-top:6px;">Uma iniciativa da <strong><a href="https://karlyon-enterprise-s-a.vercel.app/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Karlyon Enterprise S.A.</a></strong> · Beira, Moçambique</p>
       <div class="footer-social" aria-label="Redes sociais Alcartel">
         <a class="footer-social__link" href="https://www.facebook.com/Alcartelmoz" target="_blank" rel="noopener noreferrer" aria-label="Alcartel no Facebook" title="Alcartel no Facebook">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.523 1.492-3.917 3.777-3.917 1.094 0 2.238.196 2.238.196v2.475h-1.26c-1.243 0-1.63.775-1.63 1.57v1.89h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z"/></svg>
@@ -109,8 +112,9 @@
       <p class="footer-col__title">Links Úteis</p>
       <nav class="footer-links footer-links--stack" aria-label="Ligações do rodapé">
         <a href="/index.html">Início</a>
-        <a href="/vagas.html">Vagas</a>
-        <a href="/noticias.html">Notícias</a>
+        <a href="/vagas.html">Emprego</a>
+        <a href="/saude-e-bem-estar.html">Saúde e Bem-Estar</a>
+        <a href="/cinemas.html">Cinemas</a>
         <a href="/servicos.html">Serviços</a>
         <a href="/sobre.html">Sobre Nós</a>
       </nav>
@@ -123,7 +127,7 @@
         <a href="/termos.html" title="Termos de Uso">Termos</a>
         <a href="/cookies.html" title="Política de Cookies">Cookies</a>
       </nav>
-      <a class="footer-app-badge" href="#" id="pwa-install-link">
+      <a class="footer-app-badge" href="https://webtoapp.design/apps/pt_BR/download_android_apk/IjIyOTIzMSI.aoUENa-FQnRuitSeg2bERBddI28" id="pwa-install-link" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12 2a1 1 0 011 1v11.59l3.3-3.3a1 1 0 111.4 1.42l-5 5a1 1 0 01-1.4 0l-5-5a1 1 0 111.4-1.42l3.3 3.3V3a1 1 0 011-1zM5 19a1 1 0 011 1v.01c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V20a1 1 0 112 0v.01A3 3 0 0117 23H7a3 3 0 01-3-3v-1a1 1 0 011-1z"/></svg>
         <span>Instalar App<small>Acesso rápido no telemóvel</small></span>
       </a>
@@ -131,7 +135,7 @@
   </div>
   <div class="footer-bottom">
     <div class="footer-divider"></div>
-    <p>© 2026 <a href="/" aria-label="Alcartel">Alcartel</a> — O Motor de Empregos de Moçambique</p>
+    <p>© 2026 <a href="/" aria-label="Alcartel Digital">Alcartel Digital</a> — a plataforma digital de empregos, saúde e cinema de Moçambique</p>
     <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
   </div>
 </footer>
@@ -143,7 +147,7 @@
     <div class="vaga-modal__conteudo"></div>
   </div>
 </div>
-<script id="vagas-dados" type="application/json">{"consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo":{"titulo":"Consultor de Gestão – Qualidade e Segurança da Informação","empresa":"Exponencial","imagem_empresa":"/assets/empresas/images.jpeg","cidade":"Maputo","provincia":"Maputo","pais":"Moçambique","categoria":"Tecnologias de Informação","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Prestação de Serviços","descricao":"Pretende-se contratar um Consultor de Gestão – Qualidade e Segurança da Informação para apoiar organizações na implementação, manutenção e melhoria de Sistemas de Gestão da Qualidade e Sistemas de Gestão de Segurança da Informação. O profissional será responsável por garantir a conformidade com normas internacionais, promover a melhoria contínua, realizar auditorias e apoiar a gestão de riscos.","responsabilidades":"Implementar e manter sistemas de gestão da qualidade e segurança da informação;\nRealizar auditorias internas e avaliações de conformidade;\nElaborar políticas, procedimentos e documentação técnica;\nIdentificar riscos e propor medidas de mitigação;\nApoiar processos de certificação ISO;\nMinistrar formações e acções de sensibilização;\nElaborar relatórios técnicos e planos de melhoria contínua.","requisitos_obrigatorios":"Licenciatura em área relevante;\nExperiência em consultoria de sistemas de gestão;\nConhecimentos das normas ISO 9001 e ISO/IEC 27001;\nBoa capacidade de comunicação, organização e análise;\nDomínio das ferramentas Microsoft Office;\nCapacidade para trabalhar em equipa e cumprir prazos;\nDisponibilidade para deslocações.","requisitos_desejaveis":"","escolaridade":"Licenciatura","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"25.000.00MZN - 35.000.00MZN","beneficios":"","documentos_exigidos":"Curriculum Vitae actualizado;\nCarta de apresentação;\nCertificados académicos e profissionais (quando solicitados).","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Consultor de Gestão, Qualidade, Segurança da Informação, ISO 9001, ISO 27001, Auditoria, Gestão de Riscos, Sistemas de Gestão, Consultoria, Emprego em Moçambique, Vagas TIC, Cibersegurança.","data_publicacao":"2026-07-27T22:01:53.314Z","data_validade":"2026-08-11","link_candidatura":"https://www.emprego.co.mz/vaga/consultor-de-gestao-qualidade-e-seguranca-de-informacao","candidatura_email":"","candidatura_link":"https://www.emprego.co.mz/vaga/consultor-de-gestao-qualidade-e-seguranca-de-informacao","slug":"consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo"}}</script>
+<script id="vagas-dados" type="application/json">{"consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo":{"titulo":"Consultor de Gestão – Qualidade e Segurança da Informação","empresa":"Exponencial","imagem_empresa":"/assets/empresas/images.jpeg","cidade":"Maputo","provincia":"Maputo","pais":"Moçambique","categoria":"Tecnologias de Informação","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Prestação de Serviços","descricao":"Pretende-se contratar um Consultor de Gestão – Qualidade e Segurança da Informação para apoiar organizações na implementação, manutenção e melhoria de Sistemas de Gestão da Qualidade e Sistemas de Gestão de Segurança da Informação. O profissional será responsável por garantir a conformidade com normas internacionais, promover a melhoria contínua, realizar auditorias e apoiar a gestão de riscos.","responsabilidades":"Implementar e manter sistemas de gestão da qualidade e segurança da informação;\nRealizar auditorias internas e avaliações de conformidade;\nElaborar políticas, procedimentos e documentação técnica;\nIdentificar riscos e propor medidas de mitigação;\nApoiar processos de certificação ISO;\nMinistrar formações e acções de sensibilização;\nElaborar relatórios técnicos e planos de melhoria contínua.","requisitos_obrigatorios":"Licenciatura em área relevante;\nExperiência em consultoria de sistemas de gestão;\nConhecimentos das normas ISO 9001 e ISO/IEC 27001;\nBoa capacidade de comunicação, organização e análise;\nDomínio das ferramentas Microsoft Office;\nCapacidade para trabalhar em equipa e cumprir prazos;\nDisponibilidade para deslocações.","requisitos_desejaveis":"","escolaridade":"Licenciatura","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"25.000.00MZN - 35.000.00MZN","beneficios":"","documentos_exigidos":"Curriculum Vitae actualizado;\nCarta de apresentação;\nCertificados académicos e profissionais (quando solicitados).","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Consultor de Gestão, Qualidade, Segurança da Informação, ISO 9001, ISO 27001, Auditoria, Gestão de Riscos, Sistemas de Gestão, Consultoria, Emprego em Moçambique, Vagas TIC, Cibersegurança.","data_publicacao":"2026-08-10T20:33:10.855Z","data_validade":"2026-08-11","link_candidatura":"https://www.emprego.co.mz/vaga/consultor-de-gestao-qualidade-e-seguranca-de-informacao","candidatura_email":"","candidatura_link":"https://www.emprego.co.mz/vaga/consultor-de-gestao-qualidade-e-seguranca-de-informacao","slug":"consultor-de-gestao-qualidade-e-seguranca-da-informacao-maputo"}}</script>
 <script src="/scripts/vaga-modal.js" defer></script>
 <script src="/scripts/vaga-pesquisa.js" defer></script>
 <script src="/js/contador-visitas.js" defer></script>
@@ -161,6 +165,13 @@
     aclib.runAutoTag({
         zoneId: 'f9xdvntcc0',
     });
+    aclib.runAutoTag({
+        zoneId: 'rvcu0hukr8',
+    });
+    aclib.runAutoTag({
+        zoneId: '91svjmnxe0',
+    });
 </script>
+<script src="/scripts/site-nav.js" defer></script>
 </body>
 </html>

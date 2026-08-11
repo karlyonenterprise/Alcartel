@@ -35,7 +35,7 @@
   <meta name="twitter:image" content="https://alcartel.vercel.app/Og-image.jpg">
   <link rel="stylesheet" href="../style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://alcartel.vercel.app/"},{"@type":"ListItem","position":2,"name":"Vagas","item":"https://alcartel.vercel.app/vagas.html"},{"@type":"ListItem","position":3,"name":"Beira","item":"https://alcartel.vercel.app/cidade/beira.html"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/cidade/beira.html#collectionpage","url":"https://alcartel.vercel.app/cidade/beira.html","name":"Vagas em Beira – Alcartel","description":"Confira todas as vagas de emprego disponíveis em Beira na Alcartel, o motor de empregos de Moçambique.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/vagas/gestor-de-operacoes-beira-sofala.html","name":"Gestor de Operações"},{"@type":"ListItem","position":2,"url":"https://alcartel.vercel.app/vagas/facilitador-comunitario-de-wash-beira-buzi.html","name":"Facilitador Comunitário de WASH"}]}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://alcartel.vercel.app/cidade/beira.html#collectionpage","url":"https://alcartel.vercel.app/cidade/beira.html","name":"Vagas em Beira – Alcartel","description":"Confira todas as vagas de emprego disponíveis em Beira na Alcartel, o motor de empregos de Moçambique.","inLanguage":"pt-MZ","isPartOf":{"@id":"https://alcartel.vercel.app/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://alcartel.vercel.app/vagas/vaga-disponivel-para-analista-de-compras-beira-sofala.html","name":"Vaga disponível para Analista de Compras "}]}}</script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-12XX7764TS"></script>
   <script>
@@ -51,16 +51,19 @@
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel" width="640" height="322"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel" width="640" height="559"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
-  <ul>
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
     <li><a href="/index.html">Início</a></li>
-    <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/noticias.html">Notícias</a></li>
+    <li><a href="/vagas.html" aria-current="page">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="/cinemas.html">Cinemas</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main" style="max-width:720px;margin:0 auto;padding:32px 20px;">
@@ -69,38 +72,20 @@
   <ul class="vagas-grid" style="list-style:none;padding:0;">
         <li class="vaga-card" role="listitem">
       <div class="vaga-card__topo">
-        <img class="vaga-card__logo" src="/assets/empresas/images.png" alt="Acácia Transportes, Lda" loading="lazy" width="48" height="48">
+        <img class="vaga-card__logo" src="/assets/empresas/483ba5f58aa249bcb0b04de91b7d44c088991b437179822987f7392d4968f936.png" alt="Aldelia" loading="lazy" width="48" height="48">
         <div>
-          <h3><a href="/vagas/gestor-de-operacoes-beira-sofala.html">Gestor de Operações</a></h3>
-          <p>Acácia Transportes, Lda — Beira, Sofala</p>
+          <h3><a href="/vagas/vaga-disponivel-para-analista-de-compras-beira-sofala.html">Vaga disponível para Analista de Compras </a></h3>
+          <p>Aldelia — Beira, Sofala</p>
         </div>
       </div>
-      <p class="vaga-card__resumo">Gerir todos os contratos com os clientes; Gerir todas as operações de transporte. Garantir o cumprimento dos n…</p>
+      <p class="vaga-card__resumo">Apoiar o Superintendente de Operações na supervisão de todas as actividades operacionais, de manutenção, HSSE…</p>
       
       <div class="vaga-card__rodape">
         <span class="vaga-card__badges">
           <span class="vaga-card__badge">Transportes e Logística</span>
           
         </span>
-        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="gestor-de-operacoes-beira-sofala">Ver mais</button>
-      </div>
-    </li>
-    <li class="vaga-card" role="listitem">
-      <div class="vaga-card__topo">
-        <img class="vaga-card__logo" src="/assets/empresas/images.jpeg" alt="Conselho Cristão de Moçambique" loading="lazy" width="48" height="48">
-        <div>
-          <h3><a href="/vagas/facilitador-comunitario-de-wash-beira-buzi.html">Facilitador Comunitário de WASH</a></h3>
-          <p>Conselho Cristão de Moçambique — Beira, Buzi</p>
-        </div>
-      </div>
-      <p class="vaga-card__resumo">Conselho Cristão de Moçambique (CCM) – Delegação Provincial de Sofala, no âmbito da implementação do Projecto…</p>
-      
-      <div class="vaga-card__rodape">
-        <span class="vaga-card__badges">
-          <span class="vaga-card__badge">Saúde</span>
-          
-        </span>
-        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="facilitador-comunitario-de-wash-beira-buzi">Ver mais</button>
+        <button type="button" class="btn btn--vermelho vaga-card__vermais" data-slug="vaga-disponivel-para-analista-de-compras-beira-sofala">Ver mais</button>
       </div>
     </li>
   </ul>
@@ -108,9 +93,9 @@
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
     <div class="footer-col footer-col--brand">
-      <p class="footer-brand">Al<span>c</span>artel</p>
-      <p>O Motor de Empregos de Moçambique</p>
-      <p style="margin-top:6px;">Uma iniciativa da <strong>Karlyon Enterprise S.A.</strong> · Beira, Moçambique</p>
+      <p class="footer-brand">Al<span>c</span>artel <span style="font-size:0.6em;">Digital</span></p>
+      <p>A plataforma digital de empregos, saúde e cinema de Moçambique</p>
+      <p style="margin-top:6px;">Uma iniciativa da <strong><a href="https://karlyon-enterprise-s-a.vercel.app/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Karlyon Enterprise S.A.</a></strong> · Beira, Moçambique</p>
       <div class="footer-social" aria-label="Redes sociais Alcartel">
         <a class="footer-social__link" href="https://www.facebook.com/Alcartelmoz" target="_blank" rel="noopener noreferrer" aria-label="Alcartel no Facebook" title="Alcartel no Facebook">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.523 1.492-3.917 3.777-3.917 1.094 0 2.238.196 2.238.196v2.475h-1.26c-1.243 0-1.63.775-1.63 1.57v1.89h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z"/></svg>
@@ -127,8 +112,9 @@
       <p class="footer-col__title">Links Úteis</p>
       <nav class="footer-links footer-links--stack" aria-label="Ligações do rodapé">
         <a href="/index.html">Início</a>
-        <a href="/vagas.html">Vagas</a>
-        <a href="/noticias.html">Notícias</a>
+        <a href="/vagas.html">Emprego</a>
+        <a href="/saude-e-bem-estar.html">Saúde e Bem-Estar</a>
+        <a href="/cinemas.html">Cinemas</a>
         <a href="/servicos.html">Serviços</a>
         <a href="/sobre.html">Sobre Nós</a>
       </nav>
@@ -141,7 +127,7 @@
         <a href="/termos.html" title="Termos de Uso">Termos</a>
         <a href="/cookies.html" title="Política de Cookies">Cookies</a>
       </nav>
-      <a class="footer-app-badge" href="#" id="pwa-install-link">
+      <a class="footer-app-badge" href="https://webtoapp.design/apps/pt_BR/download_android_apk/IjIyOTIzMSI.aoUENa-FQnRuitSeg2bERBddI28" id="pwa-install-link" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12 2a1 1 0 011 1v11.59l3.3-3.3a1 1 0 111.4 1.42l-5 5a1 1 0 01-1.4 0l-5-5a1 1 0 111.4-1.42l3.3 3.3V3a1 1 0 011-1zM5 19a1 1 0 011 1v.01c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V20a1 1 0 112 0v.01A3 3 0 0117 23H7a3 3 0 01-3-3v-1a1 1 0 011-1z"/></svg>
         <span>Instalar App<small>Acesso rápido no telemóvel</small></span>
       </a>
@@ -149,7 +135,7 @@
   </div>
   <div class="footer-bottom">
     <div class="footer-divider"></div>
-    <p>© 2026 <a href="/" aria-label="Alcartel">Alcartel</a> — O Motor de Empregos de Moçambique</p>
+    <p>© 2026 <a href="/" aria-label="Alcartel Digital">Alcartel Digital</a> — a plataforma digital de empregos, saúde e cinema de Moçambique</p>
     <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
   </div>
 </footer>
@@ -161,7 +147,7 @@
     <div class="vaga-modal__conteudo"></div>
   </div>
 </div>
-<script id="vagas-dados" type="application/json">{"gestor-de-operacoes-beira-sofala":{"titulo":"Gestor de Operações","empresa":"Acácia Transportes, Lda","imagem_empresa":"/assets/empresas/images.png","cidade":"Beira","provincia":"Sofala","pais":"Moçambique","categoria":"Transportes e Logística","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"Gerir todos os contratos com os clientes;\nGerir todas as operações de transporte.\nGarantir o cumprimento dos níveis de serviço acordados com os clientes.\nGerir e optimizar a utilização da frota e dos recursos operacionais.\nMonitorizar indicadores de desempenho (KPIs) e implementar acções de melhoria contínua.\nAssegurar o cumprimento das normas de Qualidade, Segurança, Saúde, Ambiente de Trabalho.\nCoordenar equipas operacionais, motoristas e supervisores.\nDesenvolver estratégias para redução de custos e aumento da produtividade.\nGerir o orçamento operacional e controlar despesas.\nPromover uma cultura de segurança, excelência operacional e melhoria contínua.\nProduzir relatórios operacionais para a Direcção.","responsabilidades":"","requisitos_obrigatorios":"Licenciatura em Gestão de Transportes, Logística, Administração e Gestão de Empresas ou área similar.\nMínimo de 7 anos de experiência em operações de transporte ou logística.\nExperiência comprovada em gestão de equipas multidisciplinares.\nConhecimentos sólidos de gestão de frotas, distribuição e planeamento operacional.\nConhecimento das operações de transportes no Corredor da Beira.\nConhecimento da legislação de transporte e normas de segurança.\nCapacidade analítica e orientação para indicadores de desempenho.\nExcelentes competências de gestão e liderança.\nDomínio do Microsoft Office (Excel avançado será uma vantagem).\nConhecimentos de sistemas TMS, ERP ou plataformas de gestão logística serão valorizados.\nFluência em Português e Inglês.","requisitos_desejaveis":"","escolaridade":"","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Consultar no link de candidatura abaixo ","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Acácia Transportes, Lda,Gestor de Operações","data_publicacao":"2026-07-27T22:01:53.316Z","data_validade":"2026-07-27","link_candidatura":"https://acareerbyagl.talent-soft.com/job/job-operations-manager-m-f_10110.aspx","candidatura_email":"","candidatura_link":"https://acareerbyagl.talent-soft.com/job/job-operations-manager-m-f_10110.aspx","slug":"gestor-de-operacoes-beira-sofala"},"facilitador-comunitario-de-wash-beira-buzi":{"titulo":"Facilitador Comunitário de WASH","empresa":"Conselho Cristão de Moçambique","imagem_empresa":"/assets/empresas/images.jpeg","cidade":"Beira","provincia":"Buzi","pais":"Moçambique","categoria":"Saúde","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"Conselho Cristão de Moçambique (CCM) – Delegação Provincial de Sofala, no âmbito da implementação do Projecto RISE OVC & WASH, em parceria com a Jhpiego e com financiamento do PEPFAR/Governo dos Estados Unidos da América, torna públicas as seguintes vagas:\n07 Facilitadores Comunitários de WASH\n\nBeira (05 vagas) \nBúzi (02 vagas)\n\nObjectivo do Cargo\n\nPromover mudanças positivas de comportamento relacionadas com água, saneamento e higiene (WASH) através da mobilização comunitária, sensibilização e capacitação das comunidades, contribuindo para a prevenção de doenças e melhoria da saúde pública.","responsabilidades":"Mobilização e Sensibilização Comunitária:\n\nRealizar sessões educativas sobre higiene pessoal, lavagem das mãos, tratamento e armazenamento seguro da água.\nSensibilizar as famílias sobre a importância do uso e manutenção de latrinas.\nPromover boas práticas de saneamento e gestão de resíduos sólidos\nFacilitar reuniões comunitárias e campanhas de educação para a saúde.\nApoio à Implementação das Atividades de WASH:\nApoiar a formação e fortalecimento dos comités de água e saneamento.\nIncentivar a participação ativa da comunidade nas atividades de WASH.\nIdentificar e reportar desafios relacionados com o acesso à água, saneamento e higiene.\nApoiar a implementação de abordagens participativas de mudança de comportamento.\nMonitoria e Reporte\n\nRecolher informações sobre as atividades realizadas e os resultados alcançados.\nManter registos das sessões de sensibilização e participantes envolvidos\nReportar regularmente ao supervisor sobre o progresso das atividades e necessidade identificadas na comunidade.\nPromoção da Inclusão Comunitária\n\nGarantir a participação de mulheres, homens, jovens, idosos e pessoas com deficiência nas atividades\nTrabalhar em colaboração com líderes comunitários, religiosos e outras estruturas locais.","requisitos_obrigatorios":"Requisitos Mínimos\n\nFormação\n\nEnsino secundário completo (12a classe).\nFormação em Saúde Comunitária, Promoção de Saúde,\nDesenvolvimento Comunitário ou áreas afins constitui uma vantagem.\nExperiência\n\nExperiência em mobilização comunitária, promoção de saúde ou atividades sociais.\nExperiência prévia em programas de WASH será uma vantagem.\nCompetências\n\nBoa capacidade de comunicação e facilitação.\nCapacidade de trabalhar com diferentes grupos comunitários.\nConhecimento básico de água, saneamento e higiene.\nCapacidade de recolher e reportar dados.\nBoa organização e espirito de equipa.\nQualidades Pessoais\n\nIntegridade e respeito pela comunidade,\nDinamismo e iniciativa.\nSensibilidade cultural.\nDisponibilidade para deslocações frequentes dentro da área de intervenção.\nLínguas\n\nFluência em Português.\nConhecimento da língua local da comunidade é altamente desejável.\nIndicadores de Desempenho\n\nNúmero de sessões de sensibilização realizadas.\nNúmero de famílias alcançadas pelas atividades de WASH.\nParticipação comunitária nas ações promovidas.\nMelhoria da adoção de práticas de higiene e saneamento na comunidade.\nQualidade e pontualidade dos relatórios submetidos.","requisitos_desejaveis":"","escolaridade":"Ensino Secundário (12º ano)","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"Candidatos(as) deverão enviar o seu CV atualizado assinado e carta de manifestação de interesse que resumem como o seu perfil responde aos requisitos deste cargo para o seguinte","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"Conselho Cristão de Moçambique, Facilitador Comunitário de WASH","data_publicacao":"2026-07-27T22:01:53.315Z","data_validade":"2026-07-28","link_candidatura":"https://njobs.co.mz/vaga/facilitador-comunitario-de-wash/","candidatura_email":"ccmrecrutamento.rh@gmail.com","candidatura_link":"https://njobs.co.mz/vaga/facilitador-comunitario-de-wash/","slug":"facilitador-comunitario-de-wash-beira-buzi"}}</script>
+<script id="vagas-dados" type="application/json">{"vaga-disponivel-para-analista-de-compras-beira-sofala":{"titulo":"Vaga disponível para Analista de Compras ","empresa":"Aldelia","imagem_empresa":"/assets/empresas/483ba5f58aa249bcb0b04de91b7d44c088991b437179822987f7392d4968f936.png","cidade":"Beira","provincia":"Sofala","pais":"Moçambique","categoria":"Transportes e Logística","estado_vaga":"Aberta","codigo_vaga":"","area":"","departamento":"","numero_vagas":1,"regime_trabalho":"","horario_trabalho":"","tipo_contrato":"Tempo Inteiro","descricao":"Apoiar o Superintendente de Operações na supervisão de todas as actividades operacionais, de manutenção, HSSE e administrativas nos armazéns de lubrificantes sob a gestão da Puma Energy Moçambique. Como Supervisor, você liderará a equipa do armazém, garantindo a recepção, armazenamento, manuseamento e expedição segura e eficiente de lubrificantes embalados, mantendo um controlo rigoroso de stocks e assegurando o cumprimento das políticas, procedimentos e normas de HSSE da empresa.","responsabilidades":"Operações\nGarantir recepção conforme os processos e procedimentos da empresa\nCoordenar com Abastecimento e Transporte para entregas atempadas\nSupervisionar operações diárias, arrumação e armazenamento\nGarantir manuseamento seguro dos produtos\nExecutar expedições com total conformidade contratual\nRegistar correctamente todas as actividades\nAntecipar e monitorizar problemas operacionais\nHSSE\nCumprir todas as regras de segurança e ambiente\nPromover cultura forte de HSSE e desempenho\nParticipar em simulacros de emergência\nResponder a situações de emergência\nComunicar quase acidentes e actos inseguros\nGarantir PTW para manutenção\nManter equipamentos de HSSE em perfeito estado\nManutenção\nDesenvolver plano de inspecção para armazém e equipamentos\nCriar listas de verificação de inspecção e manutenção\nManter limpeza e organização ao nível máximo\nSupervisionar intervenções de manutenção\nGarantir conformidade com normas HSSE\nInspecção periódica de equipamentos\nRegistar todas as manutenções realizadas\nStocks e Admin\nRegistar completa e correctamente todas as actividades\nLiderar contagens regulares de stocks\nComunicar ganhos ou perdas anormais\nApoiar reconciliações e inventários físicos\nManter dashboards e KPIs de desempenho\nManter equipamentos registados no inventário\nRegistar actividades operacionais não essenciais","requisitos_obrigatorios":"Experiência: mínimo 3 a 5 anos em operações de armazém, preferencialmente em produtos petrolíferos embalados, lubrificantes ou químicos industriais similares\nFormação: diploma técnico ou equivalente em Logística, Gestão de Armazéns, Engenharia Industrial, Manutenção ou área relacionada (vantajosa)\nCompetências técnicas: Microsoft Office (Word, Excel, Outlook); experiência com sistemas de gestão de stocks é uma vantagem\nCompetências interpessoais: capacidade de interagir com gestão a todos os níveis e contactos externos, sobretudo transportadores e clientes\nCompetências analíticas: capacidade de identificar problemas, investigar variações e propor soluções práticas\nIdiomas: fluente em português; inglês é uma forte vantagem\nOrientação para resultados, excelência operacional e satisfação do cliente\nDisponibilidade para contacto fora do horário normal e deslocações ocasionais dentro de Moçambique","requisitos_desejaveis":"","escolaridade":"Diploma/Bacharelato","experiencia":"","competencias_tecnicas":"","competencias_comportamentais":"","idiomas":"","certificacoes":"","salario":"","beneficios":"","documentos_exigidos":"","como_candidatar":"","contacto":"","observacoes":"","palavras_chave":"emprego beira, supervisor armazém, logística, lubrificantes, aldelia, puma energy, vagas sofala","data_publicacao":"2026-08-10T20:33:10.888Z","data_validade":"2026-08-28","link_candidatura":"https://njobs.co.mz/vaga/supervisor-do-armazem-de-lubrificantes/ ","candidatura_email":"https://wa.me/258831190119","candidatura_link":"https://njobs.co.mz/vaga/supervisor-do-armazem-de-lubrificantes/ ","slug":"vaga-disponivel-para-analista-de-compras-beira-sofala"}}</script>
 <script src="/scripts/vaga-modal.js" defer></script>
 <script src="/scripts/vaga-pesquisa.js" defer></script>
 <script src="/js/contador-visitas.js" defer></script>
@@ -179,6 +165,13 @@
     aclib.runAutoTag({
         zoneId: 'f9xdvntcc0',
     });
+    aclib.runAutoTag({
+        zoneId: 'rvcu0hukr8',
+    });
+    aclib.runAutoTag({
+        zoneId: '91svjmnxe0',
+    });
 </script>
+<script src="/scripts/site-nav.js" defer></script>
 </body>
 </html>
