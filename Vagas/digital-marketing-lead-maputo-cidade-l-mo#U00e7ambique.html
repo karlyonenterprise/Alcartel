@@ -51,16 +51,19 @@
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="300" height="90"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="300" height="262"></picture>
   </a>
 </header>
-<nav class="site-nav" role="navigation" aria-label="Navegação principal">
-  <ul>
+<nav class="site-nav" id="site-nav" role="navigation" aria-label="Navegação principal">
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
     <li><a href="/index.html">Início</a></li>
-    <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
+    <li><a href="/vagas.html">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="/cinemas.html">Cinemas</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/contactos.html">Contacto</a></li>
   </ul>
 </nav>
 <main role="main">
@@ -138,5 +141,6 @@
   <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
 </footer>
 <script src="/scripts/vaga-share.js" defer></script>
+<script src="/scripts/site-nav.js" defer></script>
 </body>
 </html>
