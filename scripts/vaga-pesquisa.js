@@ -3,7 +3,7 @@
  * ALCARTEL — Pesquisar Vagas
  *
  * Liga o formulário de pesquisa (#pesquisa) — campo de texto livre +
- * selector de província + botão "Pesquisar" — à secção "Vagas
+ * campo "Cidade / Distrito" + botão "Pesquisar" — à secção "Vagas
  * Disponíveis" (#vagas-grid), filtrando no browser, sem recarregar a
  * página e sem pedidos ao servidor.
  *
@@ -29,22 +29,6 @@
  */
 (function () {
   "use strict";
-
-  // ── Mapa dos valores do <select id="provincia-pesquisa"> para o nome
-  //    de província tal como é gravado em cada vaga (dados.provincia).
-  //    Centralizado aqui para ser fácil de ajustar se o CMS mudar. ────
-  const PROVINCIAS = {
-    "cabo-delgado": "Cabo Delgado",
-    "niassa": "Niassa",
-    "nampula": "Nampula",
-    "zambezia": "Zambézia",
-    "tete": "Tete",
-    "manica": "Manica",
-    "sofala": "Sofala",
-    "inhambane": "Inhambane",
-    "gaza": "Gaza",
-    "maputo-provincia": "Maputo"
-  };
 
   // ── Utilitários de texto ─────────────────────────────────────────
   function normalizarTexto(str) {
@@ -77,19 +61,22 @@
   }
 
   // ── 2. Filtro: termo livre (todas as palavras têm de aparecer algures
-  //    no índice — permite pesquisas como "gestor vendas beira") e
-  //    província (comparação pelo nome, insensível a maiúsculas/acentos). ──
-  function filtrarVagas(vagas, termoNormalizado, provinciaValor) {
+  //    no índice — permite pesquisas como "gestor vendas beira" — e
+  //    aceita correspondências PARCIAIS: "enferm" encontra "Enfermeiro")
+  //    e Cidade/Distrito (texto livre, comparado por inclusão contra os
+  //    campos cidade e província da vaga — não exige seleccionar
+  //    primeiro nenhuma província). ───────────────────────────────────
+  function filtrarVagas(vagas, termoNormalizado, localidadeNormalizada) {
     const termos = termoNormalizado.split(/\s+/).filter(Boolean);
-    const provinciaNome = provinciaValor ? PROVINCIAS[provinciaValor] : "";
-    const provinciaNormalizada = provinciaNome ? normalizarTexto(provinciaNome) : "";
 
     return vagas.filter(function (v) {
       const correspondeTermo = !termos.length || termos.every(function (termo) {
         return v._indice.indexOf(termo) !== -1;
       });
-      const correspondeProvincia = !provinciaNormalizada || normalizarTexto(v.provincia) === provinciaNormalizada;
-      return correspondeTermo && correspondeProvincia;
+      const correspondeLocalidade = !localidadeNormalizada ||
+        normalizarTexto(v.cidade).indexOf(localidadeNormalizada) !== -1 ||
+        normalizarTexto(v.provincia).indexOf(localidadeNormalizada) !== -1;
+      return correspondeTermo && correspondeLocalidade;
     });
   }
 
@@ -139,7 +126,7 @@
   function mensagemSemResultados() {
     return `<li class="vaga-card vaga-card--vazio" role="listitem">
       <p><strong>Não encontrámos nenhuma vaga com esses critérios.</strong></p>
-      <p>Tente um termo diferente ou seleccione "Todas as Províncias".</p>
+      <p>Tente um termo diferente ou limpe o campo Cidade/Distrito.</p>
     </li>`;
   }
 
@@ -161,10 +148,10 @@
     vagas.forEach(function (v) { v._indice = construirIndice(v); });
 
     const campoTexto = secaoPesquisa.querySelector('input[name="q"]');
-    // Selector de província removido do HTML (pesquisa passou a ser só por
-    // texto livre); mantém-se a leitura aqui como opcional, caso volte a
-    // existir numa página futura, sem quebrar nada nas páginas actuais.
-    const campoProvincia = secaoPesquisa.querySelector('select[name="provincia"]');
+    // Campo único "Cidade / Distrito" — texto livre com sugestões (datalist),
+    // sem exigir seleccionar antes uma província. Aceita também um <select
+    // name="provincia"> por compatibilidade, caso alguma página ainda o use.
+    const campoLocalidade = secaoPesquisa.querySelector('input[name="localidade"], select[name="provincia"]');
     const botaoPesquisar = secaoPesquisa.querySelector("button");
     if (!campoTexto || !botaoPesquisar) return;
 
@@ -186,9 +173,9 @@
     //    → paginar) e desenha o resultado. ──────────────────────────
     function executarPesquisa() {
       const termoNormalizado = normalizarTexto(campoTexto.value);
-      const provinciaValor = campoProvincia ? campoProvincia.value : "";
+      const localidadeNormalizada = normalizarTexto(campoLocalidade ? campoLocalidade.value : "");
 
-      const filtradas = filtrarVagas(vagas, termoNormalizado, provinciaValor);
+      const filtradas = filtrarVagas(vagas, termoNormalizado, localidadeNormalizada);
       const ordenadas = ordenarVagas(filtradas);
       const resultados = paginarVagas(ordenadas);
 

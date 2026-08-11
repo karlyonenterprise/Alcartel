@@ -37,16 +37,19 @@
     return track.scrollWidth / 2;
   }
 
+  // Desliza continuamente para a DIREITA: a posição de leitura começa a meio
+  // da faixa duplicada e vai diminuindo; ao chegar a zero, salta de volta
+  // para o meio sem salto visível, criando um loop infinito nesse sentido.
   function passo(agora) {
     if (ultimoFrame === null) ultimoFrame = agora;
     const delta = agora - ultimoFrame;
     ultimoFrame = agora;
 
     if (!pausado) {
-      viewport.scrollLeft += velocidade * (delta / 16.6667);
+      viewport.scrollLeft -= velocidade * (delta / 16.6667);
       const metade = metadeLargura();
-      if (metade > 0 && viewport.scrollLeft >= metade) {
-        viewport.scrollLeft -= metade;
+      if (metade > 0 && viewport.scrollLeft <= 0) {
+        viewport.scrollLeft += metade;
       }
     }
     raf = requestAnimationFrame(passo);
@@ -73,8 +76,11 @@
     }, 1600);
   }
 
-  if (btnPrev) btnPrev.addEventListener("click", () => mover(-1));
-  if (btnNext) btnNext.addEventListener("click", () => mover(1));
+  // Nota: o deslize automático agora corre para a DIREITA (scrollLeft a
+  // diminuir), por isso "seguinte" acompanha esse sentido (-1) e
+  // "anterior" o sentido contrário (+1).
+  if (btnPrev) btnPrev.addEventListener("click", () => mover(1));
+  if (btnNext) btnNext.addEventListener("click", () => mover(-1));
 
   if (btnToggle) {
     btnToggle.addEventListener("click", () => {
@@ -109,6 +115,14 @@
     }, 1200);
   }, { passive: true });
 
-  raf = requestAnimationFrame(passo);
+  // Posiciona o scroll a meio da faixa duplicada ANTES de iniciar o loop,
+  // para o deslize para a direita ter espaço para "recuar" sem saltar
+  // logo no arranque. Corre num frame próprio para garantir que o layout
+  // (largura real dos cartões) já está calculado.
+  requestAnimationFrame(() => {
+    const metade = metadeLargura();
+    if (metade > 0) viewport.scrollLeft = metade;
+    raf = requestAnimationFrame(passo);
+  });
   window.addEventListener("beforeunload", () => { if (raf) cancelAnimationFrame(raf); });
 })();

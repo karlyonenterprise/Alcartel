@@ -36,6 +36,8 @@ const VAGAS_DIR_FONTE = path.join(ROOT, "content/vagas");
 // "noticias" em admin/config.yml) — 1 ficheiro JSON por notícia, o mesmo
 // padrão usado em content/vagas/.
 const NOTICIAS_DIR_FONTE = path.join(ROOT, "content/noticias");
+const SAUDE_DIR_FONTE = path.join(ROOT, "content/saude");
+const CINEMA_DIR_FONTE = path.join(ROOT, "content/cinema");
 
 // Lista de categorias do formulário "Alerta de Vagas" (campo "Categoria da
 // vaga pretendida"). Esta lista é INDEPENDENTE das categorias de vaga do
@@ -313,6 +315,105 @@ function carregarNoticias() {
 }
 
 const noticias = carregarNoticias();
+
+// SAÚDE E BEM-ESTAR — fonte: content/saude/*.json (colecção "saude" do
+// Decap CMS, apresentada ao utilizador como "Saúde"). Mesmo padrão de
+// noticias: só entram no site publicações com estado "Publicado". As
+// publicações aparecem automaticamente no carrossel "Dicas de Saúde e
+// Bem-Estar" em saude-e-bem-estar.html, sem precisar tocar em HTML. ──
+function normalizarSaude(dados) {
+  return {
+    titulo: dados.titulo || "",
+    resumo: dados.resumo || "",
+    conteudo: dados.conteudo || "",
+    imagem: dados.imagem || "",
+    categoria: dados.categoria || "Dicas de Saúde e Bem-Estar",
+    link_externo: dados.link_externo || "",
+    data_publicacao: (() => {
+      const bruto = dados.data_publicacao || "";
+      const valida = bruto && !bruto.includes("{{") && !isNaN(new Date(bruto).getTime());
+      if (!valida && bruto) {
+        console.warn(`⚠️  data_publicacao inválida ("${bruto}") numa publicação de Saúde — a usar a data de hoje como substituto.`);
+      }
+      return valida ? bruto : new Date().toISOString();
+    })(),
+    estado: dados.estado || "Rascunho",
+    meta_titulo: dados.meta_titulo || dados.titulo || "",
+    meta_descricao: dados.meta_descricao || dados.resumo || ""
+  };
+}
+
+function carregarSaude() {
+  if (!fs.existsSync(SAUDE_DIR_FONTE)) return [];
+  return fs.readdirSync(SAUDE_DIR_FONTE)
+    .filter(f => f.endsWith(".json"))
+    .map(f => {
+      const bruto = JSON.parse(fs.readFileSync(path.join(SAUDE_DIR_FONTE, f), "utf-8"));
+      const dados = normalizarSaude(bruto);
+      dados.slug = f.replace(/\.json$/, "");
+      if (!/^[a-z0-9-]+$/.test(dados.slug)) {
+        console.warn(`⚠️  Slug inválido para URL em "${f}": "${dados.slug}" — contém caracteres fora de a-z/0-9/"-". Corrige o nome do ficheiro.`);
+      }
+      return dados;
+    })
+    .filter(s => s.estado === "Publicado")
+    .sort((a, b) => new Date(b.data_publicacao) - new Date(a.data_publicacao));
+}
+
+const publicacoesSaude = carregarSaude();
+
+// CINEMA — fonte: content/cinema/*.json (colecção "cinema" do Decap
+// CMS). Mesmo padrão. O link_youtube (formato normal, ex.:
+// youtu.be/XXXX ou youtube.com/watch?v=XXXX) é convertido automaticamente
+// para o formato de embed em embedYoutube(). ─────────────────────────
+function normalizarCinema(dados) {
+  return {
+    titulo: dados.titulo || "",
+    descricao: dados.descricao || "",
+    conteudo: dados.conteudo || "",
+    imagem: dados.imagem || "",
+    link_youtube: dados.link_youtube || "",
+    categoria: dados.categoria || "Entretenimento",
+    data_publicacao: (() => {
+      const bruto = dados.data_publicacao || "";
+      const valida = bruto && !bruto.includes("{{") && !isNaN(new Date(bruto).getTime());
+      if (!valida && bruto) {
+        console.warn(`⚠️  data_publicacao inválida ("${bruto}") numa publicação de Cinema — a usar a data de hoje como substituto.`);
+      }
+      return valida ? bruto : new Date().toISOString();
+    })(),
+    estado: dados.estado || "Rascunho",
+    meta_titulo: dados.meta_titulo || dados.titulo || "",
+    meta_descricao: dados.meta_descricao || dados.descricao || ""
+  };
+}
+
+function embedYoutube(link) {
+  if (!link) return "";
+  const m = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/.exec(link);
+  return m ? `https://www.youtube.com/embed/${m[1]}` : "";
+}
+
+function carregarCinema() {
+  if (!fs.existsSync(CINEMA_DIR_FONTE)) return [];
+  return fs.readdirSync(CINEMA_DIR_FONTE)
+    .filter(f => f.endsWith(".json"))
+    .map(f => {
+      const bruto = JSON.parse(fs.readFileSync(path.join(CINEMA_DIR_FONTE, f), "utf-8"));
+      const dados = normalizarCinema(bruto);
+      dados.slug = f.replace(/\.json$/, "");
+      dados.embed = embedYoutube(dados.link_youtube);
+      if (!/^[a-z0-9-]+$/.test(dados.slug)) {
+        console.warn(`⚠️  Slug inválido para URL em "${f}": "${dados.slug}" — contém caracteres fora de a-z/0-9/"-". Corrige o nome do ficheiro.`);
+      }
+      return dados;
+    })
+    .filter(c => c.estado === "Publicado")
+    .sort((a, b) => new Date(b.data_publicacao) - new Date(a.data_publicacao));
+}
+
+const publicacoesCinema = carregarCinema();
+
 
 function slugify(str) {
   return str
@@ -671,16 +772,19 @@ function paginaVaga(v) {
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="640" height="322"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="640" height="559"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
-  <ul>
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
     <li><a href="/index.html">Início</a></li>
-    <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/noticias.html">Notícias</a></li>
+    <li><a href="/vagas.html" aria-current="page">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="/cinemas.html">Cinemas</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main">
@@ -749,9 +853,9 @@ function paginaVaga(v) {
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
     <div class="footer-col footer-col--brand">
-      <p class="footer-brand">Al<span>c</span>artel</p>
-      <p>O Motor de Empregos de Moçambique</p>
-      <p style="margin-top:6px;">Uma iniciativa da <strong>Karlyon Enterprise S.A.</strong> · Beira, Moçambique</p>
+      <p class="footer-brand">Al<span>c</span>artel <span style="font-size:0.6em;">Digital</span></p>
+      <p>A plataforma digital de empregos, saúde e cinema de Moçambique</p>
+      <p style="margin-top:6px;">Uma iniciativa da <strong><a href="https://karlyon-enterprise-s-a.vercel.app/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Karlyon Enterprise S.A.</a></strong> · Beira, Moçambique</p>
       <div class="footer-social" aria-label="Redes sociais Alcartel">
         <a class="footer-social__link" href="https://www.facebook.com/Alcartelmoz" target="_blank" rel="noopener noreferrer" aria-label="Alcartel no Facebook" title="Alcartel no Facebook">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.523 1.492-3.917 3.777-3.917 1.094 0 2.238.196 2.238.196v2.475h-1.26c-1.243 0-1.63.775-1.63 1.57v1.89h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z"/></svg>
@@ -768,8 +872,9 @@ function paginaVaga(v) {
       <p class="footer-col__title">Links Úteis</p>
       <nav class="footer-links footer-links--stack" aria-label="Ligações do rodapé">
         <a href="/index.html">Início</a>
-        <a href="/vagas.html">Vagas</a>
-        <a href="/noticias.html">Notícias</a>
+        <a href="/vagas.html">Emprego</a>
+        <a href="/saude-e-bem-estar.html">Saúde e Bem-Estar</a>
+        <a href="/cinemas.html">Cinemas</a>
         <a href="/servicos.html">Serviços</a>
         <a href="/sobre.html">Sobre Nós</a>
       </nav>
@@ -782,7 +887,7 @@ function paginaVaga(v) {
         <a href="/termos.html" title="Termos de Uso">Termos</a>
         <a href="/cookies.html" title="Política de Cookies">Cookies</a>
       </nav>
-      <a class="footer-app-badge" href="#" id="pwa-install-link">
+      <a class="footer-app-badge" href="https://webtoapp.design/apps/pt_BR/download_android_apk/IjIyOTIzMSI.aoUENa-FQnRuitSeg2bERBddI28" id="pwa-install-link" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12 2a1 1 0 011 1v11.59l3.3-3.3a1 1 0 111.4 1.42l-5 5a1 1 0 01-1.4 0l-5-5a1 1 0 111.4-1.42l3.3 3.3V3a1 1 0 011-1zM5 19a1 1 0 011 1v.01c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V20a1 1 0 112 0v.01A3 3 0 0117 23H7a3 3 0 01-3-3v-1a1 1 0 011-1z"/></svg>
         <span>Instalar App<small>Acesso rápido no telemóvel</small></span>
       </a>
@@ -790,7 +895,7 @@ function paginaVaga(v) {
   </div>
   <div class="footer-bottom">
     <div class="footer-divider"></div>
-    <p>© 2026 <a href="/" aria-label="Alcartel">Alcartel</a> — O Motor de Empregos de Moçambique</p>
+    <p>© 2026 <a href="/" aria-label="Alcartel Digital">Alcartel Digital</a> — a plataforma digital de empregos, saúde e cinema de Moçambique</p>
     <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
   </div>
 </footer>
@@ -817,6 +922,7 @@ function paginaVaga(v) {
         zoneId: '91svjmnxe0',
     });
 </script>
+<script src="/scripts/site-nav.js" defer></script>
 </body>
 </html>
 `;
@@ -969,16 +1075,19 @@ function paginaListagem({ tipo, valor, lista }) {
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel" width="640" height="322"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel" width="640" height="559"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
-  <ul>
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
     <li><a href="/index.html">Início</a></li>
-    <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/noticias.html">Notícias</a></li>
+    <li><a href="/vagas.html" aria-current="page">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="/cinemas.html">Cinemas</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main" style="max-width:720px;margin:0 auto;padding:32px 20px;">
@@ -991,9 +1100,9 @@ function paginaListagem({ tipo, valor, lista }) {
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
     <div class="footer-col footer-col--brand">
-      <p class="footer-brand">Al<span>c</span>artel</p>
-      <p>O Motor de Empregos de Moçambique</p>
-      <p style="margin-top:6px;">Uma iniciativa da <strong>Karlyon Enterprise S.A.</strong> · Beira, Moçambique</p>
+      <p class="footer-brand">Al<span>c</span>artel <span style="font-size:0.6em;">Digital</span></p>
+      <p>A plataforma digital de empregos, saúde e cinema de Moçambique</p>
+      <p style="margin-top:6px;">Uma iniciativa da <strong><a href="https://karlyon-enterprise-s-a.vercel.app/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Karlyon Enterprise S.A.</a></strong> · Beira, Moçambique</p>
       <div class="footer-social" aria-label="Redes sociais Alcartel">
         <a class="footer-social__link" href="https://www.facebook.com/Alcartelmoz" target="_blank" rel="noopener noreferrer" aria-label="Alcartel no Facebook" title="Alcartel no Facebook">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.523 1.492-3.917 3.777-3.917 1.094 0 2.238.196 2.238.196v2.475h-1.26c-1.243 0-1.63.775-1.63 1.57v1.89h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z"/></svg>
@@ -1010,8 +1119,9 @@ function paginaListagem({ tipo, valor, lista }) {
       <p class="footer-col__title">Links Úteis</p>
       <nav class="footer-links footer-links--stack" aria-label="Ligações do rodapé">
         <a href="/index.html">Início</a>
-        <a href="/vagas.html">Vagas</a>
-        <a href="/noticias.html">Notícias</a>
+        <a href="/vagas.html">Emprego</a>
+        <a href="/saude-e-bem-estar.html">Saúde e Bem-Estar</a>
+        <a href="/cinemas.html">Cinemas</a>
         <a href="/servicos.html">Serviços</a>
         <a href="/sobre.html">Sobre Nós</a>
       </nav>
@@ -1024,7 +1134,7 @@ function paginaListagem({ tipo, valor, lista }) {
         <a href="/termos.html" title="Termos de Uso">Termos</a>
         <a href="/cookies.html" title="Política de Cookies">Cookies</a>
       </nav>
-      <a class="footer-app-badge" href="#" id="pwa-install-link">
+      <a class="footer-app-badge" href="https://webtoapp.design/apps/pt_BR/download_android_apk/IjIyOTIzMSI.aoUENa-FQnRuitSeg2bERBddI28" id="pwa-install-link" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12 2a1 1 0 011 1v11.59l3.3-3.3a1 1 0 111.4 1.42l-5 5a1 1 0 01-1.4 0l-5-5a1 1 0 111.4-1.42l3.3 3.3V3a1 1 0 011-1zM5 19a1 1 0 011 1v.01c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V20a1 1 0 112 0v.01A3 3 0 0117 23H7a3 3 0 01-3-3v-1a1 1 0 011-1z"/></svg>
         <span>Instalar App<small>Acesso rápido no telemóvel</small></span>
       </a>
@@ -1032,7 +1142,7 @@ function paginaListagem({ tipo, valor, lista }) {
   </div>
   <div class="footer-bottom">
     <div class="footer-divider"></div>
-    <p>© 2026 <a href="/" aria-label="Alcartel">Alcartel</a> — O Motor de Empregos de Moçambique</p>
+    <p>© 2026 <a href="/" aria-label="Alcartel Digital">Alcartel Digital</a> — a plataforma digital de empregos, saúde e cinema de Moçambique</p>
     <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
   </div>
 </footer>
@@ -1059,6 +1169,7 @@ ${blocoModal(lista)}
         zoneId: '91svjmnxe0',
     });
 </script>
+<script src="/scripts/site-nav.js" defer></script>
 </body>
 </html>
 `;
@@ -1222,16 +1333,19 @@ function paginaNoticia(n) {
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="640" height="322"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="640" height="559"></picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
-  <ul>
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
     <li><a href="/index.html">Início</a></li>
-    <li><a href="/vagas.html">Vagas</a></li>
-    <li><a href="/noticias.html" aria-current="page">Notícias</a></li>
+    <li><a href="/vagas.html">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="/cinemas.html">Cinemas</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main">
@@ -1253,9 +1367,9 @@ function paginaNoticia(n) {
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
     <div class="footer-col footer-col--brand">
-      <p class="footer-brand">Al<span>c</span>artel</p>
-      <p>O Motor de Empregos de Moçambique</p>
-      <p style="margin-top:6px;">Uma iniciativa da <strong>Karlyon Enterprise S.A.</strong> · Beira, Moçambique</p>
+      <p class="footer-brand">Al<span>c</span>artel <span style="font-size:0.6em;">Digital</span></p>
+      <p>A plataforma digital de empregos, saúde e cinema de Moçambique</p>
+      <p style="margin-top:6px;">Uma iniciativa da <strong><a href="https://karlyon-enterprise-s-a.vercel.app/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Karlyon Enterprise S.A.</a></strong> · Beira, Moçambique</p>
       <div class="footer-social" aria-label="Redes sociais Alcartel">
         <a class="footer-social__link" href="https://www.facebook.com/Alcartelmoz" target="_blank" rel="noopener noreferrer" aria-label="Alcartel no Facebook" title="Alcartel no Facebook">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.523 1.492-3.917 3.777-3.917 1.094 0 2.238.196 2.238.196v2.475h-1.26c-1.243 0-1.63.775-1.63 1.57v1.89h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z"/></svg>
@@ -1272,8 +1386,9 @@ function paginaNoticia(n) {
       <p class="footer-col__title">Links Úteis</p>
       <nav class="footer-links footer-links--stack" aria-label="Ligações do rodapé">
         <a href="/index.html">Início</a>
-        <a href="/vagas.html">Vagas</a>
-        <a href="/noticias.html">Notícias</a>
+        <a href="/vagas.html">Emprego</a>
+        <a href="/saude-e-bem-estar.html">Saúde e Bem-Estar</a>
+        <a href="/cinemas.html">Cinemas</a>
         <a href="/servicos.html">Serviços</a>
         <a href="/sobre.html">Sobre Nós</a>
       </nav>
@@ -1286,7 +1401,7 @@ function paginaNoticia(n) {
         <a href="/termos.html" title="Termos de Uso">Termos</a>
         <a href="/cookies.html" title="Política de Cookies">Cookies</a>
       </nav>
-      <a class="footer-app-badge" href="#" id="pwa-install-link">
+      <a class="footer-app-badge" href="https://webtoapp.design/apps/pt_BR/download_android_apk/IjIyOTIzMSI.aoUENa-FQnRuitSeg2bERBddI28" id="pwa-install-link" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12 2a1 1 0 011 1v11.59l3.3-3.3a1 1 0 111.4 1.42l-5 5a1 1 0 01-1.4 0l-5-5a1 1 0 111.4-1.42l3.3 3.3V3a1 1 0 011-1zM5 19a1 1 0 011 1v.01c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V20a1 1 0 112 0v.01A3 3 0 0117 23H7a3 3 0 01-3-3v-1a1 1 0 011-1z"/></svg>
         <span>Instalar App<small>Acesso rápido no telemóvel</small></span>
       </a>
@@ -1294,7 +1409,7 @@ function paginaNoticia(n) {
   </div>
   <div class="footer-bottom">
     <div class="footer-divider"></div>
-    <p>© 2026 <a href="/" aria-label="Alcartel">Alcartel</a> — O Motor de Empregos de Moçambique</p>
+    <p>© 2026 <a href="/" aria-label="Alcartel Digital">Alcartel Digital</a> — a plataforma digital de empregos, saúde e cinema de Moçambique</p>
     <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
   </div>
 </footer>
@@ -1320,6 +1435,7 @@ function paginaNoticia(n) {
         zoneId: '91svjmnxe0',
     });
 </script>
+<script src="/scripts/site-nav.js" defer></script>
 </body>
 </html>
 `;
@@ -1327,6 +1443,281 @@ function paginaNoticia(n) {
 
 // ── Modelo da página /noticias (listagem completa, mais recente
 //    primeiro), com o mesmo grid/estilo visual das vagas. ────────────
+
+// ══════════════════════════════════════════════════════════════════
+// SAÚDE E BEM-ESTAR — cartão + página individual de cada publicação
+// vinda do CMS (content/saude/*.json). Estas publicações alimentam o
+// carrossel "Dicas de Saúde e Bem-Estar" injectado em
+// saude-e-bem-estar.html (ver injetarSaude mais abaixo) — as 3
+// secções estáticas da página (Estilo de Vida, Nutrição, Ciência)
+// mantêm-se como estão, escritas à mão. ═══════════════════════════
+function cardSaude(s) {
+  const imagem = s.imagem ? escapeHtml(s.imagem) : "/Og-image.jpg";
+  const resumo = truncar(s.resumo || markdownParaTextoPlano(s.conteudo), 110);
+  return `    <li class="blog-card" role="listitem">
+      <a class="blog-card__link" href="/saude/${s.slug}" aria-label="Ler: ${escapeHtml(s.titulo)}">
+        <div class="blog-card__midia"><img class="blog-card__imagem" src="${imagem}" alt="" loading="lazy" width="300" height="170"></div>
+        <div class="blog-card__corpo">
+          <p class="blog-card__data">${escapeHtml(formatarDataPt(s.data_publicacao))} · ${escapeHtml(s.categoria)}</p>
+          <h3>${escapeHtml(s.titulo)}</h3>
+          <p class="blog-card__resumo">${escapeHtml(resumo)}</p>
+          <span class="blog-card__cta">Ler mais →</span>
+        </div>
+      </a>
+    </li>`;
+}
+
+function paginaSaude(s) {
+  const url = `${SITE_URL}/saude/${s.slug}`;
+  const imagem = s.imagem ? urlAbsoluta(s.imagem) : `${SITE_URL}/Og-image.jpg`;
+  const descricao = truncar(s.meta_descricao || s.resumo, 160);
+  const tituloMeta = s.meta_titulo || `${s.titulo} – Alcartel Digital | Saúde`;
+  const artigo = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: s.titulo,
+    description: descricao,
+    image: [imagem],
+    datePublished: s.data_publicacao,
+    dateModified: s.data_publicacao,
+    author: { "@type": "Organization", name: "Alcartel Digital" },
+    publisher: { "@type": "Organization", name: "Alcartel Digital", logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` } },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    articleSection: s.categoria,
+    url
+  };
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Saúde", "item": `${SITE_URL}/saude-e-bem-estar.html` },
+      { "@type": "ListItem", "position": 3, "name": s.titulo, "item": url }
+    ]
+  };
+  const conteudoHtml = markdownParaHtml(s.conteudo);
+  return `<!DOCTYPE html>
+<html lang="pt-MZ" dir="ltr">
+<head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  ${GSC_META}
+  <title>${escapeHtml(tituloMeta)}</title>
+  <meta name="description" content="${escapeHtml(descricao)}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${url}">
+  <meta name="theme-color" content="#0c2c5c">
+  ${ICONS_HEAD}
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Alcartel Digital">
+  <meta property="og:title" content="${escapeHtml(tituloMeta)}">
+  <meta property="og:description" content="${escapeHtml(descricao)}">
+  <meta property="og:url" content="${url}">
+  <meta property="og:image" content="${imagem}">
+  <meta property="og:locale" content="pt_MZ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(tituloMeta)}">
+  <meta name="twitter:description" content="${escapeHtml(descricao)}">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">${JSON.stringify(artigo)}</script>
+  <script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>
+  ${ANALYTICS_HEAD}
+</head>
+<body>
+<header class="site-header" role="banner">
+  <a href="/" aria-label="Alcartel – Página inicial">
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel Digital" width="640" height="559"></picture>
+  </a>
+</header>
+<nav class="site-nav" role="navigation" aria-label="Navegação principal">
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
+    <li><a href="/index.html">Início</a></li>
+    <li><a href="/vagas.html">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html" aria-current="page">Saúde</a></li>
+    <li><a href="/cinemas.html">Cinemas</a></li>
+    <li><a href="/servicos.html">Serviços</a></li>
+  </ul>
+</nav>
+<main role="main">
+  <article style="max-width:720px;margin:0 auto;padding:32px 20px;">
+    <nav aria-label="Breadcrumb" style="font-size:0.85rem;margin-bottom:16px;">
+      <a href="/index.html">Início</a> › <a href="/saude-e-bem-estar.html">Saúde</a> › <span>${escapeHtml(s.titulo)}</span>
+    </nav>
+    <span class="cinema-card__categoria">${escapeHtml(s.categoria)}</span>
+    <h1 style="margin:8px 0 4px;">${escapeHtml(s.titulo)}</h1>
+    <p style="color:var(--texto-suave);font-size:0.85rem;">${escapeHtml(formatarDataPt(s.data_publicacao))}</p>
+    ${s.imagem ? `<img src="${escapeHtml(s.imagem)}" alt="${escapeHtml(s.titulo)}" style="width:100%;border-radius:12px;margin:16px 0;">` : ""}
+    <div style="line-height:1.7;">${conteudoHtml}</div>
+    ${s.link_externo ? `<p style="margin-top:20px;"><a class="btn btn--ouro" href="${escapeHtml(s.link_externo)}" target="_blank" rel="noopener noreferrer">Ver fonte relacionada</a></p>` : ""}
+  </article>
+</main>
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-bottom">
+    <p>© 2026 <a href="/" aria-label="Alcartel Digital">Alcartel Digital</a> — a plataforma digital de empregos, saúde e cinema de Moçambique</p>
+  </div>
+</footer>
+<script src="/scripts/site-nav.js" defer></script>
+</body>
+</html>
+`;
+}
+
+// Injecta o carrossel "Dicas de Saúde e Bem-Estar" (server-side, dados já
+// no HTML — sem precisar de fetch) em saude-e-bem-estar.html, entre
+// <!-- SAUDE_CMS:START --> e <!-- SAUDE_CMS:END -->. Gera também as
+// páginas individuais em /saude/*.html.
+function injetarSaude() {
+  const caminhoPagina = path.join(ROOT, "saude-e-bem-estar.html");
+  ensureDir(path.join(ROOT, "saude"));
+  const urls = [];
+  publicacoesSaude.forEach(s => {
+    fs.writeFileSync(path.join(ROOT, "saude", `${s.slug}.html`), paginaSaude(s), "utf-8");
+    urls.push({
+      loc: `${SITE_URL}/saude/${s.slug}`,
+      lastmod: (s.data_publicacao || HOJE_ISO).slice(0, 10),
+      changefreq: "monthly",
+      priority: "0.5"
+    });
+  });
+  if (!fs.existsSync(caminhoPagina)) return urls;
+  let html = fs.readFileSync(caminhoPagina, "utf-8");
+  const cards = publicacoesSaude.length ? publicacoesSaude.map(cardSaude).join("\n") : "";
+  const conteudo = cards ? cards + cards : `    <li class="blog-card blog-card--placeholder" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;color:var(--texto-suave);font-size:0.85rem;text-align:center;padding:20px;">Sem publicações ainda — publique através do painel de administração.</li>`;
+  const resultado = injetarEntreMarcadores(html, "<!-- SAUDE_CMS:START -->", "<!-- SAUDE_CMS:END -->", conteudo);
+  if (resultado !== null) {
+    fs.writeFileSync(caminhoPagina, resultado, "utf-8");
+    console.log(`✅ saude-e-bem-estar.html: ${publicacoesSaude.length} publicação(ões) do CMS injectada(s) no carrossel "Dicas de Saúde e Bem-Estar".`);
+  }
+  return urls;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// CINEMA — cartão + página individual de cada publicação vinda do CMS
+// (content/cinema/*.json). Aparecem em cinemas.html, a seguir aos 4
+// vídeos de demonstração já fixos na página. ═══════════════════════
+function cardCinema(c) {
+  return `    <article class="cinema-card">
+      <div class="cinema-card__video">
+        ${c.embed
+          ? `<iframe src="${escapeHtml(c.embed)}" title="${escapeHtml(c.titulo)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+          : (c.imagem ? `<img src="${escapeHtml(c.imagem)}" alt="${escapeHtml(c.titulo)}" style="width:100%;height:100%;object-fit:cover;">` : "")}
+      </div>
+      <div class="cinema-card__corpo">
+        ${c.categoria ? `<span class="cinema-card__categoria">${escapeHtml(c.categoria)}</span>` : ""}
+        <h3><a href="/cinema/${c.slug}" style="color:inherit;text-decoration:none;">${escapeHtml(c.titulo)}</a></h3>
+        <p>${escapeHtml(truncar(c.descricao, 130))}</p>
+      </div>
+    </article>`;
+}
+
+function paginaCinema(c) {
+  const url = `${SITE_URL}/cinema/${c.slug}`;
+  const imagem = c.imagem ? urlAbsoluta(c.imagem) : `${SITE_URL}/Og-image.jpg`;
+  const descricao = truncar(c.meta_descricao || c.descricao, 160);
+  const tituloMeta = c.meta_titulo || `${c.titulo} – Alcartel Digital | Cinemas`;
+  const videoObj = c.embed ? {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: c.titulo,
+    description: descricao,
+    thumbnailUrl: [imagem],
+    uploadDate: c.data_publicacao,
+    embedUrl: c.embed
+  } : null;
+  const conteudoHtml = markdownParaHtml(c.conteudo || c.descricao);
+  return `<!DOCTYPE html>
+<html lang="pt-MZ" dir="ltr">
+<head>
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  ${GSC_META}
+  <title>${escapeHtml(tituloMeta)}</title>
+  <meta name="description" content="${escapeHtml(descricao)}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${url}">
+  <meta name="theme-color" content="#0c2c5c">
+  ${ICONS_HEAD}
+  <meta property="og:type" content="video.other">
+  <meta property="og:site_name" content="Alcartel Digital">
+  <meta property="og:title" content="${escapeHtml(tituloMeta)}">
+  <meta property="og:description" content="${escapeHtml(descricao)}">
+  <meta property="og:url" content="${url}">
+  <meta property="og:image" content="${imagem}">
+  <meta property="og:locale" content="pt_MZ">
+  <link rel="stylesheet" href="../style.css">
+  ${videoObj ? `<script type="application/ld+json">${JSON.stringify(videoObj)}</script>` : ""}
+  ${ANALYTICS_HEAD}
+</head>
+<body>
+<header class="site-header" role="banner">
+  <a href="/" aria-label="Alcartel – Página inicial">
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel Digital" width="640" height="559"></picture>
+  </a>
+</header>
+<nav class="site-nav" role="navigation" aria-label="Navegação principal">
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
+    <li><a href="/index.html">Início</a></li>
+    <li><a href="/vagas.html">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="/cinemas.html" aria-current="page">Cinemas</a></li>
+    <li><a href="/servicos.html">Serviços</a></li>
+  </ul>
+</nav>
+<main role="main">
+  <article style="max-width:720px;margin:0 auto;padding:32px 20px;">
+    <nav aria-label="Breadcrumb" style="font-size:0.85rem;margin-bottom:16px;">
+      <a href="/index.html">Início</a> › <a href="/cinemas.html">Cinemas</a> › <span>${escapeHtml(c.titulo)}</span>
+    </nav>
+    <h1 style="margin:8px 0 4px;">${escapeHtml(c.titulo)}</h1>
+    ${c.embed ? `<div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;margin:16px 0;">
+      <iframe src="${escapeHtml(c.embed)}" title="${escapeHtml(c.titulo)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+    </div>` : ""}
+    <div style="line-height:1.7;">${conteudoHtml}</div>
+  </article>
+</main>
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-bottom">
+    <p>© 2026 <a href="/" aria-label="Alcartel Digital">Alcartel Digital</a> — a plataforma digital de empregos, saúde e cinema de Moçambique</p>
+  </div>
+</footer>
+<script src="/scripts/site-nav.js" defer></script>
+</body>
+</html>
+`;
+}
+
+function injetarCinema() {
+  const caminhoPagina = path.join(ROOT, "cinemas.html");
+  ensureDir(path.join(ROOT, "cinema"));
+  const urls = [];
+  publicacoesCinema.forEach(c => {
+    fs.writeFileSync(path.join(ROOT, "cinema", `${c.slug}.html`), paginaCinema(c), "utf-8");
+    urls.push({
+      loc: `${SITE_URL}/cinema/${c.slug}`,
+      lastmod: (c.data_publicacao || HOJE_ISO).slice(0, 10),
+      changefreq: "monthly",
+      priority: "0.5"
+    });
+  });
+  if (!fs.existsSync(caminhoPagina)) return urls;
+  let html = fs.readFileSync(caminhoPagina, "utf-8");
+  const cards = publicacoesCinema.map(cardCinema).join("\n");
+  const resultado = injetarEntreMarcadores(html, "<!-- CINEMA_CMS:START -->", "<!-- CINEMA_CMS:END -->", cards);
+  if (resultado !== null) {
+    fs.writeFileSync(caminhoPagina, resultado, "utf-8");
+    console.log(`✅ cinemas.html: ${publicacoesCinema.length} publicação(ões) do CMS injectada(s) (além dos 4 vídeos fixos).`);
+  }
+  return urls;
+}
+
 function paginaListagemNoticias(lista) {
   const url = `${SITE_URL}/noticias`;
   const cards = lista.length
@@ -1383,18 +1774,37 @@ function paginaListagemNoticias(lista) {
   ${ANALYTICS_HEAD}
 </head>
 <body>
-<header class="site-header" role="banner">
+<header class="site-header site-header--banner" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="Alcartel" width="640" height="322"></picture>
+    <picture>
+      <source
+        srcset="assets/banner/hero-banner-480.webp 480w, assets/banner/hero-banner-800.webp 800w, assets/banner/hero-banner-1200.webp 1200w, assets/banner/hero-banner-1600.webp 1600w, assets/banner/hero-banner-1983.webp 1983w"
+        sizes="100vw"
+        type="image/webp"
+      >
+      <img
+        src="assets/banner/hero-banner-1200.jpg"
+        srcset="assets/banner/hero-banner-480.jpg 480w, assets/banner/hero-banner-800.jpg 800w, assets/banner/hero-banner-1200.jpg 1200w, assets/banner/hero-banner-1600.jpg 1600w, assets/banner/hero-banner-1983.jpg 1983w"
+        sizes="100vw"
+        alt="Alcartel – O Motor de Empregos de Moçambique. Encontre hoje a oportunidade de amanhã: vagas actualizadas em todo o país, conectando talentos e oportunidades."
+        width="1983"
+        height="793"
+        class="site-header__banner-img"
+        fetchpriority="high"
+      >
+    </picture>
   </a>
 </header>
 <nav class="site-nav" role="navigation" aria-label="Navegação principal">
-  <ul>
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
     <li><a href="index.html">Início</a></li>
-    <li><a href="vagas.html">Vagas</a></li>
-    <li><a href="noticias.html" aria-current="page">Notícias</a></li>
+    <li><a href="vagas.html">Emprego</a></li>
+    <li><a href="saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="cinemas.html">Cinemas</a></li>
     <li><a href="servicos.html">Serviços</a></li>
-    <li><a href="sobre.html">Sobre</a></li>
   </ul>
 </nav>
 <main role="main" id="noticias" style="padding:36px 24px;">
@@ -1407,9 +1817,9 @@ function paginaListagemNoticias(lista) {
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
     <div class="footer-col footer-col--brand">
-      <p class="footer-brand">Al<span>c</span>artel</p>
-      <p>O Motor de Empregos de Moçambique</p>
-      <p style="margin-top:6px;">Uma iniciativa da <strong>Karlyon Enterprise S.A.</strong> · Beira, Moçambique</p>
+      <p class="footer-brand">Al<span>c</span>artel <span style="font-size:0.6em;">Digital</span></p>
+      <p>A plataforma digital de empregos, saúde e cinema de Moçambique</p>
+      <p style="margin-top:6px;">Uma iniciativa da <strong><a href="https://karlyon-enterprise-s-a.vercel.app/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Karlyon Enterprise S.A.</a></strong> · Beira, Moçambique</p>
       <div class="footer-social" aria-label="Redes sociais Alcartel">
         <a class="footer-social__link" href="https://www.facebook.com/Alcartelmoz" target="_blank" rel="noopener noreferrer" aria-label="Alcartel no Facebook" title="Alcartel no Facebook">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.523 1.492-3.917 3.777-3.917 1.094 0 2.238.196 2.238.196v2.475h-1.26c-1.243 0-1.63.775-1.63 1.57v1.89h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z"/></svg>
@@ -1426,8 +1836,9 @@ function paginaListagemNoticias(lista) {
       <p class="footer-col__title">Links Úteis</p>
       <nav class="footer-links footer-links--stack" aria-label="Ligações do rodapé">
         <a href="/index.html">Início</a>
-        <a href="/vagas.html">Vagas</a>
-        <a href="/noticias.html">Notícias</a>
+        <a href="/vagas.html">Emprego</a>
+        <a href="/saude-e-bem-estar.html">Saúde e Bem-Estar</a>
+        <a href="/cinemas.html">Cinemas</a>
         <a href="/servicos.html">Serviços</a>
         <a href="/sobre.html">Sobre Nós</a>
       </nav>
@@ -1440,7 +1851,7 @@ function paginaListagemNoticias(lista) {
         <a href="/termos.html" title="Termos de Uso">Termos</a>
         <a href="/cookies.html" title="Política de Cookies">Cookies</a>
       </nav>
-      <a class="footer-app-badge" href="#" id="pwa-install-link">
+      <a class="footer-app-badge" href="https://webtoapp.design/apps/pt_BR/download_android_apk/IjIyOTIzMSI.aoUENa-FQnRuitSeg2bERBddI28" id="pwa-install-link" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12 2a1 1 0 011 1v11.59l3.3-3.3a1 1 0 111.4 1.42l-5 5a1 1 0 01-1.4 0l-5-5a1 1 0 111.4-1.42l3.3 3.3V3a1 1 0 011-1zM5 19a1 1 0 011 1v.01c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V20a1 1 0 112 0v.01A3 3 0 0117 23H7a3 3 0 01-3-3v-1a1 1 0 011-1z"/></svg>
         <span>Instalar App<small>Acesso rápido no telemóvel</small></span>
       </a>
@@ -1448,7 +1859,7 @@ function paginaListagemNoticias(lista) {
   </div>
   <div class="footer-bottom">
     <div class="footer-divider"></div>
-    <p>© 2026 <a href="/" aria-label="Alcartel">Alcartel</a> — O Motor de Empregos de Moçambique</p>
+    <p>© 2026 <a href="/" aria-label="Alcartel Digital">Alcartel Digital</a> — a plataforma digital de empregos, saúde e cinema de Moçambique</p>
     <p class="footer-visitas">👁 <span id="contador-visitas">…</span> visitas</p>
   </div>
 </footer>
@@ -1474,6 +1885,7 @@ function paginaListagemNoticias(lista) {
         zoneId: '91svjmnxe0',
     });
 </script>
+<script src="/scripts/site-nav.js" defer></script>
 </body>
 </html>
 `;
@@ -1522,6 +1934,64 @@ function injetarGrid(nomeFicheiro, lista, listaDados) {
   }
 
   fs.writeFileSync(caminho, html, "utf-8");
+}
+
+// ── vagas.html: em vez de um único grid plano, a página divide-se em três
+//    subsecções calculadas a partir das datas de cada vaga —
+//      • Recentes  — as publicadas mais recentemente (informativo, topo)
+//      • Activas   — sem data de validade expirada (é o grid #vagas-grid
+//                    "oficial", o único afectado pela pesquisa/filtro)
+//      • Expiradas — data_validade já passada (mantidas para referência,
+//                    dentro de um <details> recolhido por omissão)
+//    O bloco de dados (#vagas-dados) continua a levar a lista COMPLETA,
+//    para o modal "Ver mais" e a pesquisa por texto livre encontrarem
+//    qualquer vaga, incluindo as expiradas, se alguém pesquisar por nome. ──
+function injetarGridVagasPagina(nomeFicheiro, vagas) {
+  const caminho = path.join(ROOT, nomeFicheiro);
+  if (!fs.existsSync(caminho)) {
+    console.warn(`⚠️  ${nomeFicheiro} não encontrado — grids não injectados.`);
+    return;
+  }
+  let html = fs.readFileSync(caminho, "utf-8");
+
+  const expiradas = vagas.filter(v => v.data_validade && v.data_validade < HOJE_ISO);
+  const expiradasSlugs = new Set(expiradas.map(v => v.slug));
+  const activas = vagas.filter(v => !expiradasSlugs.has(v.slug));
+  const recentes = activas.slice(0, 6);
+
+  function cardsOuVazio(lista, mensagem) {
+    return lista.length
+      ? lista.map(cardVaga).join("\n")
+      : `    <li class="vaga-card vaga-card--vazio"><p>${mensagem}</p></li>`;
+  }
+
+  const blocos = [
+    ["<!-- VAGAS_RECENTES:START -->", "<!-- VAGAS_RECENTES:END -->", cardsOuVazio(recentes, "Sem vagas recentes de momento. Volte em breve.")],
+    ["<!-- VAGAS:START -->", "<!-- VAGAS:END -->", cardsOuVazio(activas, "Sem vagas activas de momento. Volte em breve.")],
+    ["<!-- VAGAS_EXPIRADAS:START -->", "<!-- VAGAS_EXPIRADAS:END -->", cardsOuVazio(expiradas, "Sem vagas expiradas.")],
+  ];
+
+  for (const [inicio, fim, conteudo] of blocos) {
+    const resultado = injetarEntreMarcadores(html, inicio, fim, conteudo);
+    if (resultado === null) {
+      console.warn(`⚠️  Marcadores ${inicio}/${fim} não encontrados em ${nomeFicheiro} — bloco não injectado.`);
+    } else {
+      html = resultado;
+    }
+  }
+
+  // Modal + dados de pesquisa: lista completa (activas + expiradas), para
+  // o "Ver mais" e a pesquisa por texto continuarem a funcionar sobre
+  // qualquer vaga do site.
+  const comModal = injetarEntreMarcadores(html, "<!-- VAGA_MODAL:START -->", "<!-- VAGA_MODAL:END -->", blocoModal(vagas));
+  if (comModal === null) {
+    console.warn(`⚠️  Marcadores VAGA_MODAL:START/END não encontrados em ${nomeFicheiro} — modal "Ver mais" não injectado.`);
+  } else {
+    html = comModal;
+  }
+
+  fs.writeFileSync(caminho, html, "utf-8");
+  console.log(`✅ ${nomeFicheiro}: ${recentes.length} recente(s), ${activas.length} activa(s), ${expiradas.length} expirada(s).`);
 }
 
 // ── Injecta as opções da categoria no formulário "Alerta de Vagas"
@@ -1595,7 +2065,9 @@ const HOJE_ISO = new Date().toISOString().slice(0, 10);
 const PAGINAS_ESTATICAS_META = [
   { p: "", changefreq: "daily", priority: "1.0" },
   { p: "vagas.html", changefreq: "daily", priority: "0.9" },
-  { p: "noticias", changefreq: "daily", priority: "0.8" },
+  { p: "saude-e-bem-estar.html", changefreq: "daily", priority: "0.8" },
+  { p: "cinemas.html", changefreq: "weekly", priority: "0.6" },
+  { p: "noticias", changefreq: "weekly", priority: "0.4" },
   { p: "servicos.html", changefreq: "monthly", priority: "0.5" },
   { p: "sobre.html", changefreq: "monthly", priority: "0.4" },
   { p: "contactos.html", changefreq: "monthly", priority: "0.3" },
@@ -1709,11 +2181,12 @@ function main() {
   // lê para poder encontrar qualquer vaga do site directamente a partir da
   // homepage, mesmo que não esteja em destaque.
   const destaque = vagas.filter(v => v.destaque);
-  const paraHomepage = (destaque.length ? destaque : vagas).slice(0, 2);
+  const paraHomepage = (destaque.length ? destaque : vagas).slice(0, 4);
   injetarGrid("index.html", paraHomepage, vagas);
 
-  // vagas.html: lista completa em cartões e como dados de pesquisa.
-  injetarGrid("vagas.html", vagas);
+  // vagas.html: dividido em Recentes / Activas / Expiradas (ver
+  // injetarGridVagasPagina), calculado a partir de data_publicacao/data_validade.
+  injetarGridVagasPagina("vagas.html", vagas);
 
   // Sincroniza as opções do formulário "Alerta de Vagas" com a lista
   // COMPLETA de categorias oficiais (não apenas as que têm vagas activas
@@ -1742,6 +2215,14 @@ function main() {
 
   // Homepage: só as 2 notícias mais recentes publicadas.
   injetarSecaoNoticiasHome("index.html", noticias.slice(0, 6));
+
+  // Saúde e Bem-Estar: carrossel "Dicas de Saúde e Bem-Estar" (CMS) +
+  // páginas individuais em /saude/*.html.
+  urlsGeradas.push(...injetarSaude());
+
+  // Cinemas: publicações extra do CMS (além dos 4 vídeos fixos) +
+  // páginas individuais em /cinema/*.html.
+  urlsGeradas.push(...injetarCinema());
 
   const totalSitemap = gerarSitemap(urlsGeradas);
 
