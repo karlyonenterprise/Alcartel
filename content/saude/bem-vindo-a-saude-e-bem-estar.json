@@ -1,1 +1,12 @@
-
+{
+  "titulo": "Bem-vindo à área de Saúde e Bem-Estar",
+  "resumo": "Esta é uma publicação de teste para verificar que o carrossel \"Dicas de Saúde e Bem-Estar\" está a funcionar correctamente.",
+  "conteudo": "Esta publicação foi criada apenas para testar a integração entre o Decap CMS e o carrossel \"Dicas de Saúde e Bem-Estar\" da página Saúde. Pode ser apagada ou editada a qualquer momento através do painel de administração.",
+  "imagem": "",
+  "categoria": "Dicas de Saúde e Bem-Estar",
+  "link_externo": "",
+  "data_publicacao": "2026-08-09T09:00",
+  "estado": "Publicado",
+  "meta_titulo": "",
+  "meta_descricao": ""
+}
