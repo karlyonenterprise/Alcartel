@@ -10,7 +10,7 @@
   <meta name="keywords" content="Bag, Emprego Maputo, Marketing Digital, Alcartel - O Motor de Empregos de Moçambique,">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://alcartel.vercel.app/vagas/digital-marketing-lead-maputo-cidade-l-mo#U00e7ambique.html">
-  <meta name="theme-color" content="#0a1b33">
+  <meta name="theme-color" content="#0e2818">
   <meta name="author" content="Alcartel – Karlyon Enterprise S.A.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -51,16 +51,19 @@
 <body>
 <header class="site-header" role="banner">
   <a href="/" aria-label="Alcartel – Página inicial">
-    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="640" height="322"></picture>
+    <picture><source srcset="../logo.webp" type="image/webp"><img src="../logo.png" alt="Alcartel – O Motor de Empregos de Moçambique" width="300" height="262"></picture>
   </a>
 </header>
-<nav class="site-nav" role="navigation" aria-label="Navegação principal">
-  <ul>
+<nav class="site-nav" id="site-nav" role="navigation" aria-label="Navegação principal">
+  <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-expanded="false" aria-controls="site-nav-lista" aria-label="Abrir menu de navegação">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul id="site-nav-lista">
     <li><a href="/index.html">Início</a></li>
-    <li><a href="/vagas.html" aria-current="page">Vagas</a></li>
-    <li><a href="/sobre.html">Sobre</a></li>
+    <li><a href="/vagas.html">Emprego</a></li>
+    <li><a href="/saude-e-bem-estar.html">Saúde</a></li>
+    <li><a href="/cinemas.html">Cinemas</a></li>
     <li><a href="/servicos.html">Serviços</a></li>
-    <li><a href="/contactos.html">Contacto</a></li>
   </ul>
 </nav>
 <main role="main">
@@ -138,5 +141,6 @@
   <p>© 2026 <a href="/">Alcartel</a> – O Motor de Empregos de Moçambique</p>
 </footer>
 <script src="/scripts/vaga-share.js" defer></script>
+<script src="/scripts/site-nav.js" defer></script>
 </body>
 </html>
