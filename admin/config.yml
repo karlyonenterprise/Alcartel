@@ -418,3 +418,177 @@ collections:
 # caminho correcto é extrair só os blocos de conteúdo variável para campos
 # estruturados (texto, imagem, etc.) e usar um template para recompor a
 # página — isto fica como proposta em aberto, fora do âmbito desta integração.
+
+  # ══════════════════════════════════════════════════════════
+  # SAÚDE E BEM-ESTAR — substitui a antiga área "Notícias" no menu
+  # principal (apresentada ao utilizador como "Saúde"). Cada
+  # publicação aparece automaticamente na página saude-e-bem-estar.html
+  # sem precisar de tocar em HTML/CSS/JS.
+  #
+  # NOTA IMPORTANTE (âmbito desta ronda): a colecção já está pronta
+  # para uso no CMS, mas scripts/gerar-site.js ainda não lê
+  # content/saude/*.json para injectar automaticamente estas
+  # publicações nos cartões da página — isso fica como próximo passo
+  # (mesmo padrão já usado para "vagas" e "noticias"). Por agora, os
+  # cartões de Estilo de Vida/Nutrição/Ciência em saude-e-bem-estar.html
+  # são estáticos.
+  # ══════════════════════════════════════════════════════════
+  - name: "saude"
+    label: "🩺 Saúde e Bem-Estar"
+    label_singular: "Publicação de Saúde"
+    folder: "content/saude"
+    create: true
+    slug: "{{fields.titulo}}"
+    extension: "json"
+    format: "json"
+    summary: "{{fields.titulo}} — {{fields.categoria}} — {{fields.estado}}"
+    fields:
+      - { name: "titulo", label: "Título", widget: "string", required: true }
+
+      - name: "resumo"
+        label: "Resumo"
+        widget: "text"
+        required: true
+        hint: "Texto curto mostrado nos cartões. Recomendado até 160 caracteres."
+
+      - name: "conteudo"
+        label: "Conteúdo"
+        widget: "markdown"
+        required: true
+        modes: ["raw"]
+        buttons: ["bold", "bulleted-list"]
+
+      - name: "imagem"
+        label: "Imagem"
+        widget: "image"
+        required: false
+        media_folder: "/assets/saude"
+        public_folder: "/assets/saude"
+        hint: "Opcional."
+
+      - name: "categoria"
+        label: "Categoria / Subsecção"
+        widget: "select"
+        required: true
+        options:
+          - "Estilo de Vida Saudável"
+          - "Nutrição e Alimentação Saudável"
+          - "Prevenção e Cuidados de Saúde"
+          - "Ciência e Evidência em Saúde"
+          - "Dicas de Saúde e Bem-Estar"
+
+      - name: "link_externo"
+        label: "Link Externo (opcional)"
+        widget: "string"
+        required: false
+        hint: "Opcional. Ex.: para associar a publicação a um artigo externo relacionado."
+
+      - name: "data_publicacao"
+        label: "Data de Publicação"
+        widget: "datetime"
+        required: true
+        default: "{{now}}"
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm"
+        picker_utc: false
+
+      - name: "estado"
+        label: "Estado"
+        widget: "select"
+        required: true
+        default: "Rascunho"
+        options: ["Rascunho", "Publicado"]
+
+      - name: "meta_titulo"
+        label: "Meta Título (SEO)"
+        widget: "string"
+        required: false
+        hint: "Opcional. Se em branco, usa-se \"Título – Alcartel Digital | Saúde\"."
+
+      - name: "meta_descricao"
+        label: "Meta Descrição (SEO)"
+        widget: "text"
+        required: false
+        hint: "Opcional. Se em branco, usa-se o Resumo. Recomendado até 160 caracteres."
+
+  # ══════════════════════════════════════════════════════════
+  # CINEMA — página cinemas.html. Cada publicação pode ter um vídeo
+  # do YouTube opcional (o link normal é convertido automaticamente
+  # para o formato de embed pelo mesmo princípio usado nas 4
+  # publicações de demonstração já no site).
+  #
+  # NOTA IMPORTANTE (âmbito desta ronda): tal como "Saúde" acima, a
+  # colecção já está pronta para uso, mas a leitura automática de
+  # content/cinema/*.json por scripts/gerar-site.js para os injectar
+  # em cinemas.html fica como próximo passo. Por agora, os 4 vídeos
+  # em cinemas.html são estáticos (os 4 links do YouTube fornecidos).
+  # ══════════════════════════════════════════════════════════
+  - name: "cinema"
+    label: "🎬 Cinema"
+    label_singular: "Publicação de Cinema"
+    folder: "content/cinema"
+    create: true
+    slug: "{{fields.titulo}}"
+    extension: "json"
+    format: "json"
+    summary: "{{fields.titulo}} — {{fields.estado}}"
+    fields:
+      - { name: "titulo", label: "Título", widget: "string", required: true }
+
+      - name: "descricao"
+        label: "Descrição"
+        widget: "text"
+        required: true
+        hint: "Texto curto mostrado no cartão. Conteúdo original — não copiar texto protegido."
+
+      - name: "conteudo"
+        label: "Conteúdo"
+        widget: "markdown"
+        required: false
+        modes: ["raw"]
+        buttons: ["bold", "bulleted-list"]
+
+      - name: "imagem"
+        label: "Imagem (opcional)"
+        widget: "image"
+        required: false
+        media_folder: "/assets/cinema"
+        public_folder: "/assets/cinema"
+
+      - name: "link_youtube"
+        label: "Link do YouTube (opcional)"
+        widget: "string"
+        required: false
+        hint: "Cole o link normal (ex.: https://youtu.be/XXXXXXXXXXX ou https://www.youtube.com/watch?v=XXXXXXXXXXX) — é convertido automaticamente para o embed."
+
+      - name: "categoria"
+        label: "Categoria"
+        widget: "string"
+        required: false
+        hint: "Ex.: Acção & Aventura, Trailers, Entretenimento."
+
+      - name: "data_publicacao"
+        label: "Data de Publicação"
+        widget: "datetime"
+        required: true
+        default: "{{now}}"
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm"
+        picker_utc: false
+
+      - name: "estado"
+        label: "Estado"
+        widget: "select"
+        required: true
+        default: "Rascunho"
+        options: ["Rascunho", "Publicado"]
+
+      - name: "meta_titulo"
+        label: "Meta Título (SEO)"
+        widget: "string"
+        required: false
+
+      - name: "meta_descricao"
+        label: "Meta Descrição (SEO)"
+        widget: "text"
+        required: false
